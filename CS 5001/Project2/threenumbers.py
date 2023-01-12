@@ -9,10 +9,12 @@
 firstnumber = float(input("Please provide your first number "))
 secondnumber = float(input("Please provide your second number --> "))
 thirdnumber = float(input("Please provide your third number --> "))
+
 #Determine in min, max, and average based on the inputted numbers
 biggest = max(firstnumber, secondnumber, thirdnumber)
 smallest = min(firstnumber, secondnumber, thirdnumber)
 average = (firstnumber + secondnumber + thirdnumber) / 3
+
 #print the results from what was determined
 print("The biggest number is:", biggest)
 print("The smallest number is:", smallest)
