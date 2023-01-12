@@ -11,13 +11,13 @@ secondnumber = float(input("Please provide your second number --> "))
 thirdnumber = float(input("Please provide your third number --> "))
 
 #Determine in min, max, and average based on the inputted numbers
-biggest = max(firstnumber, secondnumber, thirdnumber)
-smallest = min(firstnumber, secondnumber, thirdnumber)
+max = max(firstnumber, secondnumber, thirdnumber)
+min = min(firstnumber, secondnumber, thirdnumber)
 average = (firstnumber + secondnumber + thirdnumber) / 3
 
 #print the results from what was determined
-print("The biggest number is:", biggest)
-print("The smallest number is:", smallest)
+print("The biggest number is:", max)
+print("The smallest number is:", min)
 print("The average is:", average)
 
 
