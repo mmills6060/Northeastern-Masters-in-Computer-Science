@@ -1,7 +1,8 @@
 # Michael Arthur Mills
 # Fall 2023, CS 5001
 # Lab 2 code file
-# Practicing good code style and more complex functions
+# Ask the user for 4 words.  Then print them out in alphabetical order 
+# (using < and > will compare the alphabetical order of the words).
 
 #ask the user to input four words
 firstword = input("Please provide your first word ")
