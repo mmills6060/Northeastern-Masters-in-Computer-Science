@@ -21,7 +21,7 @@ Seasons.py-
 
 I attempted this project before our lab, and was particularly stumped with how we could extract a season out of ANY date provided from the user. It never occurred to me that the best way to do this is to use a string split function to extract just the month from the input date. I found this particularly fascinating as it had never occurred to me that this would be the best solution.
 
-<img src="https://github.com/mmills6060/Northeastern-Masters-in-Computer-Science/blob/main/CS%205003/Projects/Project2/Project%202%20-%20seasons%20(3).png">
+<img src="https://github.com/mmills6060/Northeastern-Masters-in-Computer-Science/blob/main/CS%205003/Projects/Project2/Project%202%20-%20seasons%20(4).png">
 
 **Reflection**
 
