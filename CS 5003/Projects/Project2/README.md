@@ -1,12 +1,3 @@
-Michael Arthur Mills
-
-CS 5003
-
-January 19, 2023
-
-Michael Arthur Mills
-
-Project 2 Report
 
 **Problem Description**
 
@@ -18,7 +9,7 @@ Theenumbers.py-
 
 I thought this was an important algorithm to start with. It allowed me to get a feel for nesting if and else statements. I was also intrigued with the fact that I was able to determine the minimum and the maximum without creating an entirely new branch on the decision tree. In my first attempt at creating this algorithm, I immediately went to the min max functions as a solution. It really made me appreciative of the functionality embedded in the python programming language.
 
-![](RackMultipart20230119-1-vaowsa_html_a9a6edf21a52c157.png)
+<img src="https://github.com/mmills6060/Northeastern-Masters-in-Computer-Science/blob/main/CS%205001/Projects/Project2/Project%202%20-%20Three%20Numbers1%20(3).png">
 
 Alphabetize.py-
 
