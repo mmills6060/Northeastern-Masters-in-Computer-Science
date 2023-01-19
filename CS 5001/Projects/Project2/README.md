@@ -9,7 +9,7 @@ Theenumbers.py-
 
 I thought this was an important algorithm to start with. It allowed me to get a feel for nesting if and else statements. I was also intrigued with the fact that I was able to determine the minimum and the maximum without creating an entirely new branch on the decision tree. In my first attempt at creating this algorithm, I immediately went to the min max functions as a solution. It really made me appreciative of the functionality embedded in the python programming language.
 
-![](RackMultipart20230119-1-vaowsa_html_a9a6edf21a52c157.png)
+Project 2 - Three Numbers1 (3).png
 
 Alphabetize.py-
 
