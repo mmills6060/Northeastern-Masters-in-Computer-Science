@@ -1,12 +1,3 @@
-Michael Arthur Mills
-
-CS 5003
-
-January 19, 2023
-
-Michael Arthur Mills
-
-Project 2 Report
 
 **Problem Description**
 
