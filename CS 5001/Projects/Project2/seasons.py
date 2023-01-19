@@ -13,7 +13,8 @@ def main():
     month = datesplit[0]
     
 # Single out what month is what season, print season
-# I am keeping as a string because there is additional complexities 
+
+# I am keeping as a string because there are additional complexities 
 # changing to an integer, specifically when there is a zero digit in front
     if  month in ["12" , "01" , "02"]:
         print("The season is Winter")
