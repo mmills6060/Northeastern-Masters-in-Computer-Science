@@ -16,16 +16,33 @@ def main():
 
 #Defining the first value in the set as month
     month = datesplit[0]
+#Defining the second value in the set as day
+    day = int(datesplit[1])
     
-# Single out what month is what season, print season
+# Single out what month and day is what season, print season
     if  month == '12' or month == '01' or month == '02':
-        print("The season is Winter")
+        if month == '12' and day < 20:
+            print("The season is Fall")
+        else:
+            print("The season is Winter")
     else:
         if  month == '03' or month == '04' or month == '05':
-            print("The season is Spring")
+            if month == '03' and day < 19:
+                print("The season is Winter")
+            else:
+                print("The season is Spring") 
         else:
             if  month == '06' or month == '07' or month == '08':
-                print("The season is Summer")
+                if month == '06' and day < 20:
+                    print("The season is Spring")
+                else:
+                    print("The season is Summer")                    
             else:
-                print("The season is Fall")        
+                if  month == '09' or month == '10' or month == '11':
+                    if month == '09' and day < 21:
+                        print("The season is Summer") 
+                    else:                     
+                        print("The season is Fall")
+                        
+                                
 main()
