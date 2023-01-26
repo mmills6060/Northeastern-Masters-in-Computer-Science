@@ -19,6 +19,3 @@ my_number = int(number)
 oddOrEven(number)
 
 
-
-
-
