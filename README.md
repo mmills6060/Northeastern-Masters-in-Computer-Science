@@ -1,4 +1,4 @@
-<img src="https://img.shields.io/github/downloads/mmills6060/Northeastern-Masters-in-Computer-Science/total"><img src="https://img.shields.io/github/repo-size/mmills6060/Northeastern-Masters-in-Computer-Science">
+<img src="https://img.shields.io/github/downloads/mmills6060/Northeastern-Masters-in-Computer-Science/total"> <img src="https://img.shields.io/github/repo-size/mmills6060/Northeastern-Masters-in-Computer-Science">
 
 # Northeastern-Masters-in-Computer-Science
 This is a repository of all of the code that I have written and will write in the coming years during the completion of my Masters in Computer Science. This program is specifically the Masters in Computer Science Align program, which essentially includes all of the foudational courses from an Undergraduate degree. This program is meant for students that don't necessarily have a computer science background, and wish to get into the tech industry.
