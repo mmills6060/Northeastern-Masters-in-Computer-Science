@@ -1,6 +1,6 @@
 # Michael Arthur Mills
-# Fall 2023, CS 5001
-# Lab 2 code file
+# Spring 2023, CS 5001
+# Lab 3 code file
 
 import sys
 
