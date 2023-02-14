@@ -20,9 +20,7 @@ Hotter or Colder Function
 
 This was also not that difficult of a function. The only thing I needed to do was return text depending on the values of previous difference and difference. 
 
-![Diagram
-
-Description automatically generated](Aspose.Words.e535bbab-3e01-4740-af10-665a27cd3559.002.png)
+![](hotterfunction.png)
 
 Efficiency Function
 
