@@ -1,10 +1,11 @@
 # Michael Arthur Mills
 # Spring 2023, CS 5001
 # Lab 4 code file
+# generate a random number, then play a guessing game with user. 
+# additional efficiency functionality added as well.
+
 import random
 import sys
-
-#command line argument that sets max random number
 
 # evaluate guess function
 def evaluate(guess, number, prev_difference):
@@ -58,7 +59,7 @@ def efficiency(turns_used, max_random_number):
 def main():
     # assign the variable number to the second word input in command line terminal
 # check for user input
-
+    #command line argument that sets max random number
     if len( sys.argv ) > 1:
         # re-assign the value if the user provided one
         max_random_number = int( sys.argv[1] )
@@ -90,11 +91,3 @@ if __name__ == "__main__":
 # to be a loop in the main function.
 # used Real Python to find self.assertion function
 # my equation for efficiency never is 100%, only goes to 99%  
-
-# possible algorithms
-# binary search
-# monte carlo method
-# gradient descent
-# neural netwroks
-# simulated annealing
-# genetic algorithm
