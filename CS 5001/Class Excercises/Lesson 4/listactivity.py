@@ -1,15 +1,27 @@
-<<<<<<< HEAD
-def def loopthroughstring():
-    location = 0
-    
-calculateSalary()
-=======
-def loop_through_string(mysetring):
-    location = 0
-    while(location < len(mysetring)):
-        print(mysetring(location))
-        location += 1
-        
-def pull
+def multiplyList(myList):
 
->>>>>>> a7204297716a45efb308a7dc4c43928ac63906da
+
+    location = 0
+    while(location < len(myList)):
+        newlist.append(myList(location)*5)
+    return newlist 
+
+def multiply(mylist):
+    location = 0
+    while(location > len(mylist)):
+        newlist.append(mylist)
+
+
+# Driver code
+data = [1,2,3,4,5,]
+print(data)
+multiply(data)
+print(data)
+newlist = multiply(data)
+print("after multiply")
+
+
+
+
+
+
