@@ -39,7 +39,13 @@ def main():
     #for_loop()
     star()
     
-    
+fibonacci = [0, 1] # initialize the list with the first two numbers
+for i in range(2, 10):
+    # generate the next number by adding the previous two numbers
+    next_fib = fibonacci[i-1] + fibonacci[i-2]
+    fibonacci.append(next_fib) # add the new number to the list
+
+print(fibonacci)
 # write a loop that prints the same triangle, 
 # but upside down (10 * across the top down to 1 at the bottom
 
