@@ -3,6 +3,7 @@
 #Template created by: Lindsay Jamieson
 # Michael Arthur Mills
 # February 15, 2023
+
 import random
 def pick_random_word():
     '''Pick_random_word will create a word list, choose a random word and return it
@@ -50,7 +51,7 @@ def replace_character(rand_word, hidden_word, user_guess,new_hidden_word,guessed
 
 def main():
     '''Main game playing location'''
-    turns_used = 0
+    turns_used = 10
     new_hidden_word = ""
     
     print("Welcome to The Spaceman Game, created by Michael Arthur Mills")
@@ -58,13 +59,18 @@ def main():
     hidden_word = (create_hidden_word(rand_word))
     guessed = set() # create emptty set for guessed
     while True:
-        user_guess = (input("Enter your guess: "))
-        turns_used += 1
-        new_hidden_word = replace_character(rand_word, hidden_word, user_guess,new_hidden_word,guessed)
-        if word_found(rand_word, new_hidden_word):
-            print("Congratulations, you won the game!")
+        if turns_used >= 1:
+            user_guess = (input("Enter your guess: "))
+            turns_used -= 1
+            new_hidden_word = replace_character(rand_word, hidden_word, user_guess,new_hidden_word,guessed)
+            if word_found(rand_word, new_hidden_word):
+                print("Congratulations, you won the game!")
+                break
+            print(user_guess)
+            print("You have " + str(turns_used) + " turns left.")
+            print(new_hidden_word)
+        else:
+            print("Sorry, better luck next time")
             break
-        print(user_guess)
-        print(new_hidden_word)
 if __name__ == "__main__":
     main() 
