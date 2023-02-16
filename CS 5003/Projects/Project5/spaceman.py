@@ -1,5 +1,5 @@
-#Project 5
-#Spaceman Implementation
+# Project 5
+# Spaceman Implementation
 # Michael Arthur Mills
 # February 15, 2023
 
@@ -15,7 +15,6 @@ def pick_random_word():
             "Rocket", "Turtle", "Planet", "Dragon", "Orange", "Forest", "Castle", "Reptile", "Sailor",
             "Circus", "Watermelon", "Forest"]
     rand_word = random.choice(word)
-    print("The random word is " + rand_word)
     return rand_word
 def create_hidden_word(rand_word):
     # create a variable hidden word such that there is a * multiplied by
@@ -57,8 +56,8 @@ def replace_character(rand_word, hidden_word, user_guess,new_hidden_word,guessed
             new_hidden_word += hidden_word[i]
     return new_hidden_word
 def remove_turn(rand_word, user_guess, guessed):
-
-    '''Checks if a turn should be removed for the user's guess'''
+    
+    # Checks if a turn should be removed
 
     if user_guess in rand_word or user_guess in guessed:
         return False
