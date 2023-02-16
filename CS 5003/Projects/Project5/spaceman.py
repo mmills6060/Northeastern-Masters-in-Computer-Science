@@ -6,6 +6,8 @@
 
 import random
 def pick_random_word():
+    # define a list of words, pick a random word from the list that is defined.
+    # return the random word
     '''Pick_random_word will create a word list, choose a random word and return it
     Input: None
     Output: A random word from the list
@@ -17,6 +19,8 @@ def pick_random_word():
     print("The random word is " + rand_word)
     return rand_word
 def create_hidden_word(rand_word):
+    # create a variable hidden word such that there is a * multiplied by
+     # the length of the word. Return the variable. 
     '''create_hidden_word will create an obfuscated version of the random word
     Input: The random word
     Output: An obfuscated version of the word (ie banana would return ******
@@ -25,6 +29,8 @@ def create_hidden_word(rand_word):
     print(hidden_word)
     return hidden_word
 def word_found(rand_word, new_hidden_word):
+    # look to see if the chosen word is equal to the new word that the
+    # user has been guessing. Return true or false depending on result
     '''word_found will detect whether the random word has been uncovered
     Input: the random word and the hidden version of the word
     Output: True if the hidden word has all been revealed, False otherwise
@@ -36,6 +42,9 @@ def word_found(rand_word, new_hidden_word):
 
 
 def replace_character(rand_word, hidden_word, user_guess,new_hidden_word,guessed):
+    # create an empty variable for the new hidden word. For each character in the 
+    # range of characters within the word, replace the * with the character that 
+    # matches the word. return the new hidden word. 
     '''Replaces all the occurences of user_guess in hidden_word with user_guess
     Input: the random word, the hidden word so far, and the user guess
     Output: the new hidden word
@@ -51,13 +60,34 @@ def replace_character(rand_word, hidden_word, user_guess,new_hidden_word,guessed
 
 def main():
     '''Main game playing location'''
-    turns_used = 10
+    #define number of turns allowed as 6. Create empty variable for new hidden word. 
+    turns_used = 6
     new_hidden_word = ""
     
-    print("Welcome to The Spaceman Game, created by Michael Arthur Mills")
+    #create welcome message
+    print("Welcome to The Spaceman Game, created by Michael Arthur Mills ")
+    print("""
+     |     | |
+    / \    | |
+   |--o|===|-|
+   |---|   |d|
+  /     \  |w|
+ | U     | |b|
+ | S     |=| |
+ | A     | | |
+ |_______| |_|
+  |@| |@|  | |
+___________|_|_   
+          """)
+    #call funcions that pick a random word, then convert it to *
     rand_word = pick_random_word()
     hidden_word = (create_hidden_word(rand_word))
+
     guessed = set() # create emptty set for guessed
+
+    # while the user has not guessed the word correctly, ask the user to input a guess,
+    # subtract a turn, call function that replaces correctly guessed charaters,
+    # call function to see if its correct, print stuff so user knows whats going on.
     while True:
         if turns_used >= 1:
             user_guess = (input("Enter your guess: "))
@@ -72,5 +102,6 @@ def main():
         else:
             print("Sorry, better luck next time")
             break
+
 if __name__ == "__main__":
     main() 
