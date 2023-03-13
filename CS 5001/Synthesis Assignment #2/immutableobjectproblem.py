@@ -1,4 +1,4 @@
-# example of an immutable object
+# immutable object problem
 
 
 def change(x):

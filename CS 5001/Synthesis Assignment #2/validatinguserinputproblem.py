@@ -1,4 +1,4 @@
-# example of vlaidating user input
+# -practice problem vlaidating user input
 
 def validatecar():
     car = input("Enter Ferrari or Lamborghini: ")

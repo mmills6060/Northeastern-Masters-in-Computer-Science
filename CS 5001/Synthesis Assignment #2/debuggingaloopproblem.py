@@ -1,4 +1,4 @@
-# example of debugging a loop   
+# debugging a loop problem   
 
 def main():
     i = 1
