@@ -1,0 +1,16 @@
+Project 7: Hosoya’s Triangle
+
+	Problem Description
+	This project consists of writing python code to replicate Hosoya’s triangle and how it behaves mathematically. This project uses multiple different concepts in Python. Some notable concepts include lists, lists of lists, and recursion. This was a project to help students grow comfortable working with lists and how they operate as well as recursion. Other concepts include loops, variables, and functions. 
+	Required Task Elements
+
+	I thought my planning documents were particularly helpful in the sense that it allowed me to break down the problem into smaller pieces. With that in mind, I was able to think about a smaller problem such as writing code to compute the first two values, instead of a broader problem like replicating hosoya’s triangle in python. 
+Reflection
+
+	This was a particularly interesting project for me. This was the first time where I felt like I was looking at a mathematical equation and trying to figure out how I can translate a mathematical equation to python code…or any code. I thought it was interesting how I was really forced to think about what the lists are actually doing and what the lists of lists are doing and how they are being printed. I really had to understand what recursion is and how it behaves in order for me to properly complete this project. I also had to have knowledge on lists and lists of lists in order to complete the project. I was surprised with how much I had forgotten over just one week during spring break. 
+
+	Acknowledgements
+
+•	Hosoya’s Triangle
+o	https://www.geeksforgeeks.org/hosoyas-triangle/
+o	Learn and understand what hosoya’s triangle is and how the numbers are calculated. 
