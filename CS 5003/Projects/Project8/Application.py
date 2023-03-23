@@ -18,7 +18,7 @@ def main():
 
     serving = True
     while serving:
-        num_scoops = int(input("How many scoops do you want? "))
+        num_scoops = int(input("How many scoops? "))
         if num_scoops == 1:
             scooper = scoop1
         elif num_scoops == 2:
