@@ -1,6 +1,8 @@
 # File which will hold the implementation of Scoop
-# Created by Michael Mills
+# Created by Lindsay Jamieson
 # 3/29/2022
+# Implemented by Michael Mills
+
 import math
 
 class Scoop:

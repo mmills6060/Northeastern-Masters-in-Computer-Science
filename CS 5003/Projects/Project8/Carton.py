@@ -1,7 +1,7 @@
 # File which will hold the implementation of Carton
 # Created by Lindsay Jamieson
 # 3/29/2022
-# Implemented by (your name here)
+# Implemented by Michael Mills
 import math #this gives you pi
 import Scoop
 
@@ -17,7 +17,7 @@ class Carton:
                 radius - radius of a carton
                 height - height of a carton'''
         
-        self.volume = 3.14 * radius**2 * height
+        self.volume = math.pi * radius**2 * height
         self.remaining = self.volume
 
     def hasEnoughFor(self, scoop):

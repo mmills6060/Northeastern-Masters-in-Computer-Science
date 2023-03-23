@@ -3,7 +3,7 @@
 # 3/29/2022
 # Implemented by (your name here)
 import Carton
-import Scoop
+from Scoop import Scoop
 
 class IceCreamShoppe:
     '''Class IceCreamShoppe
@@ -14,17 +14,20 @@ class IceCreamShoppe:
         ''' Constructor
         Parameters: carton_radius, carton_height - dimensions for a carton
         Return: nothing'''
-        pass
-
+        self.carton_radius = carton_radius
+        self.carton_height = carton_height
+        self.cartons_used = 0
     def serve(self, numScoops, scooper):
         ''' serve method
         Parameters: numScoops - number of scoops wanted; 
             scooper - the specific Scoop to use
         Return: nothing'''
-        pass
+        self.numscoops = numScoops
+        self.scooper = Scoop.volume(scooper)
+        self.cartons_used += 1
 
     def cartonsUsed(self):
         ''' cartonsUsed method
         Parameters: none
         Return: the number of cartons used so far in the Shoppe'''
-        pass
+        return self.cartons_used
