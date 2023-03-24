@@ -15,6 +15,7 @@
 # This phenomenon is known as overfitting. It means that the model will have a difficult time generalizing on a new dataset.
 
 
+
 # Steps
 
 1. Get tensorflow to work with a provided dataset
@@ -24,3 +25,9 @@
 5. Turn the number value into an actual price
 6. Integrate other variables from the Zillow API such as Bed, Bath, Location, Etc. 
 7. Create functionality that will automatically import data from listings that have just come on the market
+
+# Problems
+
+Batch download worked for a litte bit, but google images would only display 100 photos. 
+Changed Epochs to 25 and that dramatically increased the accuracy of the machine learning algorithm.
+Correctly prediccted Agassi with a 99.76 percent confidence.

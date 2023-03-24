@@ -6,30 +6,30 @@ import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras import layers
 from tensorflow.keras.models import Sequential
+from tensorflow.keras.preprocessing import image
 import pathlib
-dataset_url = "https://storage.googleapis.com/download.tensorflow.org/example_images/flower_photos.tgz"
-data_dir = tf.keras.utils.get_file('flower_photos', origin=dataset_url, untar=True)
-data_dir = pathlib.Path(data_dir)
+
+data_dir = pathlib.Path("C:\\Users\\Michael Mills\\Pictures\\Final Project")
 
 # tell me how many images there are 
 image_count = len(list(data_dir.glob('*/*.jpg')))
 print(image_count)
 
 # here are some roses
-roses = list(data_dir.glob('roses/*'))
+roses = list(data_dir.glob('Agassi/*'))
 PIL.Image.open(str(roses[0]))
 PIL.Image.open(str(roses[1]))
 
 
 # here are some tupips
-tulips = list(data_dir.glob('tulips/*'))
+tulips = list(data_dir.glob('Federer/*'))
 PIL.Image.open(str(tulips[0]))
 PIL.Image.open(str(tulips[1]))
 
 # Define some parameters for the loader
 batch_size = 32
-img_height = 180
-img_width = 180
+img_height = 360
+img_width = 360
 
 # create a validation split for the model. Use 80% of the images for training and 20% for validation
 train_ds = tf.keras.utils.image_dataset_from_directory(
@@ -170,7 +170,7 @@ data_augmentation = keras.Sequential(
   ]
 )
 
-# Visualize a few augmented examples by aplyting data augmentation to teh same image several times
+# Visualize a few augmented examples by applying data augmentation to the same image several times
 plt.figure(figsize=(10, 10))
 for images, _ in train_ds.take(1):
   for i in range(9):
@@ -208,7 +208,7 @@ model.compile(optimizer='adam',
               loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
               metrics=['accuracy'])
 model.summary()
-epochs = 15
+epochs = 50
 history = model.fit(
   train_ds,
   validation_data=val_ds,
@@ -243,13 +243,10 @@ plt.show()
 
 
 # Predict on new data
-sunflower_url = "https://storage.googleapis.com/download.tensorflow.org/example_images/592px-Red_sunflower.jpg"
-sunflower_path = tf.keras.utils.get_file('Red_sunflower', origin=sunflower_url)
+Agassi_dir = "C:\\Users\Michael Mills\\Pictures\\Final Project\Agassi\\andre-agassi_0 (1).jpeg"
 
-img = tf.keras.utils.load_img(
-    sunflower_path, target_size=(img_height, img_width)
-)
-img_array = tf.keras.utils.img_to_array(img)
+img = PIL.Image.open(Agassi_dir).resize((img_height, img_width))
+img_array = image.img_to_array(img)
 img_array = tf.expand_dims(img_array, 0) # Create a batch
 
 predictions = model.predict(img_array)
