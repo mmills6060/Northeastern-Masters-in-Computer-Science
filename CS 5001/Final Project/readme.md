@@ -20,11 +20,12 @@
 
 1. Get tensorflow to work with a provided dataset
 2. Do the same thing but provide my own dataset
-3. See if I can classify images into different levels of quality
-4. Rather than classification, look to see if I can create a quantifiable value that characterises the quality
-5. Turn the number value into an actual price
-6. Integrate other variables from the Zillow API such as Bed, Bath, Location, Etc. 
-7. Create functionality that will automatically import data from listings that have just come on the market
+3. Write a script that will pull data of 100 listings from zillow api (Photo, listing price) and download to directory on computer. 
+4. Rather than classification, use the "regression" functionality with tensorflow to assign an integer to each individual photo. Maybe increase number of listings to 1000 or something. Train machine learning model based on 1000 listings. (3,389 total listings in NYC)
+6. Integrate other variables from the Zillow API such as Bed, Bath, Location, etc and train a new model with additional variables. (more than one input?) Is the model more accurate?
+5. Create functionality that will check for new listings every hour. Roughly 173 new listings per day. 7 listings per hour. Retrain model with new listings.
+6. Create functionality that will keep track of the listing, look to see if it was rented, record rented price.
+7. Change algorithm to learn and predict the actual price the apartment was "rented" for as opposed to what it was "listed" for. 
 
 # Problems
 
