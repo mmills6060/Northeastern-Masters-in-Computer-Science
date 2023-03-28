@@ -1,3 +1,8 @@
+# Michael Arthur Mills
+# March 24, 2023
+# This is the second test that uses the same concepts of learning, but uses my own dataset. 
+
+
 import matplotlib.pyplot as plt
 import numpy as np
 import PIL
@@ -9,20 +14,20 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.preprocessing import image
 import pathlib
 
-data_dir = pathlib.Path("C:\\Users\\Michael Mills\\Pictures\\Final Project")
+data_dir = pathlib.Path("C:\\Users\\Michael Mills\\Pictures\\Final Project\\Zillow")
 
 # tell me how many images there are 
 image_count = len(list(data_dir.glob('*/*.jpg')))
 print(image_count)
 
-# here are some roses
-roses = list(data_dir.glob('Agassi/*'))
+# here are some cheap apartments
+roses = list(data_dir.glob('1000/*'))
 PIL.Image.open(str(roses[0]))
 PIL.Image.open(str(roses[1]))
 
 
-# here are some tupips
-tulips = list(data_dir.glob('Federer/*'))
+# here are some expensive apartments
+tulips = list(data_dir.glob('10000/*'))
 PIL.Image.open(str(tulips[0]))
 PIL.Image.open(str(tulips[1]))
 
@@ -97,51 +102,45 @@ print(np.min(first_image), np.max(first_image))
 
 
 # Create the model
-num_classes = len(class_names)
 
-model = Sequential([
-  layers.Rescaling(1./255, input_shape=(img_height, img_width, 3)),
-  layers.Conv2D(16, 3, padding='same', activation='relu'),
-  layers.MaxPooling2D(),
-  layers.Conv2D(32, 3, padding='same', activation='relu'),
-  layers.MaxPooling2D(),
-  layers.Conv2D(64, 3, padding='same', activation='relu'),
-  layers.MaxPooling2D(),
-  layers.Flatten(),
-  layers.Dense(128, activation='relu'),
-  layers.Dense(num_classes)
-])
+def create_model():
+  num_classes = len(class_names)
+
+  model = Sequential([
+    layers.Rescaling(1./255, input_shape=(img_height, img_width, 3)),
+    layers.Conv2D(16, 3, padding='same', activation='relu'),
+    layers.MaxPooling2D(),
+    layers.Conv2D(32, 3, padding='same', activation='relu'),
+    layers.MaxPooling2D(),
+    layers.Conv2D(64, 3, padding='same', activation='relu'),
+    layers.MaxPooling2D(),
+    layers.Flatten(),
+    layers.Dense(128, activation='relu'),
+    layers.Dense(num_classes)
+  ])
 
 
-# Compile the model
-model.compile(optimizer='adam',
-              loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
-              metrics=['accuracy'])
+  # Compile the model
+  model.compile(optimizer='adam',
+                loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
+                metrics=['accuracy'])
+  return model
+
+# Create a basic model instance
+model = create_model()
 
 # Model Summary
 model.summary()
 
 
 # Train the model
-epochs=10
+epochs=1
 history = model.fit(
   train_ds,
   validation_data=val_ds,
   epochs=epochs
 )
-# specify the directory path to create
-directory = "C:\\Users\\Michael Mills\\Documents\\Final Project\\Saved_Models\\"
 
-# check if directory already exists
-if not os.path.exists(directory):
-    # create directory
-    os.makedirs(directory)
-    print(f"Directory {directory} created successfully.")
-else:
-    print(f"Directory {directory} already exists.")
-# Save the entire model as a SavedModel.
-
-model.save("C:\\Users\\Michael Mills\\Documents\\Final Project\\Saved_Models\\tennis_model")
 # Visualize training results
 acc = history.history['accuracy']
 val_acc = history.history['val_accuracy']
@@ -197,37 +196,71 @@ for images, _ in train_ds.take(1):
 # When you apply dropout to a layer, it randomly drops out (by setting the activation to zero) a number of output units from the layer during the training process. 
 # Dropout takes a fractional number as its input value, in the form such as 0.1, 0.2, 0.4, etc. This means dropping out 10%, 20% or 40% of the output units randomly from the applied layer.
 # Create a new neural network with tf.keras.layers.Dropout before training it using the augmented images:
+def apply_dropoutlayer():
+  model = Sequential([
+    data_augmentation,
+    layers.Rescaling(1./255),
+    layers.Conv2D(16, 3, padding='same', activation='relu'),
+    layers.MaxPooling2D(),
+    layers.Conv2D(32, 3, padding='same', activation='relu'),
+    layers.MaxPooling2D(),
+    layers.Conv2D(64, 3, padding='same', activation='relu'),
+    layers.MaxPooling2D(),
+    layers.Dropout(0.2),
+    layers.Flatten(),
+    layers.Dense(128, activation='relu'),
+    layers.Dense(num_classes, name="outputs")
+  ])
 
-model = Sequential([
-  data_augmentation,
-  layers.Rescaling(1./255),
-  layers.Conv2D(16, 3, padding='same', activation='relu'),
-  layers.MaxPooling2D(),
-  layers.Conv2D(32, 3, padding='same', activation='relu'),
-  layers.MaxPooling2D(),
-  layers.Conv2D(64, 3, padding='same', activation='relu'),
-  layers.MaxPooling2D(),
-  layers.Dropout(0.2),
-  layers.Flatten(),
-  layers.Dense(128, activation='relu'),
-  layers.Dense(num_classes, name="outputs")
-])
 
+checkpoint_path = "C:\\Users\\Michael Mills\\Github Repositories\\Northeastern-Masters-in-Computer-Science-4\\CS 5001\\Final Project\\Tensorflow_Test\\training_1\\cp.ckpt"
+checkpoint_dir = os.path.dirname(checkpoint_path)
 
+# Create a callback that saves the model's weights
+cp_callback = tf.keras.callbacks.ModelCheckpoint(filepath=checkpoint_path,
+                                                 save_weights_only=True,
+                                                 verbose=1)
 
-# Compile and train the model
+# Compile and train the model. This is the one that matters
 model.compile(optimizer='adam',
               loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
               metrics=['accuracy'])
 model.summary()
-epochs = 50
+epochs = 2
 history = model.fit(
   train_ds,
   validation_data=val_ds,
-  epochs=epochs
+  epochs=epochs,
+  callbacks=[cp_callback]
 )
 
+# specify the directory path to create
+directory = "C:\\Users\\Michael Mills\\Documents\\Final Project\\Saved_Models\\"
 
+# check if directory already exists
+if not os.path.exists(directory):
+    # create directory
+    os.makedirs(directory)
+    print(f"Directory {directory} created successfully.")
+else:
+    print(f"Directory {directory} already exists.")
+# Save the entire model as a SavedModel.
+
+model.save("C:\\Users\\Michael Mills\\Documents\\Final Project\\Saved_Models\\zillow_model")
+
+# Create a basic model instance
+model = create_model()
+
+# Evaluate the model
+loss, acc = model.evaluate(val_ds, verbose=2)
+print("Untrained model, accuracy: {:5.2f}%".format(100 * acc))
+
+# Loads the weights
+model.load_weights(checkpoint_path)
+
+# Re-evaluate the model
+loss, acc = model.evaluate(val_ds, verbose=2)
+print("Restored model, accuracy: {:5.2f}%".format(100 * acc))
 
 # Visualize training results
 acc = history.history['accuracy']
@@ -255,9 +288,9 @@ plt.show()
 
 
 # Predict on new data
-Agassi_dir = "C:\\Users\Michael Mills\\Pictures\\Final Project\Agassi\\andre-agassi_0 (1).jpeg"
+Apartment_dir = "C:\\Users\\Michael Mills\\Pictures\\Final Project\\Zillow\\5000\\4af2e0367dcd1d246ab83162d25e001e-p_e.jpg"
 
-img = PIL.Image.open(Agassi_dir).resize((img_height, img_width))
+img = PIL.Image.open(Apartment_dir).resize((img_height, img_width))
 img_array = image.img_to_array(img)
 img_array = tf.expand_dims(img_array, 0) # Create a batch
 
@@ -265,6 +298,8 @@ predictions = model.predict(img_array)
 score = tf.nn.softmax(predictions[0])
 
 print(
-    "This image most likely belongs to {} with a {:.2f} percent confidence."
+    "This image most likely is listed at ${} with a {:.2f} percent confidence."
     .format(class_names[np.argmax(score)], 100 * np.max(score))
 )
+
+

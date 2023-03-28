@@ -14,7 +14,7 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.preprocessing import image
 import pathlib
 
-data_dir = pathlib.Path("C:\\Users\\Michael Mills\\Pictures\\Final Project")
+data_dir = pathlib.Path("C:\\Users\\Michael Mills\\Pictures\\Final Project\\Tennis")
 
 # tell me how many images there are 
 image_count = len(list(data_dir.glob('*/*.jpg')))
@@ -134,13 +134,25 @@ model.summary()
 
 
 # Train the model
-epochs=2
+epochs=1
 history = model.fit(
   train_ds,
   validation_data=val_ds,
   epochs=epochs
 )
+# specify the directory path to create
+directory = "C:\\Users\\Michael Mills\\Documents\\Final Project\\Saved_Models\\"
 
+# check if directory already exists
+if not os.path.exists(directory):
+    # create directory
+    os.makedirs(directory)
+    print(f"Directory {directory} created successfully.")
+else:
+    print(f"Directory {directory} already exists.")
+# Save the entire model as a SavedModel.
+
+model.save("C:\\Users\\Michael Mills\\Documents\\Final Project\\Saved_Models\\tennis_model")
 # Visualize training results
 acc = history.history['accuracy']
 val_acc = history.history['val_accuracy']
@@ -213,7 +225,7 @@ def apply_dropoutlayer():
   ])
 
 
-checkpoint_path = "C:\\Users\\Michael Mills\\Github Repositories\\Northeastern-Masters-in-Computer-Science-4\\CS 5001\\Final Project\\Tensorflow_Test\\training_1\\cp.ckpt"
+checkpoint_path = "C:\\Users\\Michael Mills\\Github Repositories\\Northeastern-Masters-in-Computer-Science-4\\CS 5001\\Final Project\\Tennis\\Tensorflow_Test\\training_1\\cp.ckpt"
 checkpoint_dir = os.path.dirname(checkpoint_path)
 
 # Create a callback that saves the model's weights
@@ -226,7 +238,7 @@ model.compile(optimizer='adam',
               loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
               metrics=['accuracy'])
 model.summary()
-epochs = 2
+epochs = 25
 history = model.fit(
   train_ds,
   validation_data=val_ds,
@@ -274,7 +286,7 @@ plt.show()
 
 
 # Predict on new data
-Agassi_dir = "C:\\Users\Michael Mills\\Pictures\\Final Project\Agassi\\andre-agassi_0 (1).jpeg"
+Agassi_dir = "C:\\Users\Michael Mills\\Pictures\\Final Project\\Tennis\\Agassi\\andre-agassi_0 (1).jpeg"
 
 img = PIL.Image.open(Agassi_dir).resize((img_height, img_width))
 img_array = image.img_to_array(img)

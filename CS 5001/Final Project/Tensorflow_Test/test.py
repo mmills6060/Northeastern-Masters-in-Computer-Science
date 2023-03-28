@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import PIL
 import tensorflow as tf
-
+import os
 from tensorflow import keras
 from tensorflow.keras import layers
 from tensorflow.keras.models import Sequential
@@ -215,7 +215,19 @@ history = model.fit(
   epochs=epochs
 )
 
+# specify the directory path to create
+directory = "C:\\Users\\Michael Mills\\Documents\\Final Project\\Saved_Models\\"
 
+# check if directory already exists
+if not os.path.exists(directory):
+    # create directory
+    os.makedirs(directory)
+    print(f"Directory {directory} created successfully.")
+else:
+    print(f"Directory {directory} already exists.")
+# Save the entire model as a SavedModel.
+
+model.save("C:\\Users\\Michael Mills\\Documents\\Final Project\\Saved_Models\\flower_model")
 
 # Visualize training results
 acc = history.history['accuracy']
