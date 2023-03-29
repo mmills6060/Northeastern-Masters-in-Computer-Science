@@ -74,21 +74,69 @@ def train_model():
     
         # Perform the selected action
         if choice == "1":
-            epochs = input("Enter the number of epocs for this model: ")
-            image_target_size = input("Enter the image target size (ie. 180): ")
-            flowers_train_model()
+            print("\nEpochs: Press enter for default(2)")
+            epochs = input("Enter the number of epochs for this model: ")
+            if epochs == "":
+                epochs = 2
+            else:
+                epochs = int(epochs)
+            print("\nImage Target Size: Press enter for default(180)")
+            image_target_size = (input("Enter the image target size (ie. 180): "))
+            if image_target_size == "":
+                image_target_size = 180
+            else:
+                image_target_size = int(image_target_size)
+            print("\nValidation Split: Press enter for default(180)")
+            validation_split = (input("Enter the percent of the dataset you would like to use for training (and the rest for validation) (ie. .2) for this model: "))
+            if validation_split == "":
+                validation_split = 0.2
+            else:
+                validation_split = float(validation_split)
+            flowers_train_model(epochs, image_target_size, validation_split)
             print("Training completed successfully")
             main()
         elif choice == "2":
-            epochs = input("Enter the number of epocs for this model: ")
-            image_target_size = input("Enter the image target size (ie. 180): ")
-            tennis_train_model()
+            print("\nEpochs: Press enter for default(2)")
+            epochs = input("Enter the number of epochs for this model: ")
+            if epochs == "":
+                epochs = 2
+            else:
+                epochs = int(epochs)
+            print("\nImage Target Size: Press enter for default(180)")
+            image_target_size = (input("Enter the image target size (ie. 180): "))
+            if image_target_size == "":
+                image_target_size = 180
+            else:
+                image_target_size = int(image_target_size)
+            print("\nValidation Split: Press enter for default(180)")
+            validation_split = (input("Enter the percent of the dataset you would like to use for training (and the rest for validation) (ie. .2) for this model: "))
+            if validation_split == "":
+                validation_split = 0.2
+            else:
+                validation_split = float(validation_split)
+            tennis_train_model(epochs, image_target_size, validation_split)
             print("Training completed successfully")
             main()
         elif choice == "3":
-            epochs = input("Enter the number of epocs for this model: ")
-            image_target_size = input("Enter the image target size (ie. 180): ")
-            zillow_train_model()
+            print("\nEpochs: Press enter for default(2)")
+            epochs = input("Enter the number of epochs for this model: ")
+            if epochs == "":
+                epochs = 2
+            else:
+                epochs = int(epochs)
+            print("\nImage Target Size: Press enter for default(180)")
+            image_target_size = (input("Enter the image target size (ie. 180): "))
+            if image_target_size == "":
+                image_target_size = 180
+            else:
+                image_target_size = int(image_target_size)
+            print("\nValidation Split: Press enter for default(180)")
+            validation_split = (input("Enter the percent of the dataset you would like to use for training (and the rest for validation) (ie. .2) for this model: "))
+            if validation_split == "":
+                validation_split = 0.2
+            else:
+                validation_split = float(validation_split)
+            zillow_train_model(epochs, image_target_size, validation_split)
             print("Training completed successfully")
             main()
         elif choice == "4":
