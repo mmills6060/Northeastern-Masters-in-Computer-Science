@@ -40,18 +40,21 @@ def generate_inference():
         print("\nWhich topic would you like to generate an inference for?")
         print("1. Flowers")
         print("2. Tennis")
-        print("2. Zillow")
-        print("3. Back")
+        print("3. Zillow")
+        print("4. Back")
         # Get user input
         choice = input("Enter the number of your choice: ")
     
         # Perform the selected action
         if choice == "1":
-            generate_flower_inference()         
+            generate_flower_inference()
+            main()         
         elif choice == "2":
             generate_tennis_inference()
+            main()
         elif choice == "3":
             generate_zillow_inference()
+            main()
         elif choice == "4":
             main()
         
