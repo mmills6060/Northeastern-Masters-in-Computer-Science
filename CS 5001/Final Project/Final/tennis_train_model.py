@@ -10,7 +10,7 @@ from tensorflow.keras.preprocessing import image
 import pathlib
 from tensorflow.keras.models import load_model
 
-def tennis_train_model():
+def tennis_train_model(epochs, image_taget_size, validation_split):
     pass
 
 def main():

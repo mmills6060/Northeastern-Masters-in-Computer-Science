@@ -12,7 +12,7 @@ from tensorflow.keras.models import load_model
 
 def generate_tennis_inference():
     # Define the class names
-    class_names = ['Agassi', 'Federer', 'Murray', 'Nadal', 'Roddick']
+    class_names = ['Andre Agassi', 'Roger Federer', 'Andy Murray','Rafa Nadal', 'Andy Roddick']
 
     # Reload a fresh Keras model from the saved model in directory
     new_model = tf.keras.models.load_model("C:\\Users\\Michael Mills\\Documents\\Final Project\\Saved_Models\\tennis_model")
@@ -22,7 +22,7 @@ def generate_tennis_inference():
 
     # Preprocess the input image
     def preprocess_image(image_path):
-        img = image.load_img(image_path, target_size=(180, 180))
+        img = image.load_img(image_path, target_size=(360, 360))
         img_array = image.img_to_array(img)
         img_array = tf.expand_dims(img_array, 0)  # Create batch axis
         return img_array
@@ -42,7 +42,7 @@ def generate_tennis_inference():
     # Print the predicted class name and the corresponding probability
     predicted_class_index = np.argmax(prediction)
     predicted_class_name = class_names[predicted_class_index]
-    print("Predicted class:", predicted_class_name)
+    print("This tennis player is most likely:", predicted_class_name)
     print("Probability:", prediction[0][predicted_class_index])
 
 

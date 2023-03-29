@@ -42,7 +42,7 @@ def generate_flower_inference():
     # Print the predicted class name and the corresponding probability
     predicted_class_index = np.argmax(prediction)
     predicted_class_name = class_names[predicted_class_index]
-    print("Predicted class:", predicted_class_name)
+    print("This flower is most likely a:", predicted_class_name)
     print("Probability:", prediction[0][predicted_class_index])
 
 
