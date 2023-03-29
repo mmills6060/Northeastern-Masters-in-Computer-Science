@@ -13,8 +13,51 @@ from tensorflow.keras import layers
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.preprocessing import image
 import pathlib
+import pandas as pd
+
+
+# Make numpy values easier to read.
+np.set_printoptions(precision=3, suppress=True)
 
 data_dir = pathlib.Path("C:\\Users\\Michael Mills\\Pictures\\Final Project\\Zillow")
+csv_dir = pathlib.Path("C:\\Users\\Michael Mills\\Documents\\Final Project\\Datasets\\zillow.csv")
+
+zillow_train = pd.read_csv(csv_dir, names= ["listing_price", "bathrooms", "bedrooms", "living_area", "days_on_zillow", "zpid"])
+zillow_train.head()
+print(zillow_train.head())
+zillow_features = zillow_train.copy()
+
+#seperate labels and features for training
+zillow_labels = zillow_features.pop('listing_price')
+zillow_features = zillow_features.astype(int)
+
+# Pack the features into a single numpy array
+zillow_features = np.array(zillow_features)
+print(zillow_features)
+
+
+
+# Make a regression model predict the price
+zillow_model = tf.keras.Sequential([
+  layers.Dense(64),
+  layers.Dense(1)
+])
+
+zillow_model.compile(loss = tf.keras.losses.MeanSquaredError(),
+                      optimizer = tf.keras.optimizers.Adam())
+
+# train the model by passing the features and labels to model.fit
+zillow_model.fit(zillow_features, zillow_labels, epochs=100)
+
+# create a sample input to make a prediction on
+sample_input = np.array([[1, 2, 886, 0, 2121729151]])
+
+# make a prediction based on the input using the trained model
+predicted_price = zillow_model.predict(sample_input)
+
+# print the predicted price
+print("The predicted price for the given input is: $", predicted_price[0][0])
+
 
 # tell me how many images there are 
 image_count = len(list(data_dir.glob('*/*.jpg')))

@@ -5,7 +5,7 @@ import pandas as pd
 import tensorflow as tf
 
 
-max_results = 200
+max_results = 680
 num_results = 0
 results_per_page = 40
 current_page = 1
@@ -43,16 +43,16 @@ while num_results < max_results:
         # Extract the photo and listing price data for each listing
         for listing in data['results']:
             photo_url = listing['imgSrc']
-            listing_price = listing['price']
-            bathrooms = listing['bathrooms']
-            bedrooms = listing['bedrooms']
-            living_area = listing.get('livingArea', None)
-            days_on_zillow = listing.get('daysOnZillow', None)
-            zpid = listing.get('zpid', None)
+            listing_price = int(round(float(listing['price'])))
+            bathrooms = int(round(float(listing['bathrooms'])))
+            bedrooms = int(round(float(listing['bedrooms'])))
+            living_area = int(round(float(listing.get('livingArea', -1)))) # Use -1 as default value if livingArea is missing or non-numeric
+            days_on_zillow = int(round(float(listing.get('daysOnZillow', -1)))) # Use -1 as default value if daysOnZillow is missing or non-numeric
+            zpid = int(round(float(listing.get('zpid', -1)))) # Use -1 as default value if zpid is missing or non-numeric
             photo_urls.append(listing['imgSrc'])
-            listing_prices.append(listing['price'])
-            living_areas.append(listing.get('livingArea', None))
-            zpids.append(listing.get('zpid', None))
+            listing_prices.append(int(round(float(listing['price']))))
+            living_areas.append(int(round(float(listing.get('livingArea', -1)))))
+            zpids.append(int(round(float(listing.get('zpid', -1)))))
           #  bathrooms.append(str(listing['bathrooms']))
          #   bedrooms.append(str(listing['bedrooms']))
          #   days_on_zillow.append(str(listing.get('daysOnZillow', None)))
@@ -107,7 +107,6 @@ print(f"Processed a total of {num_results} listings.")
 
 # create a dataframe from the lists
 df = pd.DataFrame({
-    'photo_url': photo_urls,
     'listing_price': listing_prices,
     'bathrooms': bathrooms,
     'bedrooms': bedrooms,
@@ -120,4 +119,12 @@ df = pd.DataFrame({
 print("The first 5 rows of the dataframe looks like the following:")
 print(df.head())
 
+# define the file path and name
+file_path = "C:\\Users\\Michael Mills\\Documents\\Final Project\\Datasets\\zillow.csv"
+
+# save the DataFrame to a CSV file
+df.to_csv(file_path, index=False, header=False)
+
+# print a confirmation message
+print("Dataframe saved to zillow.csv")
 
