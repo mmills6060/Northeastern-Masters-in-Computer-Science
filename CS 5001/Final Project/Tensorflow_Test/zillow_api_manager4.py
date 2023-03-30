@@ -112,9 +112,18 @@ df = pd.DataFrame({
     'bedrooms': bedrooms,
     'living_area': living_areas,
     'days_on_zillow': days_on_zillow,
-    'zpid': zpids
 })
 
+# create a second dataframe from the lists
+df2 = pd.DataFrame({
+    'imgSrc': photo_url,
+    'listing_price': listing_prices,
+    'bathrooms': bathrooms,
+    'bedrooms': bedrooms,
+    'living_area': living_areas,
+    'days_on_zillow': days_on_zillow,
+    'zpid': zpids
+})
 # show the first 5 rows of the dataframe
 print("The first 5 rows of the dataframe looks like the following:")
 print(df.head())
@@ -125,6 +134,11 @@ file_path = "C:\\Users\\Michael Mills\\Documents\\Final Project\\Datasets\\zillo
 # save the DataFrame to a CSV file
 df.to_csv(file_path, index=False, header=False)
 
+# define the file path and name
+file_path2 = "C:\\Users\\Michael Mills\\Documents\\Final Project\\Datasets\\zillow.csv"
+
+# save the DataFrame to a CSV file
+df2.to_csv(file_path, index=False, header=False)
 # print a confirmation message
 print("Dataframe saved to zillow.csv")
 

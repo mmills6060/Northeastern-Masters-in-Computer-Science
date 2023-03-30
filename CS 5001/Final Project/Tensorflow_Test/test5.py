@@ -22,7 +22,7 @@ np.set_printoptions(precision=3, suppress=True)
 data_dir = pathlib.Path("C:\\Users\\Michael Mills\\Pictures\\Final Project\\Zillow")
 csv_dir = pathlib.Path("C:\\Users\\Michael Mills\\Documents\\Final Project\\Datasets\\zillow.csv")
 
-zillow_train = pd.read_csv(csv_dir, names= ["listing_price", "bathrooms", "bedrooms", "living_area", "days_on_zillow", "zpid"])
+zillow_train = pd.read_csv(csv_dir, names= ["listing_price", "bathrooms", "bedrooms", "living_area", "days_on_zillow"])
 zillow_train.head()
 print(zillow_train.head())
 zillow_features = zillow_train.copy()
@@ -50,7 +50,7 @@ zillow_model.compile(loss = tf.keras.losses.MeanSquaredError(),
 zillow_model.fit(zillow_features, zillow_labels, epochs=100)
 
 # create a sample input to make a prediction on
-sample_input = np.array([[1, 2, 886, 0, 2121729151]])
+sample_input = np.array([[1, 2, 886, 0]])
 
 # make a prediction based on the input using the trained model
 predicted_price = zillow_model.predict(sample_input)
