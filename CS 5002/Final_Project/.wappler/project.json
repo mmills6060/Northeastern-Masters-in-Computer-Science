@@ -35,8 +35,7 @@
       "name": "Development",
       "remoteURL": "http://localhost:3000/",
       "access": "local",
-      "targetType": "heroku",
-      "herokuProjectID": "cs-5002-final-project"
+      "targetType": "wappler"
     },
     {
       "targetType": "heroku",
@@ -46,6 +45,7 @@
       "remoteURL": "https://cs-5002-final-project.herokuapp.com/"
     }
   ],
-  "activeTarget": "Development",
-  "projectType": "web"
+  "activeTarget": "Production",
+  "projectType": "web",
+  "extensions": []
 }
