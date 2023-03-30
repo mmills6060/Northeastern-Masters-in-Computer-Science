@@ -1,0 +1,9 @@
+{
+  "routes": [
+    {
+      "path": "/",
+      "page": "index",
+      "routeType": "page"
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "projectName": "CS_5002_Final_Project",
+  "styleFile": "/css/style.css",
+  "assetsFolder": "/assets",
+  "designFramework": "bootstrap4",
+  "frameworks": [
+    {
+      "name": "jquery_slim_33",
+      "type": "cdn"
+    },
+    {
+      "name": "fontawesome_4",
+      "type": "cdn"
+    },
+    {
+      "name": "bootstrap4",
+      "type": "local"
+    },
+    {
+      "name": "appConnect",
+      "type": "local"
+    }
+  ],
+  "hostingType": "heroku",
+  "projectServerModel": "node",
+  "runtime": "capacitor",
+  "herokuProjectID": "cs-5002-final-project",
+  "webRootFolder": "/public",
+  "useRouting": true,
+  "addBase": true,
+  "routingHandler": "node",
+  "projectLinksType": "site",
+  "targets": [
+    {
+      "name": "Development",
+      "remoteURL": "http://localhost:3000/",
+      "access": "local",
+      "targetType": "heroku",
+      "herokuProjectID": "cs-5002-final-project"
+    },
+    {
+      "targetType": "heroku",
+      "name": "Production",
+      "usage": "production",
+      "herokuProjectID": "cs-5002-final-project",
+      "remoteURL": "https://cs-5002-final-project.herokuapp.com/"
+    }
+  ],
+  "activeTarget": "Development",
+  "projectType": "web"
+}

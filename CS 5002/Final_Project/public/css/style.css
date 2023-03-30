@@ -1,0 +1,36 @@
+/* CSS Document */
+.container-fluid {
+	max-width: 1400px;
+}
+#page-header {
+	margin-bottom: 30px;
+}
+#page-header h2 {
+    font-size: 22px;
+    letter-spacing: 2px;
+    padding: 15px 0 30px;
+    margin: 0;
+    font-weight: 400;
+    color: #444;
+}
+#page-header h3 {
+	position: absolute;
+	bottom: 20px;
+	color: #fff;
+	right: 30px;
+	font-weight: 400;
+	
+}
+section {
+	padding: 30px 0 50px;
+}
+h4.section-title {
+	color: #444;
+	font-weight: 400;
+	font-size: 22px;
+	margin-bottom: 20px;
+}
+#page-footer {
+    padding: 15px 0 10px;
+    font-size: 12px;
+}
