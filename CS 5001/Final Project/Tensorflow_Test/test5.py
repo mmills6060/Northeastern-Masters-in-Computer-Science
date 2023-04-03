@@ -102,16 +102,7 @@ class_names = train_ds.class_names
 print(class_names)
 
 
-# here are the first nine images from the training dataset
-import matplotlib.pyplot as plt
 
-plt.figure(figsize=(10, 10))
-for images, labels in train_ds.take(1):
-  for i in range(9):
-    ax = plt.subplot(3, 3, i + 1)
-    plt.imshow(images[i].numpy().astype("uint8"))
-    plt.title(class_names[labels[i]])
-    plt.axis("off")
 
 # manually iterate over the dataset and retrieve batches of images
 for image_batch, labels_batch in train_ds:
@@ -184,28 +175,7 @@ history = model.fit(
   epochs=epochs
 )
 
-# Visualize training results
-acc = history.history['accuracy']
-val_acc = history.history['val_accuracy']
 
-loss = history.history['loss']
-val_loss = history.history['val_loss']
-
-epochs_range = range(epochs)
-
-plt.figure(figsize=(8, 8))
-plt.subplot(1, 2, 1)
-plt.plot(epochs_range, acc, label='Training Accuracy')
-plt.plot(epochs_range, val_acc, label='Validation Accuracy')
-plt.legend(loc='lower right')
-plt.title('Training and Validation Accuracy')
-
-plt.subplot(1, 2, 2)
-plt.plot(epochs_range, loss, label='Training Loss')
-plt.plot(epochs_range, val_loss, label='Validation Loss')
-plt.legend(loc='upper right')
-plt.title('Training and Validation Loss')
-plt.show()
 
 
 # Data Augmentation
@@ -224,14 +194,7 @@ data_augmentation = keras.Sequential(
   ]
 )
 
-# Visualize a few augmented examples by applying data augmentation to the same image several times
-plt.figure(figsize=(10, 10))
-for images, _ in train_ds.take(1):
-  for i in range(9):
-    augmented_images = data_augmentation(images)
-    ax = plt.subplot(3, 3, i + 1)
-    plt.imshow(augmented_images[0].numpy().astype("uint8"))
-    plt.axis("off")
+
 
 
 # Another technique to reduce overfitting is to introduce dropout regularization to the network.
@@ -269,7 +232,7 @@ model.compile(optimizer='adam',
               loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
               metrics=['accuracy'])
 model.summary()
-epochs = 2
+epochs = 500
 history = model.fit(
   train_ds,
   validation_data=val_ds,
