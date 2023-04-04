@@ -184,7 +184,70 @@ def main():
             bath_input += 1
         bed_input += 1
     sort = "priorityScore"
-    doz = 1
+    doz = 7
+    bed_input = 0
+    while bed_input <= 5:
+        bath_input = 1
+        while bath_input <= 5:
+            try:
+                df, df2 = get_Xb_Xb_sort_X_doz_X(max_results, no_results, num_results, results_per_page, current_page, photo_urls, listing_prices, bathrooms, bedrooms, living_areas, days_on_zillow, zpids, total_results, bed_input, bath_input, sort, doz)
+            except Exception as e:
+                print("No results found for this search")
+                break
+            bath_input += 1
+        bed_input += 1
+    sort = "priorityScore"
+    doz = 14
+    bed_input = 0
+    while bed_input <= 5:
+        bath_input = 1
+        while bath_input <= 5:
+            try:
+                df, df2 = get_Xb_Xb_sort_X_doz_X(max_results, no_results, num_results, results_per_page, current_page, photo_urls, listing_prices, bathrooms, bedrooms, living_areas, days_on_zillow, zpids, total_results, bed_input, bath_input, sort, doz)
+            except Exception as e:
+                print("No results found for this search")
+                break
+            bath_input += 1
+        bed_input += 1
+    sort = "priorityScore"
+    doz = 30
+    bed_input = 0
+    while bed_input <= 5:
+        bath_input = 1
+        while bath_input <= 5:
+            try:
+                df, df2 = get_Xb_Xb_sort_X_doz_X(max_results, no_results, num_results, results_per_page, current_page, photo_urls, listing_prices, bathrooms, bedrooms, living_areas, days_on_zillow, zpids, total_results, bed_input, bath_input, sort, doz)
+            except Exception as e:
+                print("No results found for this search")
+                break
+            bath_input += 1
+        bed_input += 1
+    sort = "priorityScore"
+    doz = 90
+    bed_input = 0
+    while bed_input <= 5:
+        bath_input = 1
+        while bath_input <= 5:
+            try:
+                df, df2 = get_Xb_Xb_sort_X_doz_X(max_results, no_results, num_results, results_per_page, current_page, photo_urls, listing_prices, bathrooms, bedrooms, living_areas, days_on_zillow, zpids, total_results, bed_input, bath_input, sort, doz)
+            except Exception as e:
+                print("No results found for this search")
+                break
+            bath_input += 1
+        bed_input += 1
+    sort = "priorityScore"
+    doz = "6m"
+    bed_input = 0
+    while bed_input <= 5:
+        bath_input = 1
+        while bath_input <= 5:
+            try:
+                df, df2 = get_Xb_Xb_sort_X_doz_X(max_results, no_results, num_results, results_per_page, current_page, photo_urls, listing_prices, bathrooms, bedrooms, living_areas, days_on_zillow, zpids, total_results, bed_input, bath_input, sort, doz)
+            except Exception as e:
+                print("No results found for this search")
+                break
+            bath_input += 1
+        bed_input += 1
 
 if __name__ == "__main__":
     main()
