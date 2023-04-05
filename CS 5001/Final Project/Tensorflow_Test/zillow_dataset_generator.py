@@ -112,7 +112,7 @@ def get_Xb_Xb_sort_X_doz_X(max_results, no_results, num_results, results_per_pag
                             with open(directory + '/' + filename, 'wb') as f:
                                 f.write(r.content)
                             
-                            print(f"Processed listing #{num_results}: Price: ${listing_price} Bedrooms: {bedrooms} Bathrooms: {bathrooms} Square Feet: {living_area} Days on Zillow: {days_on_zillow} ZPID: {zpid} ")
+                            print(f"Processed listing #{num_results}: Price: ${listing_price} Bedrooms: {bedrooms} Bathrooms: {bathrooms} Square Feet: {living_area} Days on Zillow: {doz} ZPID: {zpid} ")
                     except Exception as e:
                         print(f"Error downloading photo for listing #{num_results}: {str(e)}")
                         
@@ -153,7 +153,7 @@ def get_Xb_Xb_sort_X_doz_X(max_results, no_results, num_results, results_per_pag
 
         return df, df2
 pass
-def save_dataframe_to_csv(df, df2, zpids, listing_prices, bathrooms, bedrooms, living_areas, days_on_zillow, photo_urls):
+def save_dataframe_to_csv(df, df2):
     print("writing dataframe to csv file")
     # define the file path and name
     file_path = "C:\\Users\\Michael Mills\\Documents\\Final Project\\Datasets\\zillow.csv"
@@ -248,7 +248,46 @@ def main():
                 break
             bath_input += 1
         bed_input += 1
-
+    sort = "priorityScore"
+    doz = "12m"
+    bed_input = 0
+    while bed_input <= 5:
+        bath_input = 1
+        while bath_input <= 5:
+            try:
+                df, df2 = get_Xb_Xb_sort_X_doz_X(max_results, no_results, num_results, results_per_page, current_page, photo_urls, listing_prices, bathrooms, bedrooms, living_areas, days_on_zillow, zpids, total_results, bed_input, bath_input, sort, doz)
+            except Exception as e:
+                print("No results found for this search")
+                break
+            bath_input += 1
+        bed_input += 1
+    sort = "priorityScore"
+    doz = "24m"
+    bed_input = 0
+    while bed_input <= 5:
+        bath_input = 1
+        while bath_input <= 5:
+            try:
+                df, df2 = get_Xb_Xb_sort_X_doz_X(max_results, no_results, num_results, results_per_page, current_page, photo_urls, listing_prices, bathrooms, bedrooms, living_areas, days_on_zillow, zpids, total_results, bed_input, bath_input, sort, doz)
+            except Exception as e:
+                print("No results found for this search")
+                break
+            bath_input += 1
+        bed_input += 1
+    sort = "priorityScore"
+    doz = "36m"
+    bed_input = 0
+    while bed_input <= 5:
+        bath_input = 1
+        while bath_input <= 5:
+            try:
+                df, df2 = get_Xb_Xb_sort_X_doz_X(max_results, no_results, num_results, results_per_page, current_page, photo_urls, listing_prices, bathrooms, bedrooms, living_areas, days_on_zillow, zpids, total_results, bed_input, bath_input, sort, doz)
+            except Exception as e:
+                print("No results found for this search")
+                break
+            bath_input += 1
+        bed_input += 1
+    save_dataframe_to_csv(df, df2)
 if __name__ == "__main__":
     main()
 

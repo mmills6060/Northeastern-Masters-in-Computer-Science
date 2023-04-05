@@ -22,7 +22,7 @@ def generate_zillow_inference():
 
     # Preprocess the input image
     def preprocess_image(image_path):
-        img = image.load_img(image_path, target_size=(180, 180))
+        img = image.load_img(image_path, target_size=(360, 360))
         img_array = image.img_to_array(img)
         img_array = tf.expand_dims(img_array, 0)  # Create batch axis
         return img_array
