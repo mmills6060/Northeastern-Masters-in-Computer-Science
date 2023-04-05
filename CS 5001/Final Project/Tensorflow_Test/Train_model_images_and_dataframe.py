@@ -74,3 +74,8 @@ model.compile(loss='mse', optimizer='adam')
 # Train the model using both the photo arrays and data features
 model.fit([photo_arrays, data_features], data_labels, epochs=10)
 
+# Save the entire model as a SavedModel.
+
+model.save("C:\\Users\\Michael Mills\\Documents\\Final Project\\Saved_Models\\zillow_model_photo_and_data")
+
+print ("Model saved")
