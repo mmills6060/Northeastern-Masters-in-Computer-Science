@@ -12,9 +12,10 @@ import pandas as pd
 from PIL import Image
 from io import BytesIO
 import requests
+import time
 
 # Load CSV file into a Pandas DataFrame
-data = pd.read_csv("C:\\Users\\Michael Mills\\Documents\\Final Project\\Datasets\\zillow - mini.csv", names=["photo_url", "price", "beds", "baths", "sqft", "doz", "zpid"])
+data = pd.read_csv("C:\\Users\\Michael Mills\\Documents\\Final Project\\Datasets\\zillow.csv", names=["photo_url", "price", "beds", "baths", "sqft", "doz", "zpid"])
 
 # Create an empty list to store arrays of photo arrays
 photo_arrays = []
@@ -22,18 +23,31 @@ photo_arrays = []
 # Set batch size for loading images
 batch_size = 100
 
+# Calculate number of batches
+num_batches = len(data) // batch_size
+if len(data) % batch_size != 0:
+    num_batches += 1
+
 # Loop through each batch of rows in the DataFrame, extract the photo_url, load the image from the URL, convert it to a NumPy array, and append it to the list
-for i in range(0, len(data), batch_size):
+for i in range(0, num_batches * batch_size, batch_size):
     batch = data[i:i+batch_size]
     batch_arrays = []
     for index, row in batch.iterrows():
-        response = requests.get(row['photo_url'])
+        try:
+            response = requests.get(row['photo_url'])
+        except:
+            print("Connection refused by the server..")
+            print("Let me sleep for 5 seconds")
+            print("ZZzzzz...")
+            time.sleep(5)
+            print("Was a nice sleep, now let me continue...")
+            continue
         img = Image.open(BytesIO(response.content))
-        photo_array = img.resize((360, 360))
+        photo_array = img.resize((224, 224))
         photo_array = np.array(img)
         batch_arrays.append(photo_array)
+        print ("Added image", index, "of", len(data), "to the dataset")
     photo_arrays.append(np.array(batch_arrays))
-    print ("Loaded batch", i, "of", len(data))
     
 # Concatenate the list of arrays into a single NumPy array
 photo_arrays = np.concatenate(photo_arrays, axis=0)
