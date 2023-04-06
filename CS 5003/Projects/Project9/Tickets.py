@@ -5,7 +5,7 @@
 
 import random
 
-def simulate_ticket_line():
+def ticket_line():
     queue = []
     num_entered = 0
     for i in range(100):
@@ -21,7 +21,7 @@ def simulate_ticket_line():
 
 def main():
     
-    simulate_ticket_line()
+    ticket_line()
 
 if __name__ == "__main__":
     main()

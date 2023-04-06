@@ -82,6 +82,13 @@ def get_Xb_Xb_sort_X_doz_X(num_page_results, listings_per_page, max_results, no_
                     living_area = int(round(float(listing.get('livingArea', -1)))) # Use -1 as default value if livingArea is missing or non-numeric
                     days_on_zillow = int(round(float(listing.get('daysOnZillow', -1)))) # Use -1 as default value if daysOnZillow is missing or non-numeric
                     zpid = int(round(float(listing.get('zpid', -1)))) # Use -1 as default value if zpid is missing or non-numeric
+                    try:
+                        r = requests.get(photo_url, allow_redirects=True)
+                        if r.headers['Content-Type'] != 'image/jpeg':
+                            raise Exception('Not a JPEG file')
+                    except Exception as e:
+                        print(f"Error processing listing #{num_results}: {str(e)}")
+                        continue
                     photo_urls.append(listing['imgSrc'])
                     listing_prices.append(int(round(float(listing['price']))))
                     living_areas.append(int(round(float(listing.get('livingArea', -1)))))
@@ -89,6 +96,7 @@ def get_Xb_Xb_sort_X_doz_X(num_page_results, listings_per_page, max_results, no_
                     bathrooms_list.append(int(round(float(listing['bathrooms']))))
                     bedrooms_list.append(int(round(float(listing['bedrooms']))))
                     days_on_zillow_list.append(int(round(float(listing.get('daysOnZillow', -1)))))
+
                 #  bathrooms.append(str(listing['bathrooms']))
                 #   bedrooms.append(str(listing['bedrooms']))
                 #   days_on_zillow.append(str(listing.get('daysOnZillow', None)))
@@ -129,6 +137,8 @@ def get_Xb_Xb_sort_X_doz_X(num_page_results, listings_per_page, max_results, no_
                         print(f"Error downloading photo for listing #{num_results}: {str(e)}")
                         
                         continue
+
+
 
         else:
             print(f"Error: {response.status_code}")
