@@ -17,6 +17,8 @@ def define_variables_and_lists():
     sort = "priorityScore"
     doz = 1
     no_results = False
+    listings_per_page = 40
+    num_page_results = 0
     
     # create empty lists to store values
     photo_urls = []
@@ -29,18 +31,18 @@ def define_variables_and_lists():
     bathrooms = []
     bedrooms = []
     days_on_zillow_list = []
-    return max_results, no_results, num_results, total_results, results_per_page, days_on_zillow_list, current_page, photo_urls, listing_prices, bathrooms, bedrooms, living_areas, days_on_zillow, zpids, bed_input, bath_input, sort, doz, bathrooms_list, bedrooms_list
+    return num_page_results, listings_per_page, max_results, no_results, num_results, total_results, results_per_page, days_on_zillow_list, current_page, photo_urls, listing_prices, bathrooms, bedrooms, living_areas, days_on_zillow, zpids, bed_input, bath_input, sort, doz, bathrooms_list, bedrooms_list
 
 
 
 
-def get_Xb_Xb_sort_X_doz_X(max_results, no_results, num_results, results_per_page, days_on_zillow_list , current_page, photo_urls, listing_prices, bathrooms, bedrooms, living_areas, days_on_zillow, zpids, total_results, bed_input, bath_input, sort, doz, bathrooms_list, bedrooms_list):
+def get_Xb_Xb_sort_X_doz_X(num_page_results, listings_per_page, max_results, no_results, num_results, results_per_page, days_on_zillow_list , current_page, photo_urls, listing_prices, bathrooms, bedrooms, living_areas, days_on_zillow, zpids, total_results, bed_input, bath_input, sort, doz, bathrooms_list, bedrooms_list):
     print("Obtaining all listings that contain " + str(bed_input) + " bedroom and " + str(bath_input) + " bathroom, sorted by " + str(sort) + " and doz = " + str(doz) + "")
     num_results = 0
     # Set up the Zillow API endpoint and parameters
     url = "https://zillow56.p.rapidapi.com/search"
     query_params = {"location": "New York, NY",
-                    "status": "forRent", "sort": sort, "beds_min": bed_input, "baths_min" : bath_input,"beds_max": bed_input, "baths_max": bath_input, "doz": doz}
+                    "status": "forRent", "sort": sort, "beds_min": bed_input, "baths_min" : bath_input,"beds_max": bed_input, "baths_max": bath_input, "doz": doz, "page": current_page, "results_per_page": listings_per_page}
 
     headers = {
         "X-RapidAPI-Key": "62ab95a2e3msh3c57160cf27f53cp1c3f9ejsndaa8e5d8ea5f",
@@ -53,7 +55,7 @@ def get_Xb_Xb_sort_X_doz_X(max_results, no_results, num_results, results_per_pag
         if total_result_count == 0:
             no_results = True  
     except:
-        print("No results found for " + str(bed_input) + " bedroom and " + str(bath_input) + " bathroom, sorted by " + str(sort) + " and doz = " + str(doz) + "")
+        print("No results found for " + str(bed_input) + " bedroom and " + str(bath_input) + " bathroom, sorted by " + str(sort) + " and doz = " + str(doz) + "Page = " + str(current_page))
         no_results = True
     while num_results < total_result_count and no_results == False:
         response = requests.get(url, headers=headers, params=query_params)
@@ -69,6 +71,10 @@ def get_Xb_Xb_sort_X_doz_X(max_results, no_results, num_results, results_per_pag
                 # Extract the photo and listing price data for each listing
                 for listing in data['results']:
                     num_results += 1
+                    num_page_results += 1
+                    if num_page_results == listings_per_page:
+                        current_page += 1
+                        num_page_results = 0
                     photo_url = listing['imgSrc']
                     listing_price = int(round(float(listing['price'])))
                     bathrooms = int(round(float(listing['bathrooms'])))
@@ -118,7 +124,7 @@ def get_Xb_Xb_sort_X_doz_X(max_results, no_results, num_results, results_per_pag
                             with open(directory + '/' + filename, 'wb') as f:
                                 f.write(r.content)
                             
-                            print(f"Processed listing #{num_results}: Price: ${listing_price} Bedrooms: {bedrooms} Bathrooms: {bathrooms} Square Feet: {living_area} Days on Zillow: {days_on_zillow} ZPID: {zpid} ")
+                            print(f"Processed listing #{num_results}: Price: ${listing_price} Bedrooms: {bedrooms} Bathrooms: {bathrooms} Square Feet: {living_area} Days on Zillow: {days_on_zillow} ZPID: {zpid} Page: {current_page}")
                     except Exception as e:
                         print(f"Error downloading photo for listing #{num_results}: {str(e)}")
                         
@@ -177,61 +183,8 @@ def save_dataframe_to_csv(df, df2):
 
 def main():
 
-    max_results, no_results, num_results, total_results, results_per_page, days_on_zillow_list, current_page, photo_urls, listing_prices, bathrooms, bedrooms, living_areas, days_on_zillow, zpids, bed_input, bath_input, sort, doz, bathrooms_list, bedrooms_list = define_variables_and_lists()
+    num_page_results, listings_per_page, max_results, no_results, num_results, total_results, results_per_page, days_on_zillow_list, current_page, photo_urls, listing_prices, bathrooms, bedrooms, living_areas, days_on_zillow, zpids, bed_input, bath_input, sort, doz, bathrooms_list, bedrooms_list = define_variables_and_lists()
     #zillow api is limited to 800 results per search even with using pagination techniques. 
-
-    sort = "priorityScore"
-    doz = 90
-    bed_input = 0
-    while bed_input <= 5:
-        bath_input = 1
-        while bath_input <= 5:
-            try:
-                df, df2 = get_Xb_Xb_sort_X_doz_X(max_results, no_results, num_results, results_per_page, days_on_zillow_list, current_page, photo_urls, listing_prices, bathrooms, bedrooms, living_areas, days_on_zillow, zpids, total_results, bed_input, bath_input, sort, doz, bathrooms_list, bedrooms_list)
-            except Exception as e:
-                print("No results found for this search")
-                break
-            bath_input += 1
-        bed_input += 1
-    sort = "priorityScore"
-    doz = "6m"
-    bed_input = 0
-    while bed_input <= 5:
-        bath_input = 1
-        while bath_input <= 5:
-            try:
-                df, df2 = get_Xb_Xb_sort_X_doz_X(max_results, no_results, num_results, results_per_page, days_on_zillow_list, current_page, photo_urls, listing_prices, bathrooms, bedrooms, living_areas, days_on_zillow, zpids, total_results, bed_input, bath_input, sort, doz, bathrooms_list, bedrooms_list)
-            except Exception as e:
-                print("No results found for this search")
-                break
-            bath_input += 1
-        bed_input += 1
-    sort = "priorityScore"
-    doz = "12m"
-    bed_input = 0
-    while bed_input <= 5:
-        bath_input = 1
-        while bath_input <= 5:
-            try:
-                df, df2 = get_Xb_Xb_sort_X_doz_X(max_results, no_results, num_results, results_per_page, days_on_zillow_list, current_page, photo_urls, listing_prices, bathrooms, bedrooms, living_areas, days_on_zillow, zpids, total_results, bed_input, bath_input, sort, doz, bathrooms_list, bedrooms_list)
-            except Exception as e:
-                print("No results found for this search")
-                break
-            bath_input += 1
-        bed_input += 1
-    sort = "priorityScore"
-    doz = "24m"
-    bed_input = 0
-    while bed_input <= 5:
-        bath_input = 1
-        while bath_input <= 5:
-            try:
-                df, df2 = get_Xb_Xb_sort_X_doz_X(max_results, no_results, num_results, results_per_page, days_on_zillow_list, current_page, photo_urls, listing_prices, bathrooms, bedrooms, living_areas, days_on_zillow, zpids, total_results, bed_input, bath_input, sort, doz, bathrooms_list, bedrooms_list)
-            except Exception as e:
-                print("No results found for this search")
-                break
-            bath_input += 1
-        bed_input += 1
     sort = "priorityScore"
     doz = "36m"
     bed_input = 0
@@ -239,7 +192,7 @@ def main():
         bath_input = 1
         while bath_input <= 5:
             try:
-                df, df2 = get_Xb_Xb_sort_X_doz_X(max_results, no_results, num_results, results_per_page,days_on_zillow_list,  current_page, photo_urls, listing_prices, bathrooms, bedrooms, living_areas, days_on_zillow, zpids, total_results, bed_input, bath_input, sort, doz, bathrooms_list, bedrooms_list)
+                df, df2 = get_Xb_Xb_sort_X_doz_X(num_page_results, listings_per_page, max_results, no_results, num_results, results_per_page,days_on_zillow_list,  current_page, photo_urls, listing_prices, bathrooms, bedrooms, living_areas, days_on_zillow, zpids, total_results, bed_input, bath_input, sort, doz, bathrooms_list, bedrooms_list)
             except Exception as e:
                 print("No results found for this search")
                 break
