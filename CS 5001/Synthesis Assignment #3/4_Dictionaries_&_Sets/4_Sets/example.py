@@ -2,7 +2,7 @@
 # April 7. 2023
 # CS 5001
 
-# An example of recursion
+# This is an example of recursion
 
 sales_list = [100, 150, 200, 175, 225, 250, 300]
 
