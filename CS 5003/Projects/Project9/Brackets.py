@@ -3,30 +3,32 @@
 # 4/4/2023
 # Implemented by Michael Mills
 
+from Stack import Stack
+
 def check_brackets(s):
-    stack = []
-    open_brackets = set(['(', '{', '[', '<'])
-    close_brackets = set([')', '}', ']', '>'])
-    bracket_map = {'(': ')', '{': '}', '[': ']', '<': '>'}
 
-    for char in s:
-        if char in open_brackets:
-            stack.append(char)
-        elif char in close_brackets:
-            if len(stack) == 0:
+    bracket_stack = Stack(len(s))
+    for bracket in s:
+        if bracket in "([{<":
+            bracket_stack.push(bracket)
+        elif bracket in ")]}>":
+            popped_bracket = bracket_stack.pop()
+            if not popped_bracket:
                 return False
+            elif (bracket == ")" and popped_bracket == "(") or \
+                (bracket == "]" and popped_bracket == "[") or \
+                (bracket == "}" and popped_bracket == "{") or \
+                (bracket == ">" and popped_bracket == "<"):
+                continue
             else:
-                last_open_bracket = stack.pop()
-                if bracket_map[last_open_bracket] != char:
-                    return False
-
-    return len(stack) == 0
+                return False
+    return bracket_stack.end == 0
 
 def main():
     s = input("Enter a string: ")
     if check_brackets(s):
         print("The string contains a valid set of brackets.")
-    else:
+    else:     
         print("The string does not contain a valid set of brackets.")
 
 if __name__ == "__main__":
