@@ -2,15 +2,19 @@
 # April 7. 2023
 # CS 5001
 
-# An example of recursion
+# An example of an associative array
 
-sales_list = [100, 150, 200, 175, 225, 250, 300]
+# Create an associative array of student names and their grades
+grades = {
+    "John": 85,
+    "Bob": 92,
+    "David": 78,
+    "Bruce": 89
+}
 
-def calculate_sales(sales_list):
-    if len(sales_list) == 0:
-        return 0
-    else:
-        return sales_list[0] + calculate_sales(sales_list[1:])
-    
-total_sales = calculate_sales(sales_list)
-print(total_sales)
+# Retrieve the grade of "Charlie" from the array
+charlie_grade = grades["Charlie"]
+print(charlie_grade) 
+
+# Output: 78
+

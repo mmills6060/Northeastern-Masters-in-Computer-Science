@@ -2,15 +2,16 @@
 # April 7. 2023
 # CS 5001
 
-# An example of recursion
+# example of iterating over a dictionary
+# create a dictionary of tennis players and their rankings
+rankings = {
+    "Roger Federer": 1,
+    "Rafael Nadal": 2,
+    "Novak Djokovic": 3,
+    "Dominic Thiem": 4
+}
 
-sales_list = [100, 150, 200, 175, 225, 250, 300]
-
-def calculate_sales(sales_list):
-    if len(sales_list) == 0:
-        return 0
-    else:
-        return sales_list[0] + calculate_sales(sales_list[1:])
+# iterate over the dictionary
+for player in rankings:
+    print(player, "is ranked", rankings[player])
     
-total_sales = calculate_sales(sales_list)
-print(total_sales)
