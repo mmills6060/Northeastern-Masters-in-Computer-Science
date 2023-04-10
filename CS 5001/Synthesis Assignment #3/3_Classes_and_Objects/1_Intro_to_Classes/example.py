@@ -2,15 +2,11 @@
 # April 7. 2023
 # CS 5001
 
-# An example of recursion
+# An example of a class with objects
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
 
-sales_list = [100, 150, 200, 175, 225, 250, 300]
-
-def calculate_sales(sales_list):
-    if len(sales_list) == 0:
-        return 0
-    else:
-        return sales_list[0] + calculate_sales(sales_list[1:])
-    
-total_sales = calculate_sales(sales_list)
-print(total_sales)
+    def say_hi(self):
+        print("Hello, my name is", self.name)
