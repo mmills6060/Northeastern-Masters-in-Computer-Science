@@ -153,7 +153,9 @@ module.exports = {
             const results = await db.fromJSON(sql, meta);
 
             if (results.length) {
-                await _processSubQueries.call(this, db, results, sql.sub, meta);
+                if (sql.sub) {
+                    await _processSubQueries.call(this, db, results, sql.sub, meta);
+                }
 
                 if (sql.joins && sql.joins.length) {
                     for (const join of sql.joins) {
@@ -378,7 +380,9 @@ module.exports = {
 
             if (!result) return null;
 
-            await _processSubQueries.call(this, db, [result], sql.sub, meta);
+            if (sql.sub) {
+                await _processSubQueries.call(this, db, [result], sql.sub, meta);
+            }
 
             if (sql.joins && sql.joins.length) {
                 for (const join of sql.joins) {
@@ -563,7 +567,9 @@ module.exports = {
             const results = await db.fromJSON(sql, meta);
             
             if (results.length) {
-                await _processSubQueries.call(this, db, results, sql.sub, meta);
+                if (sql.sub) {
+                    await _processSubQueries.call(this, db, results, sql.sub, meta);
+                }
 
                 if (sql.joins && sql.joins.length) {
                     for (const join of sql.joins) {
@@ -696,7 +702,7 @@ function prepareColumns(sql) {
         }
     }
 
-    if (sql.primary) {
+    if (sql.sub && sql.primary) {
         sql.columns.push({
             table: table,
             column: sql.primary,
@@ -728,7 +734,7 @@ function prepareColumns(sql) {
 
     if (sql.joins && sql.joins.length) {
         for (const join of sql.joins) {
-            if (join.primary) {
+            if (join.sub && join.primary) {
                 sql.columns.push({
                     table: join.alias || join.table,
                     column: join.primary,

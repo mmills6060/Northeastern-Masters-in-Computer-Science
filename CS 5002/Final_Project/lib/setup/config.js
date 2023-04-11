@@ -67,6 +67,16 @@ Parser.parseValue(config, new Scope({
     $_ENV: process.env
 }));
 
+// we change the cors config a bit, * will become true
+// and we split string on comma for multiple origins
+if (typeof config.cors?.origin == 'string') {
+    if (config.cors.origin === '*') {
+        config.cors.origin = true;
+    } else if (config.cors.origin.includes(',')) {
+        config.cors.origin = config.cors.origin.split(/\s*,\s*/);
+    }
+}
+
 if (config.debug) {
     require('debug').enable(typeof config.debug == 'string' ? config.debug : 'server-connect:*');
 }

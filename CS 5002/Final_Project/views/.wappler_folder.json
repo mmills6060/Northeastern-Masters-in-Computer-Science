@@ -2,5 +2,21 @@
   "Chapter_1.ejs": {
     "layoutPage": "",
     "description": "This is the first chapter in the story"
+  },
+  "Acknowledgements.ejs": {
+    "layoutPage": "",
+    "description": ""
+  },
+  "Chapter2.ejs": {
+    "layoutPage": "Chapter1",
+    "description": ""
+  },
+  "Topics.ejs": {
+    "layoutPage": "",
+    "description": ""
+  },
+  "Quiz_1.ejs": {
+    "layoutPage": "",
+    "description": ""
   }
 }

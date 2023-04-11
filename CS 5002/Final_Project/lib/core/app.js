@@ -321,7 +321,7 @@ App.prototype = {
                             if (typeof record[column] == 'string') {
                                 try {
                                     // column of type json returned as string, need parse
-                                    record[column] = JSON.parse(row[name]);
+                                    record[column] = JSON.parse(record[column]);
                                 } catch (err) {
                                     console.warn(err);
                                 }

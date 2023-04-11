@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+  <script src="/dmxAppConnect/dmxAppConnect.js"></script>
   <meta name="ac:route" content="/">
   <base href="/">
   <!-- Required meta tags -->
@@ -14,20 +15,40 @@
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
   <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="/dmxAppConnect/dmxPreloader/dmxPreloader.css" />
+  <script src="/dmxAppConnect/dmxPreloader/dmxPreloader.js" defer></script>
+  <script src="/dmxAppConnect/dmxBootstrap4Navigation/dmxBootstrap4Navigation.js" defer></script>
+  <script src="/dmxAppConnect/dmxSmoothScroll/dmxSmoothScroll.js" defer></script>
 </head>
 
-<body>
+<body is="dmx-app" id="index">
+
+
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid"> <a class="navbar-brand" href="#">CS 5002: Discrete Structures</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
       <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item active"> <a class="nav-link" href="#">Home</a> </li>
-          <li class="nav-item"> <a class="nav-link" href="#">About</a> </li>
-          <li class="nav-item"> <a class="nav-link" href="/Chapter_1">Stories</a> </li>
-          <li class="nav-item"> <a class="nav-link" href="#">Acknowledgements</a> </li>
-          <li class="nav-item"> <a class="nav-link" href="#">Contact</a> </li>
-        </ul>
+
+        <div class="navbar-nav w-100 flex-row justify-content-end">
+          <a class="nav-item nav-link" href="/">Home</a>
+
+
+
+          <div class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="dropdown1" role="button" aria-haspopup="true" aria-expanded="false">Stories</a>
+            <div class="dropdown-menu" aria-labelledby="dropdown1">
+              <a class="dropdown-item" href="/Chapter_1">Chapter 1</a>
+              <a class="dropdown-item" href="/Chapter2">Chapter 2</a>
+            </div>
+          </div>
+          <div class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="dropdown2" role="button" aria-haspopup="true" aria-expanded="false">Quizzes</a>
+            <div class="dropdown-menu" aria-labelledby="dropdown1">
+              <a class="dropdown-item" href="/Quiz_1">Quiz 1</a>
+              <a class="dropdown-item" href="/Quiz_2">Quiz 2</a>
+            </div>
+          </div><a class="nav-item nav-link" href="/Topics">Topics</a><a class="nav-item nav-link" dmx-on:click="browser1.goto('/Acknowledgements')" dmx-bind:href="'/Acknowledgements'">Acknowledgements</a><a class="nav-item nav-link" href="/contact">Contact</a>
+        </div>
       </div>
     </div>
   </nav>
@@ -62,6 +83,8 @@
   </section>
   <section class="bg-white">
     <div class="container-fluid">
+      <dmx-smooth-scroll id="scroll1"></dmx-smooth-scroll>
+      <dmx-preloader id="preloader1"></dmx-preloader>
       <div class="row">
         <div class="col-12 text-center">
           <h4 class="section-title text-uppercase">Similar Properties</h4>

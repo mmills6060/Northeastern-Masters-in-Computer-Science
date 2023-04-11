@@ -1,0 +1,441 @@
+/* csslint order-alphabetical: false, fallback-colors: false */
+
+.dmxLightboxOverlay {
+    display: none;
+    opacity: 0;
+    position: fixed;
+    overflow: hidden;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000000;
+    background: #222;
+    /*background: rgba(0, 0, 0, .8);*/
+    transition: opacity .5s ease;
+}
+
+.dmxLightboxVisible {
+    opacity: 1;
+}
+
+.dmxLightboxImage {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+}
+
+.dmxLightboxImage figure {
+    display: inline;
+    margin: 0;
+    height: 100%;
+}
+
+.dmxLightboxImage img,
+.dmxLightboxImage video {
+    display: inline-block;
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+    vertical-align: middle;
+    box-shadow: 0 0 8px rgba(0, 0, 0, .6);
+}
+
+.dmxLightboxImage figcaption {
+    display: block;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    line-height: 1.8;
+    white-space: normal;
+    color: #ccc;
+    background: #000;
+    background: rgba(0, 0, 0, .6);
+    font-family: sans-serif;
+}
+
+.dmxLightboxImage::before {
+    content: '';
+    display: inline-block;
+    height: 50%;
+    width: 1px;
+    margin-right: -1px;
+}
+
+.dmxLightboxSlider {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    white-space: nowrap;
+    transition: left .4s ease, transform .4s ease;
+}
+
+.dmxLightboxButton {
+    position: absolute;
+    cursor: pointer;
+    outline: none;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    border-radius: 15%;
+    background-color: #323232;
+    background-color: rgba(50, 50, 50, .5);
+    color: #ddd;
+    font: 1.6em sans-serif;
+    transition: background-color .4s ease;
+}
+
+.dmxLightboxButton:focus,
+.dmxLightboxButton:hover {
+    background-color: rgba(50, 50, 50, .9);
+}
+
+.dmxLightboxButton svg {
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.dmxLightboxButton.dmxLightboxPrev {
+    /* <svg xmlns="http://www.w3.org/2000/svg" width="44" height="60"><polyline points="30 10 10 30 30 50" stroke="rgba(255,255,255,0.5)" stroke-width="4" stroke-linecap="butt" fill="none" stroke-linejoin="round"/></svg> */
+    background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0NCIgaGVpZ2h0PSI2MCI+PHBvbHlsaW5lIHBvaW50cz0iMzAgMTAgMTAgMzAgMzAgNTAiIHN0cm9rZT0icmdiYSgyNTUsMjU1LDI1NSwwLjUpIiBzdHJva2Utd2lkdGg9IjQiIHN0cm9rZS1saW5lY2FwPSJidXR0IiBmaWxsPSJub25lIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+PC9zdmc+');
+    top: 50%;
+    margin-top: -30px;
+    width: 44px;
+    height: 60px;
+    left: 2%;
+}
+
+.dmxLightboxButton.dmxLightboxNext {
+    /* <svg xmlns="http://www.w3.org/2000/svg" width="44" height="60"><polyline points="14 10 34 30 14 50" stroke="rgba(255,255,255,0.5)" stroke-width="4" stroke-linecap="butt" fill="none" stroke-linejoin="round"/></svg> */
+    background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0NCIgaGVpZ2h0PSI2MCI+PHBvbHlsaW5lIHBvaW50cz0iMTQgMTAgMzQgMzAgMTQgNTAiIHN0cm9rZT0icmdiYSgyNTUsMjU1LDI1NSwwLjUpIiBzdHJva2Utd2lkdGg9IjQiIHN0cm9rZS1saW5lY2FwPSJidXR0IiBmaWxsPSJub25lIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+PC9zdmc+');
+    top: 50%;
+    margin-top: -30px;
+    width: 44px;
+    height: 60px;
+    right: 2%;
+}
+
+.dmxLightboxButton.dmxLightboxClose {
+    /* <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"><g stroke="rgb(160,160,160)" stroke-width="4"><line x1="5" y1="5" x2="25" y2="25"/><line x1="5" y1="25" x2="25" y2="5"/></g></svg> */
+    background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMCIgaGVpZ2h0PSIzMCI+PGcgc3Ryb2tlPSJyZ2IoMTYwLDE2MCwxNjApIiBzdHJva2Utd2lkdGg9IjQiPjxsaW5lIHgxPSI1IiB5MT0iNSIgeDI9IjI1IiB5Mj0iMjUiLz48bGluZSB4MT0iNSIgeTE9IjI1IiB4Mj0iMjUiIHkyPSI1Ii8+PC9nPjwvc3ZnPg==');
+    top: 20px;
+    margin-left: -6px;
+    right: 2%;
+    width: 30px;
+    height: 30px;
+}
+
+/* http://tobiasahlin.com/spinkit/ */
+.dmxLightboxSpinner {
+    width: 70px;
+    height: 18px;
+    display: inline-block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -9px;
+    margin-left: -35px;
+}
+
+.dmxLightboxSpinner > div {
+    width: 18px;
+    height: 18px;
+    background-color: rgba(255, 255, 255, 0.6);
+    border-radius: 100%;
+    display: inline-block;
+    -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+    animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+}
+
+.dmxLightboxSpinner .dmxLightboxSpinnerBounce1 {
+    animation-delay: -0.32s;
+}
+
+.dmxLightboxSpinner .dmxLightboxSpinnerBounce2 {
+    animation-delay: -0.16s;
+}
+
+@keyframes sk-bouncedelay {
+  0%, 80%, 100% {
+    transform: scale(0);
+  } 40% {
+    transform: scale(1.0);
+  }
+}
+
+.dmxLightboxBounceRight {
+    animation: bounceRight .4s ease-out;
+}
+
+.dmxLightboxBounceLeft {
+    animation: bounceLeft .4s ease-out;
+}
+
+@keyframes bounceRight {
+    0% { margin-left: 0; }
+    50% { margin-left: -30px; }
+    100% { margin-left: 0; }
+}
+
+@keyframes bounceLeft {
+    0% { margin-left: 0; }
+    50% { margin-left: 30px; }
+    100% { margin-left: 0; }
+}
+
+/* Spinners (https://projects.lukehaas.me/css-loaders/) */
+
+.dmxLightboxSpinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    color: #ffffff;
+    font-size: 11px;
+    direction: ltr;
+    text-indent: -9999em;
+}
+
+.dmxLightboxSpinner1,
+.dmxLightboxSpinner1:before,
+.dmxLightboxSpinner1:after {
+    background: #ffffff;
+    animation: load1 1s infinite ease-in-out;
+    width: 1em;
+    height: 4em;
+}
+.dmxLightboxSpinner1 {
+    margin-top: -2em;
+    margin-left: -.5em;
+    transform: translateZ(0);
+    animation-delay: -0.16s;
+}
+.dmxLightboxSpinner1:before,
+.dmxLightboxSpinner1:after {
+    position: absolute;
+    top: 0;
+    content: '';
+}
+.dmxLightboxSpinner1:before {
+    left: -1.5em;
+    animation-delay: -0.32s;
+}
+.dmxLightboxSpinner1:after {
+    left: 1.5em;
+}
+@keyframes load1 {
+    0%, 80%, 100% {
+        box-shadow: 0 0;
+        height: 4em;
+    }
+    40% {
+        box-shadow: 0 -2em;
+        height: 5em;
+    }
+}
+
+.dmxLightboxSpinner2,
+.dmxLightboxSpinner2:before,
+.dmxLightboxSpinner2:after {
+    border-radius: 50%;
+}
+.dmxLightboxSpinner2 {
+    margin-left: -5em;
+    margin-top: -5em;
+    width: 10em;
+    height: 10em;
+    box-shadow: inset 0 0 0 1em;
+    transform: translateZ(0);
+}
+.dmxLightboxSpinner2:before,
+.dmxLightboxSpinner2:after {
+    position: absolute;
+    content: '';
+}
+.dmxLightboxSpinner2:before {
+    width: 5.2em;
+    height: 10.2em;
+    background: #222;
+    border-radius: 10.2em 0 0 10.2em;
+    top: -0.1em;
+    left: -0.1em;
+    transform-origin: 5.2em 5.1em;
+    animation: load2 2s infinite ease 1.5s;
+}
+.dmxLightboxSpinner2:after {
+    width: 5.2em;
+    height: 10.2em;
+    background: #222;
+    border-radius: 0 10.2em 10.2em 0;
+    top: -0.1em;
+    left: 5.1em;
+    transform-origin: 0 5.1em;
+    animation: load2 2s infinite ease;
+}
+@keyframes load2 {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.dmxLightboxSpinner3 {
+    width: 11em;
+    height: 11em;
+    margin-left: -5.5em;
+    margin-top: -5.5em;
+    border-radius: 50%;
+    background: #ffffff;
+    background: linear-gradient(to right, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
+    animation: load3 1.4s infinite linear;
+    transform: translateZ(0);
+}
+.dmxLightboxSpinner3:before {
+    width: 50%;
+    height: 50%;
+    background: #ffffff;
+    border-radius: 100% 0 0 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    content: '';
+}
+.dmxLightboxSpinner3:after {
+    background: #222;
+    width: 75%;
+    height: 75%;
+    border-radius: 50%;
+    content: '';
+    margin: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+@keyframes load3 {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.dmxLightboxSpinner4 {
+    margin-left: -.5em;
+    margin-top: -.5em;
+    width: 1em;
+    height: 1em;
+    border-radius: 50%;
+    animation: load4 1.3s infinite linear;
+    transform: translateZ(0);
+}
+@keyframes load4 {
+    0%, 100% { box-shadow: 0 -3em 0 0.2em, 2em -2em 0 0, 3em 0 0 -1em, 2em 2em 0 -1em, 0 3em 0 -1em, -2em 2em 0 -1em, -3em 0 0 -1em, -2em -2em 0 0; }
+    12.5% { box-shadow: 0 -3em 0 0, 2em -2em 0 0.2em, 3em 0 0 0, 2em 2em 0 -1em, 0 3em 0 -1em, -2em 2em 0 -1em, -3em 0 0 -1em, -2em -2em 0 -1em; }
+    25% { box-shadow: 0 -3em 0 -0.5em, 2em -2em 0 0, 3em 0 0 0.2em, 2em 2em 0 0, 0 3em 0 -1em, -2em 2em 0 -1em, -3em 0 0 -1em, -2em -2em 0 -1em; }
+    37.5% { box-shadow: 0 -3em 0 -1em, 2em -2em 0 -1em, 3em 0 0 0, 2em 2em 0 0.2em, 0 3em 0 0, -2em 2em 0 -1em, -3em 0 0 -1em, -2em -2em 0 -1em; }
+    50% { box-shadow: 0 -3em 0 -1em, 2em -2em 0 -1em, 3em 0 0 -1em, 2em 2em 0 0, 0 3em 0 0.2em, -2em 2em 0 0, -3em 0 0 -1em, -2em -2em 0 -1em; }
+    62.5% { box-shadow: 0 -3em 0 -1em, 2em -2em 0 -1em, 3em 0 0 -1em, 2em 2em 0 -1em, 0 3em 0 0, -2em 2em 0 0.2em, -3em 0 0 0, -2em -2em 0 -1em; }
+    75% { box-shadow: 0 -3em 0 -1em, 2em -2em 0 -1em, 3em 0 0 -1em, 2em 2em 0 -1em, 0 3em 0 -1em, -2em 2em 0 0, -3em 0 0 0.2em, -2em -2em 0 0; }
+    87.5% { box-shadow: 0 -3em 0 0, 2em -2em 0 -1em, 3em 0 0 -1em, 2em 2em 0 -1em, 0 3em 0 -1em, -2em 2em 0 0, -3em 0 0 0, -2em -2em 0 0.2em; }
+}
+
+.dmxLightboxSpinner5 {
+    margin-left: -.5em;
+    margin-top: -.5em;
+    width: 1em;
+    height: 1em;
+    border-radius: 50%;
+    animation: load5 1.1s infinite ease;
+    transform: translateZ(0);
+}
+@keyframes load5 {
+    0%, 100% { box-shadow: 0 -2.6em 0 0 #ffffff, 1.8em -1.8em 0 0 rgba(255, 255, 255, 0.2), 2.5em 0 0 0 rgba(255, 255, 255, 0.2), 1.75em 1.75em 0 0 rgba(255, 255, 255, 0.2), 0 2.5em 0 0 rgba(255, 255, 255, 0.2), -1.8em 1.8em 0 0 rgba(255, 255, 255, 0.2), -2.6em 0 0 0 rgba(255, 255, 255, 0.5), -1.8em -1.8em 0 0 rgba(255, 255, 255, 0.7); }
+    12.5% { box-shadow: 0 -2.6em 0 0 rgba(255, 255, 255, 0.7), 1.8em -1.8em 0 0 #ffffff, 2.5em 0 0 0 rgba(255, 255, 255, 0.2), 1.75em 1.75em 0 0 rgba(255, 255, 255, 0.2), 0 2.5em 0 0 rgba(255, 255, 255, 0.2), -1.8em 1.8em 0 0 rgba(255, 255, 255, 0.2), -2.6em 0 0 0 rgba(255, 255, 255, 0.2), -1.8em -1.8em 0 0 rgba(255, 255, 255, 0.5); }
+    25% { box-shadow: 0 -2.6em 0 0 rgba(255, 255, 255, 0.5), 1.8em -1.8em 0 0 rgba(255, 255, 255, 0.7), 2.5em 0 0 0 #ffffff, 1.75em 1.75em 0 0 rgba(255, 255, 255, 0.2), 0 2.5em 0 0 rgba(255, 255, 255, 0.2), -1.8em 1.8em 0 0 rgba(255, 255, 255, 0.2), -2.6em 0 0 0 rgba(255, 255, 255, 0.2), -1.8em -1.8em 0 0 rgba(255, 255, 255, 0.2); }
+    37.5% { box-shadow: 0 -2.6em 0 0 rgba(255, 255, 255, 0.2), 1.8em -1.8em 0 0 rgba(255, 255, 255, 0.5), 2.5em 0 0 0 rgba(255, 255, 255, 0.7), 1.75em 1.75em 0 0 #ffffff, 0 2.5em 0 0 rgba(255, 255, 255, 0.2), -1.8em 1.8em 0 0 rgba(255, 255, 255, 0.2), -2.6em 0 0 0 rgba(255, 255, 255, 0.2), -1.8em -1.8em 0 0 rgba(255, 255, 255, 0.2); }
+    50% { box-shadow: 0 -2.6em 0 0 rgba(255, 255, 255, 0.2), 1.8em -1.8em 0 0 rgba(255, 255, 255, 0.2), 2.5em 0 0 0 rgba(255, 255, 255, 0.5), 1.75em 1.75em 0 0 rgba(255, 255, 255, 0.7), 0 2.5em 0 0 #ffffff, -1.8em 1.8em 0 0 rgba(255, 255, 255, 0.2), -2.6em 0 0 0 rgba(255, 255, 255, 0.2), -1.8em -1.8em 0 0 rgba(255, 255, 255, 0.2); }
+    62.5% { box-shadow: 0 -2.6em 0 0 rgba(255, 255, 255, 0.2), 1.8em -1.8em 0 0 rgba(255, 255, 255, 0.2), 2.5em 0 0 0 rgba(255, 255, 255, 0.2), 1.75em 1.75em 0 0 rgba(255, 255, 255, 0.5), 0 2.5em 0 0 rgba(255, 255, 255, 0.7), -1.8em 1.8em 0 0 #ffffff, -2.6em 0 0 0 rgba(255, 255, 255, 0.2), -1.8em -1.8em 0 0 rgba(255, 255, 255, 0.2); }
+    75% { box-shadow: 0 -2.6em 0 0 rgba(255, 255, 255, 0.2), 1.8em -1.8em 0 0 rgba(255, 255, 255, 0.2), 2.5em 0 0 0 rgba(255, 255, 255, 0.2), 1.75em 1.75em 0 0 rgba(255, 255, 255, 0.2), 0 2.5em 0 0 rgba(255, 255, 255, 0.5), -1.8em 1.8em 0 0 rgba(255, 255, 255, 0.7), -2.6em 0 0 0 #ffffff, -1.8em -1.8em 0 0 rgba(255, 255, 255, 0.2); }
+    87.5% { box-shadow: 0 -2.6em 0 0 rgba(255, 255, 255, 0.2), 1.8em -1.8em 0 0 rgba(255, 255, 255, 0.2), 2.5em 0 0 0 rgba(255, 255, 255, 0.2), 1.75em 1.75em 0 0 rgba(255, 255, 255, 0.2), 0 2.5em 0 0 rgba(255, 255, 255, 0.2), -1.8em 1.8em 0 0 rgba(255, 255, 255, 0.5), -2.6em 0 0 0 rgba(255, 255, 255, 0.7), -1.8em -1.8em 0 0 #ffffff; }
+}
+
+.dmxLightboxSpinner6 {
+    font-size: 5em;
+    overflow: hidden;
+    width: 1em;
+    height: 1em;
+    border-radius: 50%;
+    margin-left: -.5em;
+    margin-top: -.5em;
+    transform: translateZ(0);
+    animation: load6 1.7s infinite ease, round 1.7s infinite ease;
+}
+@keyframes load6 {
+    0% { box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em; }
+    5%, 95% { box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em; }
+    10%, 59% { box-shadow: 0 -0.83em 0 -0.4em, -0.087em -0.825em 0 -0.42em, -0.173em -0.812em 0 -0.44em, -0.256em -0.789em 0 -0.46em, -0.297em -0.775em 0 -0.477em; }
+    20% { box-shadow: 0 -0.83em 0 -0.4em, -0.338em -0.758em 0 -0.42em, -0.555em -0.617em 0 -0.44em, -0.671em -0.488em 0 -0.46em, -0.749em -0.34em 0 -0.477em; }
+    38% { box-shadow: 0 -0.83em 0 -0.4em, -0.377em -0.74em 0 -0.42em, -0.645em -0.522em 0 -0.44em, -0.775em -0.297em 0 -0.46em, -0.82em -0.09em 0 -0.477em; }
+    100% { box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em; }
+}
+@keyframes round {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.dmxLightboxSpinner7,
+.dmxLightboxSpinner7:before,
+.dmxLightboxSpinner7:after {
+    border-radius: 50%;
+    width: 2.5em;
+    height: 2.5em;
+    animation-fill-mode: both;
+    animation: load7 1.8s infinite ease-in-out;
+}
+.dmxLightboxSpinner7 {
+    margin-left: -1.25em;
+    margin-top: -3.75em;
+    transform: translateZ(0);
+    animation-delay: -0.16s;
+}
+.dmxLightboxSpinner7:before,
+.dmxLightboxSpinner7:after {
+    content: '';
+    position: absolute;
+    top: 0;
+}
+.dmxLightboxSpinner7:before {
+    left: -3.5em;
+    animation-delay: -0.32s;
+}
+.dmxLightboxSpinner7:after {
+    left: 3.5em;
+}
+@keyframes load7 {
+    0%, 80%, 100% { box-shadow: 0 2.5em 0 -1.3em; }
+    40% { box-shadow: 0 2.5em 0 0; }
+}
+
+.dmxLightboxSpinner8,
+.dmxLightboxSpinner8:after {
+    border-radius: 50%;
+    width: 6em;
+    height: 6em;
+}
+.dmxLightboxSpinner8 {
+    margin-top: -4.1em;
+    margin-left: -4.1em;
+    border-top: 1.1em solid rgba(255, 255, 255, 0.2);
+    border-right: 1.1em solid rgba(255, 255, 255, 0.2);
+    border-bottom: 1.1em solid rgba(255, 255, 255, 0.2);
+    border-left: 1.1em solid #ffffff;
+    transform: translateZ(0);
+    animation: load8 1.1s infinite linear;
+}
+@keyframes load8 {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

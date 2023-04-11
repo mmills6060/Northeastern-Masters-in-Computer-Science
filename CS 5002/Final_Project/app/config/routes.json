@@ -1,17 +1,47 @@
 {
   "routes": [
     {
+      "path": "/chapter1_correct_answer",
+      "page": "Chapter1_correct_answer",
+      "name": "chapter_1_correct_answer"
+    },
+    {
+      "path": "/Chapter2",
+      "page": "Chapter2",
+      "layout": ""
+    },
+    {
       "path": "/",
       "page": "index",
       "routeType": "page"
+    },
+    {
+      "path": "/contact",
+      "page": "contact"
     },
     {
       "path": "/Chapter_1",
       "page": "Chapter1"
     },
     {
-      "path": "file:///Users/michaelmills/Northeastern-Masters-in-Computer-Science/CS%205002/Final_Project/views/Chapter1_correct_answer",
-      "url": "file:///Users/michaelmills/Northeastern-Masters-in-Computer-Science/CS%205002/Final_Project/views/Chapter1_correct_answer.ejs"
+      "path": "/Acknowledgements",
+      "page": "Acknowledgements"
+    },
+    {
+      "path": "/Topics",
+      "page": "Topics"
+    },
+    {
+      "path": "/Chapter_1_incorrect_answer",
+      "page": "Chapter1_incorrect_answer"
+    },
+    {
+      "path": "/Quiz_1",
+      "page": "Quiz_1"
+    },
+    {
+      "path": "/Quiz_2",
+      "page": "Quiz_2"
     }
   ]
 }

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <script src="/dmxAppConnect/dmxAppConnect.js"></script>
+  <meta name="ac:route" content="/Topics">
+  <base href="/">
+  <!-- Required meta tags -->
+  <title>Discrete Structures Final Project</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+  <!-- Custom CSS styles-->
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="/dmxAppConnect/dmxBootstrap4Navigation/dmxBootstrap4Navigation.js" defer></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/summernote/dist/summernote-bs4.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/summernote/dist/summernote-bs4.min.js" defer></script>
+  <script src="/dmxAppConnect/dmxSummernote/dmxSummernote.js" defer></script>
+  <script src="/dmxAppConnect/dmxBrowser/dmxBrowser.js" defer></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/summernote/dist/summernote-lite.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/summernote/dist/summernote-lite.min.js" defer></script>
+  <link rel="stylesheet" href="/dmxAppConnect/dmxPreloader/dmxPreloader.css" />
+  <script src="/dmxAppConnect/dmxPreloader/dmxPreloader.js" defer></script>
+  <script src="/dmxAppConnect/dmxBootstrap4Collapse/dmxBootstrap4Collapse.js" defer></script>
+  <link rel="stylesheet" href="/dmxAppConnect/dmxSlideshow/dmxSlideshow.css" />
+  <script src="/dmxAppConnect/dmxSlideshow/dmxSlideshow.js" defer></script>
+  <link rel="stylesheet" href="/dmxAppConnect/dmxSlideshow/themes/default.css" />
+</head>
+
+<body is="dmx-app" id="Topics">
+  <div is="dmx-browser" id="browser1"></div>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid"> <a class="navbar-brand" href="#">CS 5002: Discrete Structures</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+
+        <div class="navbar-nav w-100 flex-row justify-content-end">
+          <a class="nav-item nav-link" href="/">Home</a>
+
+
+
+          <div class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="dropdown1" role="button" aria-haspopup="true" aria-expanded="false">Stories</a>
+            <div class="dropdown-menu" aria-labelledby="dropdown1">
+              <a class="dropdown-item" href="/Chapter_1">Chapter 1</a>
+              <a class="dropdown-item" href="/Chapter2">Chapter 2</a>
+            </div>
+          </div>
+          <div class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="dropdown2" role="button" aria-haspopup="true" aria-expanded="false">Quizzes</a>
+            <div class="dropdown-menu" aria-labelledby="dropdown1">
+              <a class="dropdown-item" href="/Quiz_1">Quiz 1</a>
+              <a class="dropdown-item" href="/Quiz_2">Quiz 2</a>
+            </div>
+          </div><a class="nav-item nav-link" href="/Topics">Topics</a><a class="nav-item nav-link" dmx-on:click="browser1.goto('/Acknowledgements')" dmx-bind:href="'/Acknowledgements'">Acknowledgements</a><a class="nav-item nav-link" href="/contact">Contact</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <header id="page-header">
+    <div class="jumbotron">
+      <h1 class="display-3">Topics</h1>
+      <p class="lead">Three planets, Decimal, Binary, and Hexadecimal, each have their own way of representing numbers. The planets unite to defeat a super bad guy with a secret weapon, but they cannot communicate with each other due to their different number systems.</p>
+      <hr class="my-4">
+    </div>
+
+  </header>
+  <section id="description" class="bg-light">
+    <div class="container">
+      <div class="row">
+        <div class="col-2">
+          <ul class="nav flex-column justify-content-start nav-pills align-content-start flex-wrap" id="navTabs1_tabs" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="navTabs1_1_tab" data-toggle="tab" href="#" data-target="#navTabs1_1" role="tab" aria-controls="navTabs1_1" aria-selected="true">Number Representation</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="navTabs1_2_tab" data-toggle="tab" href="#" data-target="#navTabs1_2" role="tab" aria-controls="navTabs1_2" aria-selected="false">Number Conversion</a>
+            </li>
+            <li class="nav-item">
+            </li>
+          </ul>
+        </div>
+        <div class="col">
+          <div class="tab-content" id="navTabs1_content">
+            <div class="tab-pane fade show active" id="navTabs1_1" role="tabpanel">
+              <div class="container">
+                <div class="accordion" id="accordion1">
+                  <div class="card">
+                    <div class="card-header" id="accordion1_headingOne">
+                      <h5 class="mb-0">
+                        <button id="accordion1_collapseOne_Btn" class="btn btn-light" data-toggle="collapse" data-target="#accordion1_collapseOne" aria-expanded="true" aria-controls="collapseOne">Decimal Notation</button>
+                      </h5>
+                    </div>
+                    <div id="accordion1_collapseOne" class="collapse" is="dmx-bs4-collapse" show="true" aria-labelledby="accordion1_headingOne" data-parent="#accordion1">
+                      <div class="container">
+                        <p>In our daily lives, we use ten digits from 0 to 9 to represent numbers. Each digit represents a power of 10, with the rightmost digit representing 10⁰, the second rightmost representing 10¹, and so on. This is called decimal presentation.</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card">
+                    <div class="card-header" id="accordion1_headingTwo">
+                      <h5 class="mb-0">
+                        <button id="accordion1_collapseTwo_Btn" class="btn collapsed btn-light" type="button" data-toggle="collapse" data-target="#accordion1_collapseTwo" aria-expanded="false" aria-controls="collapseTwo">Binary Notation</button>
+                      </h5>
+                    </div>
+                    <div id="accordion1_collapseTwo" class="collapse" is="dmx-bs4-collapse" aria-labelledby="accordion1_headingTwo" data-parent="#accordion1">
+                      <div class="container">
+                        <p>There are actually many other ways to represent numbers. In the Binary system, numbers are only represented in two digits: 0, 1. It follows a similar rule as decimal representation. Each digit in a binary number represents a power of 2, with the rightmost digit representing 2⁰, the second rightmost representing 2¹, and so on.
+                        <p><br></p>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card">
+                    <div class="card-header" id="accordion1_headingThree">
+                      <h5 class="mb-0">
+                        <button id="accordion1_collapseThree_Btn" class="btn collapsed btn-light" type="button" data-toggle="collapse" data-target="#accordion1_collapseThree" aria-expanded="false" aria-controls="collapseThree">Hexadecimal Notation</button>
+                      </h5>
+                    </div>
+                    <div id="accordion1_collapseThree" class="collapse" is="dmx-bs4-collapse" aria-labelledby="accordion1_headingThree" data-parent="#accordion1">
+                      <div class="container">
+                        <p>In the Hexadecimal system, we use 16 digits from 0 to 9 and letters A to F to represent numbers. Each digit in a hexadecimal number represents a power of 16, with the rightmost digit representing 16⁰, the second rightmost representing 16¹, and so on.
+                        <p><br></p>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="navTabs1_2" role="tabpanel">
+              <div class="container">
+                <div class="accordion" id="accordion2">
+                  <div class="card">
+                    <div class="card-header" id="accordion2_headingOne">
+                      <h5 class="mb-0">
+                        <button id="accordion2_collapseOne_Btn" class="btn btn-light" type="button" data-toggle="collapse" data-target="#accordion2_collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                          Collapsible Group Item #1
+                        </button>
+                      </h5>
+                    </div>
+                    <div id="accordion2_collapseOne" class="collapse" is="dmx-bs4-collapse" show="true" aria-labelledby="accordion2_headingOne" data-parent="#accordion2">
+                      <div class="card-body">
+                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card">
+                    <div class="card-header" id="accordion2_headingTwo">
+                      <h5 class="mb-0">
+                        <button id="accordion2_collapseTwo_Btn" class="btn collapsed btn-light" type="button" data-toggle="collapse" data-target="#accordion2_collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                          Collapsible Group Item #2
+                        </button>
+                      </h5>
+                    </div>
+                    <div id="accordion2_collapseTwo" class="collapse" is="dmx-bs4-collapse" aria-labelledby="accordion2_headingTwo" data-parent="#accordion2">
+                      <div class="card-body">
+                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card">
+                    <div class="card-header" id="accordion2_headingThree">
+                      <h5 class="mb-0">
+                        <button id="accordion2_collapseThree_Btn" class="btn collapsed btn-light" type="button" data-toggle="collapse" data-target="#accordion2_collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                          Collapsible Group Item #3
+                        </button>
+                      </h5>
+                    </div>
+                    <div id="accordion2_collapseThree" class="collapse" is="dmx-bs4-collapse" aria-labelledby="accordion2_headingThree" data-parent="#accordion2">
+                      <div class="card-body">
+                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <dmx-preloader id="preloader1"></dmx-preloader>
+    </div>
+
+
+
+  </section>
+  <footer id="page-footer" class="bg-light">
+  </footer>
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+</body>
+
+</html>

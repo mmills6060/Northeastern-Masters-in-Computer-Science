@@ -3,7 +3,7 @@
 
 <head>
   <script src="/dmxAppConnect/dmxAppConnect.js"></script>
-  <meta name="ac:route" content="/Chapter_1">
+  <meta name="ac:route" content="/Acknowledgements">
   <base href="/">
   <!-- Required meta tags -->
   <title>Discrete Structures Final Project</title>
@@ -22,69 +22,11 @@
   <script src="/dmxAppConnect/dmxBrowser/dmxBrowser.js" defer></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/summernote/dist/summernote-lite.min.css" />
   <script src="https://cdn.jsdelivr.net/npm/summernote/dist/summernote-lite.min.js" defer></script>
-  <script src="/dmxAppConnect/dmxBootstrap4Modal/dmxBootstrap4Modal.js" defer></script>
-  <link rel="stylesheet" href="/dmxAppConnect/dmxAnimateCSS/animate.min.css" />
-  <script src="/dmxAppConnect/dmxAnimateCSS/dmxAnimateCSS.js" defer></script>
   <link rel="stylesheet" href="/dmxAppConnect/dmxPreloader/dmxPreloader.css" />
   <script src="/dmxAppConnect/dmxPreloader/dmxPreloader.js" defer></script>
 </head>
 
 <body is="dmx-app" id="Chapter1">
-  <div class="modal fade" id="modal1" is="dmx-bs4-modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-
-        <div class="modal-header">
-          <h5 class="modal-title">Congratulations!</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <p>The coordinates were indeed (17, 29).</p>
-          <img src="/assets/images/1.jpg" class="img-fluid">
-          <p>With this new information, the people of Decimal, Binary, and Hexadecimal worked together to destroy the secret weapon and defeat the bad guy.
-          <p>
-          </p>
-          <p>They also realized that by learning about each other's cultures, they could create a better universe where no one was left behind.
-          </p>
-          <p><br></p>
-          </p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal" dmx-on:click="modal1.hide()">Close</button>
-          <button class="btn btn-primary" dmx-on:click="browser1.goto('/')">Finish</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="modal fade" id="modal2" is="dmx-bs4-modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-
-        <div class="modal-header">
-          <h5 class="modal-title">Oh no!</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <p>The coordinates were incorrect!&nbsp;</p>
-          <img src="/assets/images/1.jpg" class="img-fluid">
-          <p>The bad guy arrived and started to use his powerful weapon to destroy everything.&nbsp;</p>
-          <p>
-          </p>
-          <p>Just when all hope seemed lost, Alan appeared once again! He said, "Don't worry, I can send you back in time. But this time, you need to work together and figure it out quickly. Are you ready to try again?"</p>
-          <p><br></p>
-          <p></p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal" dmx-on:click="browser1.goto('/')">No</button>
-          <button class="btn btn-primary" dmx-on:click="modal2.hide()">Yes</button>
-        </div>
-      </div>
-    </div>
-  </div>
   <div is="dmx-browser" id="browser1"></div>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
@@ -117,7 +59,7 @@
   </nav>
   <header id="page-header">
     <div class="jumbotron">
-      <h1 class="display-3">Chapter 1: The Secret Weapon</h1>
+      <h1 class="display-3">Acknowledgements</h1>
       <p class="lead">Three planets, Decimal, Binary, and Hexadecimal, each have their own way of representing numbers. The planets unite to defeat a super bad guy with a secret weapon, but they cannot communicate with each other due to their different number systems.</p>
       <hr class="my-4">
     </div>
@@ -158,31 +100,25 @@
           <p>After Alan disappeared, the people worked hard to convert the code to decimal numbers, and finally, they found the coordinates:____.</p>
           <form id="form1">
             <h1>Choose an Answer</h1>
-            <div class="form-group bg-light">
-              <div class="form-check">
-                <input class="form-check-input" type="radio" value="" id="radio4" name="radio1" dmx-bind:checked="value+'=radio4'" dmx-on:click="radio4.setValue(value+'=radio4')">
-                <label class="form-check-label" for="radio4">(29, 5)</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" value="" id="radio3" name="radio1" dmx-bind:checked="value+'=radio3'">
-                <label class="form-check-label" for="radio3">(17, 29)</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" value="" id="radio2" name="radio1" dmx-bind:checked="value+'=radio2'">
-                <label class="form-check-label" for="radio2">(29, 17)</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" value="" id="radio1" name="radio1" dmx-bind:checked="value+'=radio1'">
-                <label class="form-check-label" for="radio1">(5, 29)</label>
-              </div><button id="btn2" class="btn mt-2 btn-primary" dmx-on:click="run([{condition:{if:`form1.radio2.checked`,then:{steps:{run:{action:`modal1.show()`}}}}},{condition:{if:`form1.radio1.checked`,then:{steps:{run:{action:`modal2.show()`}}}}},{condition:{if:`form1.radio3.checked`,then:{steps:{run:{action:`modal2.show()`}}}}},{condition:{if:`form1.radio4.checked`,then:{steps:{run:{action:`modal2.show()`}}}}}])">Submit</button>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" value="" id="radio1" name="radio1" dmx-bind:checked="value+'=radio1'">
+              <label class="form-check-label" for="radio1">(5, 29)</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" value="" id="radio2" name="radio1" dmx-bind:checked="value+'=radio2'">
+              <label class="form-check-label" for="radio2">(29, 17)</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" value="" id="radio3" name="radio1" dmx-bind:checked="value+'=radio3'">
+              <label class="form-check-label" for="radio3">(17, 29)</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" value="" id="radio4" name="radio1" dmx-bind:checked="value+'=radio4'" dmx-on:click="radio4.setValue(value+'=radio4')">
+              <label class="form-check-label" for="radio4">(29, 5)</label>
             </div>
 
-
-
-
-
           </form>
-
+          <button id="btn1" class="btn mt-2 btn-primary" dmx-on:click="run({condition:{if:`form1.radio1.checked`,then:{steps:{run:{action:`browser1.goto(\'/chapter1_correct_answer\')`}}}}})">Submit</button>
           </p>
 
 

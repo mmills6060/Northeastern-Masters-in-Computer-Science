@@ -1,0 +1,23 @@
+{
+  "meta": {
+    "options": {
+      "linkedFile": "/views/Chapter1.ejs",
+      "linkedForm": "form1"
+    },
+    "$_POST": [
+      {
+        "type": "text",
+        "name": "new"
+      },
+      {
+        "type": "text",
+        "fieldName": "radio1",
+        "options": {
+          "rules": {}
+        },
+        "name": "radio1"
+      }
+    ]
+  },
+  "exec": {}
+}
