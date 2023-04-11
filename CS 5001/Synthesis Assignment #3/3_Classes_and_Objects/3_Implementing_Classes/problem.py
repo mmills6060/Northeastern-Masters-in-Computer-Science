@@ -2,7 +2,6 @@
 # April 7. 2023
 # CS 5001
 
-# an example of printing objects
 class computer:
     ''' Class computer
     Attributes: name, size, price
@@ -31,13 +30,4 @@ class computer:
         elif adder == "Keyboard":
             self.price += 200
 
-from computer import computer
-
-def main():
-    computer1 = computer()
-    computer1.add_on("Mouse")
-    computer1.add_on("Keyboard")
-    print(computer1.name)
-    print(computer1.size)
-    print(computer1.price)
 

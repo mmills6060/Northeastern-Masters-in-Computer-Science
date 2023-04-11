@@ -17,3 +17,9 @@ class Person:
             print(self.name, "is old")
         else:
             print(self.name, "is not old")
+    # add a characteristic about this person
+    def is_young(self):
+        if self.age < 20:
+            print(self.name, "is young")
+        else:
+            print(self.name, "is not young")
