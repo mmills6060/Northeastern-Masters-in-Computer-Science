@@ -179,15 +179,12 @@ module.exports = {
             switch (extname(file).toLowerCase()) {
                 case '.png': format = 'png'; break;
                 case '.gif': format = 'gif'; break;
-                case '.webp': format = 'webp'; break;
                 default: format = 'jpeg';
             }
         }
         
         if (format == 'jpeg') {
             sharp.image.flatten({ background });
-            sharp.image.toFormat(format, { quality });
-        } else if (format == 'webp') {
             sharp.image.toFormat(format, { quality });
         } else {
             sharp.image.toFormat(format);

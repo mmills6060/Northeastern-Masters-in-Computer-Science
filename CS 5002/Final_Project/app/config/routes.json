@@ -4,6 +4,14 @@
       "path": "/",
       "page": "index",
       "routeType": "page"
+    },
+    {
+      "path": "/Chapter_1",
+      "page": "Chapter1"
+    },
+    {
+      "path": "file:///Users/michaelmills/Northeastern-Masters-in-Computer-Science/CS%205002/Final_Project/views/Chapter1_correct_answer",
+      "url": "file:///Users/michaelmills/Northeastern-Masters-in-Computer-Science/CS%205002/Final_Project/views/Chapter1_correct_answer.ejs"
     }
   ]
 }

@@ -45,7 +45,7 @@
       "remoteURL": "https://cs-5002-final-project.herokuapp.com/"
     }
   ],
-  "activeTarget": "Production",
+  "activeTarget": "Development",
   "projectType": "web",
   "extensions": []
 }
