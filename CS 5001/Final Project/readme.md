@@ -35,3 +35,5 @@ Correctly prediccted Agassi with a 99.76 percent confidence.
 i included a timer but it didn't seem to do anything
 zillow API only returns 800 listings. 
 training just photos only rsulted in about 30% confidence
+users will have different operating systems, modify code so it works with any operating system
+if i included the directory in the project folder, issues with github as you can only upload to a certain file size

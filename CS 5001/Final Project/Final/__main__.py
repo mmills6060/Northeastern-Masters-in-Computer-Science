@@ -4,6 +4,7 @@ import os
 import pandas as pd
 import tensorflow as tf
 import subprocess
+import platform
 from pretrained_flower_model import generate_flower_inference
 from pretrained_tennis_model import generate_tennis_inference
 from pretrained_zillow_model import generate_zillow_inference
@@ -148,6 +149,7 @@ def train_model():
         else:
             print("Invalid choice. Please enter a number between 1 and 3.")
         ("Estimating listing price...")
+
 def main():
     while True:
         # Print menu options
@@ -156,7 +158,8 @@ def main():
         print("2. Train Model")
         print("3. Refresh dataset")
         print ("4. Delete dataset")
-        print("5. Quit")
+        print ("5. Quit")
+
         
         # Get user input
         choice = input("Enter the number of your choice: ")

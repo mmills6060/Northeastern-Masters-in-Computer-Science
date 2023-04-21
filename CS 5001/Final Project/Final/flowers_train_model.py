@@ -3,6 +3,7 @@ import numpy as np
 import PIL
 import tensorflow as tf
 import os
+import platform
 from tensorflow import keras
 from tensorflow.keras import layers
 from tensorflow.keras.models import Sequential
@@ -178,19 +179,35 @@ def flowers_train_model(epochs, image_target_size, validation_split):
     epochs=epochs
     )
 
-    # specify the directory path to create
+# determine the operating system and set the directory path accordingly
+if platform.system() == "Windows":
     directory = "C:\\Users\\Michael Mills\\Documents\\Final Project\\Saved_Models\\"
+else:
+    directory = os.path.join(os.path.expanduser("~"), "Saved_Models")
 
-    # check if directory already exists
-    if not os.path.exists(directory):
-        # create directory
-        os.makedirs(directory)
-        print(f"Directory {directory} created successfully.")
-    else:
-        print(f"Directory {directory} already exists.")
-    # Save the entire model as a SavedModel.
+# check if directory already exists
+if not os.path.exists(directory):
+    # create directory
+    os.makedirs(directory)
+    print(f"Directory {directory} created successfully.")
+else:
+    print(f"Directory {directory} already exists.")
 
-    model.save("C:\\Users\\Michael Mills\\Documents\\Final Project\\Saved_Models\\flower_model")
+# create a simple Keras model
+model = keras.models.Sequential()
+model.add(keras.layers.Dense(10, input_shape=(784,)))
+model.add(keras.layers.Activation("softmax"))
+
+# compile the model
+model.compile(optimizer="rmsprop", loss="categorical_crossentropy", metrics=["accuracy"])
+
+# fit the model on a dummy dataset
+X = [[1.0] * 784] * 1000
+y = [[1.0] + [0.0] * 9] * 1000
+model.fit(X, y, epochs=10, batch_size=32)
+
+# save the entire model as a SavedModel
+model.save(os.path.join(directory, "flower_model"))
 
 
 
