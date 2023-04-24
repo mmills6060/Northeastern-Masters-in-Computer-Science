@@ -34,13 +34,13 @@ def flowers_train_model(epochs, image_target_size, validation_split):
 
     # Define some parameters for the loader
     batch_size = 32
-    img_height = image_target_size
-    img_width = image_target_size
+    img_height = 180
+    img_width = 180
 
     # create a validation split for the model. Use 80% of the images for training and 20% for validation
     train_ds = tf.keras.utils.image_dataset_from_directory(
     data_dir,
-    validation_split=validation_split,
+    validation_split=0.2,
     subset="training",
     seed=123,
     image_size=(img_height, img_width),
@@ -49,7 +49,7 @@ def flowers_train_model(epochs, image_target_size, validation_split):
     # create validation and use 20%
     val_ds = tf.keras.utils.image_dataset_from_directory(
     data_dir,
-    validation_split=validation_split,
+    validation_split=0.2,
     subset="validation",
     seed=123,
     image_size=(img_height, img_width),
@@ -59,6 +59,17 @@ def flowers_train_model(epochs, image_target_size, validation_split):
     class_names = train_ds.class_names
     print(class_names)
 
+
+    # here are the first nine images from the training dataset
+    import matplotlib.pyplot as plt
+
+    plt.figure(figsize=(10, 10))
+    for images, labels in train_ds.take(1):
+        for i in range(9):
+            ax = plt.subplot(3, 3, i + 1)
+            plt.imshow(images[i].numpy().astype("uint8"))
+            plt.title(class_names[labels[i]])
+            plt.axis("off")
 
     # manually iterate over the dataset and retrieve batches of images
     for image_batch, labels_batch in train_ds:
@@ -118,14 +129,35 @@ def flowers_train_model(epochs, image_target_size, validation_split):
 
 
     # Train the model
-    epochs = epochs
+    epochs=epochs
     history = model.fit(
     train_ds,
     validation_data=val_ds,
     epochs=epochs
     )
 
+    # Visualize training results
+    acc = history.history['accuracy']
+    val_acc = history.history['val_accuracy']
 
+    loss = history.history['loss']
+    val_loss = history.history['val_loss']
+
+    epochs_range = range(epochs)
+
+    plt.figure(figsize=(8, 8))
+    plt.subplot(1, 2, 1)
+    plt.plot(epochs_range, acc, label='Training Accuracy')
+    plt.plot(epochs_range, val_acc, label='Validation Accuracy')
+    plt.legend(loc='lower right')
+    plt.title('Training and Validation Accuracy')
+
+    plt.subplot(1, 2, 2)
+    plt.plot(epochs_range, loss, label='Training Loss')
+    plt.plot(epochs_range, val_loss, label='Validation Loss')
+    plt.legend(loc='upper right')
+    plt.title('Training and Validation Loss')
+    plt.show()
 
 
     # Data Augmentation
@@ -143,6 +175,16 @@ def flowers_train_model(epochs, image_target_size, validation_split):
         layers.RandomZoom(0.1),
     ]
     )
+
+    # Visualize a few augmented examples by aplyting data augmentation to teh same image several times
+    plt.figure(figsize=(10, 10))
+    for images, _ in train_ds.take(1):
+        for i in range(9):
+            augmented_images = data_augmentation(images)
+            ax = plt.subplot(3, 3, i + 1)
+            plt.imshow(augmented_images[0].numpy().astype("uint8"))
+            plt.axis("off")
+
 
     # Another technique to reduce overfitting is to introduce dropout regularization to the network.
 
@@ -179,37 +221,43 @@ def flowers_train_model(epochs, image_target_size, validation_split):
     epochs=epochs
     )
 
-# determine the operating system and set the directory path accordingly
-if platform.system() == "Windows":
-    directory = "C:\\Users\\Michael Mills\\Documents\\Final Project\\Saved_Models\\"
-else:
-    directory = os.path.join(os.path.expanduser("~"), "Saved_Models")
+    # specify the directory path to create
+    directory = "/Users/michaelmills/Saved_Models/flower_model"
 
-# check if directory already exists
-if not os.path.exists(directory):
-    # create directory
-    os.makedirs(directory)
-    print(f"Directory {directory} created successfully.")
-else:
-    print(f"Directory {directory} already exists.")
+    # check if directory already exists
+    if not os.path.exists(directory):
+        # create directory
+        os.makedirs(directory)
+        print(f"Directory {directory} created successfully.")
+    else:
+        print(f"Directory {directory} already exists.")
+    # Save the entire model as a SavedModel.
 
-# create a simple Keras model
-model = keras.models.Sequential()
-model.add(keras.layers.Dense(10, input_shape=(784,)))
-model.add(keras.layers.Activation("softmax"))
+    model.save("/Users/michaelmills/Saved_Models/flower_model")
 
-# compile the model
-model.compile(optimizer="rmsprop", loss="categorical_crossentropy", metrics=["accuracy"])
+    # Visualize training results
+    acc = history.history['accuracy']
+    val_acc = history.history['val_accuracy']
 
-# fit the model on a dummy dataset
-X = [[1.0] * 784] * 1000
-y = [[1.0] + [0.0] * 9] * 1000
-model.fit(X, y, epochs=10, batch_size=32)
+    loss = history.history['loss']
+    val_loss = history.history['val_loss']
 
-# save the entire model as a SavedModel
-model.save(os.path.join(directory, "flower_model"))
+    epochs_range = range(epochs)
 
+    plt.figure(figsize=(8, 8))
+    plt.subplot(1, 2, 1)
+    plt.plot(epochs_range, acc, label='Training Accuracy')
+    plt.plot(epochs_range, val_acc, label='Validation Accuracy')
+    plt.legend(loc='lower right')
+    plt.title('Training and Validation Accuracy')
 
+    plt.subplot(1, 2, 2)
+    plt.plot(epochs_range, loss, label='Training Loss')
+    plt.plot(epochs_range, val_loss, label='Validation Loss')
+    plt.legend(loc='upper right')
+    plt.title('Training and Validation Loss')
+    plt.show()
+ 
 
 
 

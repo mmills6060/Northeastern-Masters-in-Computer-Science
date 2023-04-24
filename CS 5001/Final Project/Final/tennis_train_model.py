@@ -13,11 +13,7 @@ from tensorflow.keras.models import load_model
 
 def tennis_train_model(epochs, image_taget_size, validation_split):
     
-    if platform.system() == "Windows":
-        data_dir = pathlib.Path("CS 5001/Final Project/Final/Assets/Tennis Dataset")
-    else:
-        data_dir = pathlib.Path("CS 5001/Final Project/Final/Assets/Tennis Dataset")
-    
+    data_dir = pathlib.Path("CS 5001/Final Project/Final/Assets/Tennis Dataset")
 
     # tell me how many images there are 
     image_count = len(list(data_dir.glob('*/*.jpg')))
@@ -36,13 +32,13 @@ def tennis_train_model(epochs, image_taget_size, validation_split):
 
     # Define some parameters for the loader
     batch_size = 32
-    img_height = image_taget_size
-    img_width = image_taget_size
+    img_height = 360
+    img_width = 360
 
     # create a validation split for the model. Use 80% of the images for training and 20% for validation
     train_ds = tf.keras.utils.image_dataset_from_directory(
     data_dir,
-    validation_split=validation_split,
+    validation_split=0.2,
     subset="training",
     seed=123,
     image_size=(img_height, img_width),
@@ -51,7 +47,7 @@ def tennis_train_model(epochs, image_taget_size, validation_split):
     # create validation and use 20%
     val_ds = tf.keras.utils.image_dataset_from_directory(
     data_dir,
-    validation_split=validation_split,
+    validation_split=0.2,
     subset="validation",
     seed=123,
     image_size=(img_height, img_width),
@@ -61,6 +57,17 @@ def tennis_train_model(epochs, image_taget_size, validation_split):
     class_names = train_ds.class_names
     print(class_names)
 
+
+    # here are the first nine images from the training dataset
+    import matplotlib.pyplot as plt
+
+    plt.figure(figsize=(10, 10))
+    for images, labels in train_ds.take(1):
+        for i in range(9):
+            ax = plt.subplot(3, 3, i + 1)
+            plt.imshow(images[i].numpy().astype("uint8"))
+            plt.title(class_names[labels[i]])
+            plt.axis("off")
 
     # manually iterate over the dataset and retrieve batches of images
     for image_batch, labels_batch in train_ds:
@@ -91,19 +98,24 @@ def tennis_train_model(epochs, image_taget_size, validation_split):
     # Notice the pixel values are now in `[0,1]`.
     print(np.min(first_image), np.max(first_image))
 
+
+
+    # Create the model
+
+
     num_classes = len(class_names)
 
     model = Sequential([
-    layers.Rescaling(1./255, input_shape=(img_height, img_width, 3)),
-    layers.Conv2D(16, 3, padding='same', activation='relu'),
-    layers.MaxPooling2D(),
-    layers.Conv2D(32, 3, padding='same', activation='relu'),
-    layers.MaxPooling2D(),
-    layers.Conv2D(64, 3, padding='same', activation='relu'),
-    layers.MaxPooling2D(),
-    layers.Flatten(),
-    layers.Dense(128, activation='relu'),
-    layers.Dense(num_classes)
+        layers.Rescaling(1./255, input_shape=(img_height, img_width, 3)),
+        layers.Conv2D(16, 3, padding='same', activation='relu'),
+        layers.MaxPooling2D(),
+        layers.Conv2D(32, 3, padding='same', activation='relu'),
+        layers.MaxPooling2D(),
+        layers.Conv2D(64, 3, padding='same', activation='relu'),
+        layers.MaxPooling2D(),
+        layers.Flatten(),
+        layers.Dense(128, activation='relu'),
+        layers.Dense(num_classes)
     ])
 
 
@@ -111,13 +123,22 @@ def tennis_train_model(epochs, image_taget_size, validation_split):
     model.compile(optimizer='adam',
                     loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
                     metrics=['accuracy'])
+    
 
 
-    # determine the operating system and set the directory path accordingly
-    if platform.system() == "Windows":
-        directory = "C:\\Users\\Michael Mills\\Documents\\Final Project\\Saved_Models\\"
-    else:
-        directory = os.path.join(os.path.expanduser("~"), "Saved_Models")
+    # Model Summary
+    model.summary()
+
+
+    # Train the model
+    epochs=epochs
+    history = model.fit(
+    train_ds,
+    validation_data=val_ds,
+    epochs=epochs
+    )
+    # specify the directory path to create
+    directory = "/Users/michaelmills/Saved_Models/tennis_model"
 
     # check if directory already exists
     if not os.path.exists(directory):
@@ -126,23 +147,31 @@ def tennis_train_model(epochs, image_taget_size, validation_split):
         print(f"Directory {directory} created successfully.")
     else:
         print(f"Directory {directory} already exists.")
+    # Save the entire model as a SavedModel.
 
-    # create a simple Keras model
-    model = keras.models.Sequential()
-    model.add(keras.layers.Dense(10, input_shape=(784,)))
-    model.add(keras.layers.Activation("softmax"))
+    model.save("/Users/michaelmills/Saved_Models/tennis_model")
+    # Visualize training results
+    acc = history.history['accuracy']
+    val_acc = history.history['val_accuracy']
 
-    # compile the model
-    model.compile(optimizer="rmsprop", loss="categorical_crossentropy", metrics=["accuracy"])
+    loss = history.history['loss']
+    val_loss = history.history['val_loss']
 
-    # fit the model on a dummy dataset
-    X = [[1.0] * 784] * 1000
-    y = [[1.0] + [0.0] * 9] * 1000
-    model.fit(X, y, epochs=10, batch_size=32)
+    epochs_range = range(epochs)
 
-    # save the entire model as a SavedModel
-    model.save(os.path.join(directory, "flower_model"))
-    
+    plt.figure(figsize=(8, 8))
+    plt.subplot(1, 2, 1)
+    plt.plot(epochs_range, acc, label='Training Accuracy')
+    plt.plot(epochs_range, val_acc, label='Validation Accuracy')
+    plt.legend(loc='lower right')
+    plt.title('Training and Validation Accuracy')
+
+    plt.subplot(1, 2, 2)
+    plt.plot(epochs_range, loss, label='Training Loss')
+    plt.plot(epochs_range, val_loss, label='Validation Loss')
+    plt.legend(loc='upper right')
+    plt.title('Training and Validation Loss')
+    plt.show()
 
 
     # Data Augmentation
@@ -161,7 +190,14 @@ def tennis_train_model(epochs, image_taget_size, validation_split):
     ]
     )
 
-
+    # Visualize a few augmented examples by applying data augmentation to the same image several times
+    plt.figure(figsize=(10, 10))
+    for images, _ in train_ds.take(1):
+        for i in range(9):
+            augmented_images = data_augmentation(images)
+            ax = plt.subplot(3, 3, i + 1)
+            plt.imshow(augmented_images[0].numpy().astype("uint8"))
+            plt.axis("off")
 
 
     # Another technique to reduce overfitting is to introduce dropout regularization to the network.
@@ -169,29 +205,24 @@ def tennis_train_model(epochs, image_taget_size, validation_split):
     # When you apply dropout to a layer, it randomly drops out (by setting the activation to zero) a number of output units from the layer during the training process. 
     # Dropout takes a fractional number as its input value, in the form such as 0.1, 0.2, 0.4, etc. This means dropping out 10%, 20% or 40% of the output units randomly from the applied layer.
     # Create a new neural network with tf.keras.layers.Dropout before training it using the augmented images:
-    model = Sequential([
-    data_augmentation,
-    layers.Rescaling(1./255),
-    layers.Conv2D(16, 3, padding='same', activation='relu'),
-    layers.MaxPooling2D(),
-    layers.Conv2D(32, 3, padding='same', activation='relu'),
-    layers.MaxPooling2D(),
-    layers.Conv2D(64, 3, padding='same', activation='relu'),
-    layers.MaxPooling2D(),
-    layers.Dropout(0.2),
-    layers.Flatten(),
-    layers.Dense(128, activation='relu'),
-    layers.Dense(num_classes, name="outputs")
-    ])
+    def apply_dropoutlayer():
+        model = Sequential([
+            data_augmentation,
+            layers.Rescaling(1./255),
+            layers.Conv2D(16, 3, padding='same', activation='relu'),
+            layers.MaxPooling2D(),
+            layers.Conv2D(32, 3, padding='same', activation='relu'),
+            layers.MaxPooling2D(),
+            layers.Conv2D(64, 3, padding='same', activation='relu'),
+            layers.MaxPooling2D(),
+            layers.Dropout(0.2),
+            layers.Flatten(),
+            layers.Dense(128, activation='relu'),
+            layers.Dense(num_classes, name="outputs")
+        ])
 
 
-    checkpoint_path = "C:\\Users\\Michael Mills\\Github Repositories\\Northeastern-Masters-in-Computer-Science-4\\CS 5001\\Final Project\\Tennis\\Tensorflow_Test\\training_1\\cp.ckpt"
-    checkpoint_dir = os.path.dirname(checkpoint_path)
 
-    # Create a callback that saves the model's weights
-    cp_callback = tf.keras.callbacks.ModelCheckpoint(filepath=checkpoint_path,
-                                                    save_weights_only=True,
-                                                    verbose=1)
 
     # Compile and train the model
     model.compile(optimizer='adam',
@@ -203,22 +234,50 @@ def tennis_train_model(epochs, image_taget_size, validation_split):
     train_ds,
     validation_data=val_ds,
     epochs=epochs,
-    callbacks=[cp_callback]
     )
 
-    # specify the directory path to create
-    directory = "C:\\Users\\Michael Mills\\Documents\\Final Project\\Saved_Models\\"
 
-    # check if directory already exists
-    if not os.path.exists(directory):
-        # create directory
-        os.makedirs(directory)
-        print(f"Directory {directory} created successfully.")
-    else:
-        print(f"Directory {directory} already exists.")
-    # Save the entire model as a SavedModel.
 
-    model.save("C:\\Users\\Michael Mills\\Documents\\Final Project\\Saved_Models\\tennis_model")
+
+    # Visualize training results
+    acc = history.history['accuracy']
+    val_acc = history.history['val_accuracy']
+
+    loss = history.history['loss']
+    val_loss = history.history['val_loss']
+
+    epochs_range = range(epochs)
+
+    plt.figure(figsize=(8, 8))
+    plt.subplot(1, 2, 1)
+    plt.plot(epochs_range, acc, label='Training Accuracy')
+    plt.plot(epochs_range, val_acc, label='Validation Accuracy')
+    plt.legend(loc='lower right')
+    plt.title('Training and Validation Accuracy')
+
+    plt.subplot(1, 2, 2)
+    plt.plot(epochs_range, loss, label='Training Loss')
+    plt.plot(epochs_range, val_loss, label='Validation Loss')
+    plt.legend(loc='upper right')
+    plt.title('Training and Validation Loss')
+    plt.show()
+
+
+
+    # Predict on new data
+    Agassi_dir = "CS 5001/Final Project/Final/Assets/Test_photos/Tennis/agassi.jpeg"
+
+    img = PIL.Image.open(Agassi_dir).resize((img_height, img_width))
+    img_array = image.img_to_array(img)
+    img_array = tf.expand_dims(img_array, 0) # Create a batch
+
+    predictions = model.predict(img_array)
+    score = tf.nn.softmax(predictions[0])
+
+    print(
+        "This image most likely belongs to {} with a {:.2f} percent confidence."
+        .format(class_names[np.argmax(score)], 100 * np.max(score))
+    )
 
 def main():
     tennis_train_model()

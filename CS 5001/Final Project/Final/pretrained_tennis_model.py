@@ -10,44 +10,35 @@ from tensorflow.keras.preprocessing import image
 import pathlib
 from tensorflow.keras.models import load_model
 
-def generate_tennis_inference():
-    # Define the class names
-    class_names = ['Andre Agassi', 'Roger Federer', 'Andy Murray','Rafa Nadal', 'Andy Roddick']
+def generate_tennis_inference(model, class_names):
+    
+    # Predict on new data
+    tennis_path = "CS 5001/Final Project/Final/Assets/Test_photos/Tennis/agassi.jpeg"
 
-    # Reload a fresh Keras model from the saved model in directory
-    new_model = tf.keras.models.load_model("C:\\Users\\Michael Mills\\Documents\\Final Project\\Saved_Models\\tennis_model")
+    img = tf.keras.utils.load_img(
+        tennis_path, target_size=(360, 360)
+    )
+    img_array = tf.keras.utils.img_to_array(img)
+    img_array = tf.expand_dims(img_array, 0) # Create a batch
 
-    # Check its architecture
-    new_model.summary()
+    predictions = model.predict(img_array)
+    score = tf.nn.softmax(predictions[0])
 
-    # Preprocess the input image
-    def preprocess_image(image_path):
-        img = image.load_img(image_path, target_size=(360, 360))
-        img_array = image.img_to_array(img)
-        img_array = tf.expand_dims(img_array, 0)  # Create batch axis
-        return img_array
-
-    # Make a prediction using the loaded model
-    def predict_image(image_path, model):
-        img_array = preprocess_image(image_path)
-        prediction = model.predict(img_array)
-        return prediction
-
-    # Specify the path to the input image
-    image_path = "C:\\Users\\Michael Mills\\Documents\\Final Project\\Photos\\Tennis_Test_Photo\\test_photo.jpg"
-
-    # Make a prediction using the loaded model
-    prediction = predict_image(image_path, new_model)
-
-    # Print the predicted class name and the corresponding probability
-    predicted_class_index = np.argmax(prediction)
-    predicted_class_name = class_names[predicted_class_index]
-    print("This tennis player is most likely:", predicted_class_name)
-    print("Probability:", prediction[0][predicted_class_index])
-
+    print(
+        "This image most likely belongs to {} with a {:.2f} percent confidence."
+        .format(class_names[np.argmax(score)], 100 * np.max(score))
+    )
 
 def main():
-    generate_tennis_inference()
+    # Load the model
+    model_path = "/Users/michaelmills/Saved_Models/tennis_model"
+    model = load_model(model_path)
+
+    # Define the class names
+    class_names = ["Agassi", "Federer"]
+
+    # Generate the flower inference
+    generate_tennis_inference(model, class_names)
 
 if __name__ == "__main__":
     main()

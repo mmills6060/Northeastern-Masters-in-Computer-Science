@@ -11,6 +11,9 @@ from pretrained_zillow_model import generate_zillow_inference
 from flowers_train_model import flowers_train_model
 from tennis_train_model import tennis_train_model
 from zillow_train_model import zillow_train_model
+import pretrained_flower_model
+import pretrained_tennis_model
+import pretrained_zillow_model
 
 def refresh_dataset():
     # Implementation of refreshing dataset
@@ -48,13 +51,13 @@ def generate_inference():
     
         # Perform the selected action
         if choice == "1":
-            generate_flower_inference()
+            pretrained_flower_model.main()
             main()         
         elif choice == "2":
-            generate_tennis_inference()
+            pretrained_tennis_model.main()
             main()
         elif choice == "3":
-            generate_zillow_inference()
+            generate_zillow_inference(model, class_names)
             main()
         elif choice == "4":
             main()

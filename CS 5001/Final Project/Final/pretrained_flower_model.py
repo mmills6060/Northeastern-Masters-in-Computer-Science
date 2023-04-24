@@ -10,44 +10,35 @@ from tensorflow.keras.preprocessing import image
 import pathlib
 from tensorflow.keras.models import load_model
 
-def generate_flower_inference():
-    # Define the class names
-    class_names = ['Daisy', 'Dandelion', 'Rose', 'Sunflower', 'Tulip']
+def generate_flower_inference(model, class_names):
+    # Predict on new data
+    sunflower_url = "https://storage.googleapis.com/download.tensorflow.org/example_images/592px-Red_sunflower.jpg"
+    sunflower_path = tf.keras.utils.get_file('Red_sunflower', origin=sunflower_url)
 
-    # Reload a fresh Keras model from the saved model in directory
-    new_model = tf.keras.models.load_model("C:\\Users\\Michael Mills\\Documents\\Final Project\\Saved_Models\\flower_model")
+    img = tf.keras.utils.load_img(
+        sunflower_path, target_size=(180, 180)
+    )
+    img_array = tf.keras.utils.img_to_array(img)
+    img_array = tf.expand_dims(img_array, 0) # Create a batch
 
-    # Check its architecture
-    new_model.summary()
+    predictions = model.predict(img_array)
+    score = tf.nn.softmax(predictions[0])
 
-    # Preprocess the input image
-    def preprocess_image(image_path):
-        img = image.load_img(image_path, target_size=(180, 180))
-        img_array = image.img_to_array(img)
-        img_array = tf.expand_dims(img_array, 0)  # Create batch axis
-        return img_array
-
-    # Make a prediction using the loaded model
-    def predict_image(image_path, model):
-        img_array = preprocess_image(image_path)
-        prediction = model.predict(img_array)
-        return prediction
-
-    # Specify the path to the input image
-    image_path = "C:\\Users\\Michael Mills\\Documents\\Final Project\\Photos\\Flower_Test_Photo\\test_photo.jpg"
-
-    # Make a prediction using the loaded model
-    prediction = predict_image(image_path, new_model)
-
-    # Print the predicted class name and the corresponding probability
-    predicted_class_index = np.argmax(prediction)
-    predicted_class_name = class_names[predicted_class_index]
-    print("This flower is most likely a:", predicted_class_name)
-    print("Probability:", prediction[0][predicted_class_index])
-
+    print(
+        "This image most likely belongs to {} with a {:.2f} percent confidence."
+        .format(class_names[np.argmax(score)], 100 * np.max(score))
+    )
 
 def main():
-    generate_flower_inference()
+    # Load the model
+    model_path = "/Users/michaelmills/Saved_Models/flower_model"
+    model = load_model(model_path)
+
+    # Define the class names
+    class_names = ["Daisy", "Dandelion", "Rose", "Sunflower", "Tulip"]
+
+    # Generate the flower inference
+    generate_flower_inference(model, class_names)
 
 if __name__ == "__main__":
     main()
