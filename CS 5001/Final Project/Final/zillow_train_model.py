@@ -38,10 +38,9 @@ def zillow_train_model(epochs, image_target_size, validation_split):
                 response = requests.get(row['photo_url'])
             except:
                 print("Connection refused by the server..")
-                print("Let me sleep for 5 seconds")
-                print("ZZzzzz...")
+                print("Waiting for 5 seconds")
                 time.sleep(5)
-                print("Was a nice sleep, now let me continue...")
+                print("Continuing")
                 continue
             img = Image.open(BytesIO(response.content))
             photo_array = img.resize((224, 224))

@@ -56,8 +56,8 @@ def generate_inference():
             pretrained_tennis_model.main()
             main()
         elif choice == "3":
-            generate_zillow_inference(model, class_names)
-            main()
+            pretrained_zillow_model.generate_zillow_inference()
+            main()  
         elif choice == "4":
             main()
         
