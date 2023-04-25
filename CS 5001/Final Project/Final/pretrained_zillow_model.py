@@ -47,6 +47,6 @@ def generate_zillow_inference():
 
     # Predict on the new data
     predictions = model.predict([photo_arrays, new_data_array])
-
+    print("Predictions:")
     # Print the predictions
     print(predictions)

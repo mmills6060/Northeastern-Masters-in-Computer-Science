@@ -49,11 +49,13 @@
           </p>
           <p>Congratulations on catching the murderer!</p>
           <p><br></p>
+          <p>Click on Chapter 2 if you are ready to start the next adventure!</p>
           </p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal" dmx-on:click="modal1.hide()">Close</button>
           <button class="btn btn-primary" dmx-on:click="browser1.goto('/')">Finish</button>
+          <button class="btn btn-primary" dmx-on:click="browser1.goto('/Chapter2')">Chapter 2</button>
         </div>
       </div>
     </div>
@@ -112,7 +114,7 @@
               <a class="dropdown-item" href="/Quiz_1">Quiz 1</a>
               <a class="dropdown-item" href="/Quiz_2">Quiz 2</a>
             </div>
-          </div><a class="nav-item nav-link" href="/Topics">Topics</a><a class="nav-item nav-link" dmx-on:click="browser1.goto('/Acknowledgements')" dmx-bind:href="'/Acknowledgements'">Acknowledgements</a><a class="nav-item nav-link" href="/contact">Contact</a>
+          </div><a class="nav-item nav-link" href="/Topics">Topics</a><a class="nav-item nav-link" dmx-on:click="browser1.goto('/Acknowledgements')" dmx-bind:href="'/Acknowledgements'">Acknowledgements</a>
         </div>
       </div>
     </div>
@@ -142,39 +144,37 @@
               <p>You know that the victim was a computer scientist, so you suspect that these numbers might be some code in binary. Try to convert the code to a decimal number. It might lead you to the killer.</p>
             </div>
           </div>
+          <div class="row">
+            <form id="form1">
+              <h4>Choose an Answer</h4>
+              <div class="form-group bg-light">
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" value="" id="radio4" name="radio1" dmx-bind:checked="value+'=radio4'" dmx-on:click="radio4.setValue(value+'=radio4')">
+                  <label class="form-check-label" for="radio4">83</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" value="" id="radio3" name="radio1">
+                  <label class="form-check-label" for="radio3">51</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" value="" id="radio2" name="radio1">
+                  <label class="form-check-label" for="radio2">43</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" value="" id="radio1" name="radio1">
+                  <label class="form-check-label" for="radio1">91</label>
+                </div><button id="btn2" class="btn mt-2 btn-primary" dmx-on:click="run([{condition:{if:`form1.radio2.checked`,then:{steps:{run:{action:`modal1.show()`}}}}},{condition:{if:`form1.radio1.checked`,then:{steps:{run:{action:`modal2.show()`}}}}},{condition:{if:`form1.radio3.checked`,then:{steps:{run:{action:`modal2.show()`}}}}},{condition:{if:`form1.radio4.checked`,then:{steps:{run:{action:`modal2.show()`}}}}}])">Submit</button>
+              </div>
+
+
+
+
+
+            </form>
+          </div>
         </div>
         <div class="col-12 col-md-6">
           <img class="wappler-type-picture w-100 img-fluid" height="500" src="/assets/images/cpt1Detective.png">
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <form id="form1">
-            <h4>Choose an Answer</h4>
-            <div class="form-group bg-light">
-              <div class="form-check">
-                <input class="form-check-input" type="radio" value="" id="radio4" name="radio1" dmx-bind:checked="value+'=radio4'" dmx-on:click="radio4.setValue(value+'=radio4')">
-                <label class="form-check-label" for="radio4">43</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" value="" id="radio3" name="radio1" dmx-bind:checked="value+'=radio3'">
-                <label class="form-check-label" for="radio3">51</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" value="" id="radio2" name="radio1" dmx-bind:checked="value+'=radio2'">
-                <label class="form-check-label" for="radio2">83</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" value="" id="radio1" name="radio1" dmx-bind:checked="value+'=radio1'">
-                <label class="form-check-label" for="radio1">91</label>
-              </div><button id="btn2" class="btn mt-2 btn-primary" dmx-on:click="run([{condition:{if:`form1.radio2.checked`,then:{steps:{run:{action:`modal1.show()`}}}}},{condition:{if:`form1.radio1.checked`,then:{steps:{run:{action:`modal2.show()`}}}}},{condition:{if:`form1.radio3.checked`,then:{steps:{run:{action:`modal2.show()`}}}}},{condition:{if:`form1.radio4.checked`,then:{steps:{run:{action:`modal2.show()`}}}}}])">Submit</button>
-            </div>
-
-
-
-
-
-          </form>
         </div>
       </div>
     </div>

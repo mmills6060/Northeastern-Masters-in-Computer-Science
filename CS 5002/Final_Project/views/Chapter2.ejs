@@ -53,11 +53,13 @@
           <p>Therefore, the number 364 in base 10 (decimal) is equal to 1030 in base 7.</p>
           </p>
           <p><br></p>
+          <p>Looks like you are doing well with this topic, click on Quiz 2 to test your mastery in the topic.&nbsp;</p>
           </p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal" dmx-on:click="modal1.hide()">Close</button>
           <button class="btn btn-primary" dmx-on:click="browser1.goto('/')">Finish</button>
+          <button class="btn btn-primary" dmx-on:click="browser1.goto('/Quiz_2')">Quiz 2</button>
         </div>
       </div>
     </div>
@@ -124,7 +126,7 @@
               <a class="dropdown-item" href="/Quiz_1">Quiz 1</a>
               <a class="dropdown-item" href="/Quiz_2">Quiz 2</a>
             </div>
-          </div><a class="nav-item nav-link" href="/Topics">Topics</a><a class="nav-item nav-link" dmx-on:click="browser1.goto('/Acknowledgements')" dmx-bind:href="'/Acknowledgements'">Acknowledgements</a><a class="nav-item nav-link" href="/contact">Contact</a>
+          </div><a class="nav-item nav-link" href="/Topics">Topics</a><a class="nav-item nav-link" dmx-on:click="browser1.goto('/Acknowledgements')" dmx-bind:href="'/Acknowledgements'">Acknowledgements</a>
         </div>
       </div>
     </nav>
@@ -158,15 +160,15 @@
                 <label class="form-check-label" for="radio1">1130</label>
               </div>
               <div class="form-check">
-                <input class="form-check-input" type="radio" value="" id="radio2" name="radio1" dmx-bind:checked="value+'=radio2'">
+                <input class="form-check-input" type="radio" value="" id="radio2" name="radio1">
                 <label class="form-check-label" for="radio2">1030</label>
               </div>
               <div class="form-check">
-                <input class="form-check-input" type="radio" value="" id="radio3" name="radio1" dmx-bind:checked="value+'=radio3'">
+                <input class="form-check-input" type="radio" value="" id="radio3" name="radio1">
                 <label class="form-check-label" for="radio3">1139</label>
               </div>
               <div class="form-check">
-                <input class="form-check-input" type="radio" value="" id="radio4" name="radio1" dmx-bind:checked="value+'=radio4'" dmx-on:click="radio4.setValue(value+'=radio4')">
+                <input class="form-check-input" type="radio" value="" id="radio4" name="radio1" dmx-on:click="radio4.setValue(value+'=radio4')">
                 <label class="form-check-label" for="radio4">3011</label>
               </div>
 

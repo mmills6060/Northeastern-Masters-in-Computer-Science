@@ -50,11 +50,13 @@
           <p>
           </p>
           <p><br></p>
+          <p>Congratulations on completing all chapters and quizzes. Click on Acknowledgements to view a conclusion to the project.&nbsp;</p>
           </p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal" dmx-on:click="modal1.hide()">Close</button>
           <button class="btn btn-primary" dmx-on:click="browser1.goto('/')">Finish</button>
+          <button class="btn btn-primary" dmx-on:click="browser1.goto('/Acknowledgements')">Acknowledgements</button>
         </div>
       </div>
     </div>
@@ -109,7 +111,7 @@
               <a class="dropdown-item" href="/Quiz_1">Quiz 1</a>
               <a class="dropdown-item" href="/Quiz_2">Quiz 2</a>
             </div>
-          </div><a class="nav-item nav-link" href="/Topics">Topics</a><a class="nav-item nav-link" dmx-on:click="browser1.goto('/Acknowledgements')" dmx-bind:href="'/Acknowledgements'">Acknowledgements</a><a class="nav-item nav-link" href="/contact">Contact</a>
+          </div><a class="nav-item nav-link" href="/Topics">Topics</a><a class="nav-item nav-link" dmx-on:click="browser1.goto('/Acknowledgements')" dmx-bind:href="'/Acknowledgements'">Acknowledgements</a>
         </div>
       </div>
     </div>
@@ -142,15 +144,15 @@
                 <label class="form-check-label" for="radio4">52700</label>
               </div>
               <div class="form-check">
-                <input class="form-check-input" type="radio" value="" id="radio3" name="radio1" dmx-bind:checked="value+'=radio3'">
+                <input class="form-check-input" type="radio" value="" id="radio3" name="radio1">
                 <label class="form-check-label" for="radio3">5702</label>
               </div>
               <div class="form-check">
-                <input class="form-check-input" type="radio" value="" id="radio2" name="radio1" dmx-bind:checked="value+'=radio2'">
+                <input class="form-check-input" type="radio" value="" id="radio2" name="radio1">
                 <label class="form-check-label" for="radio2">5207</label>
               </div>
               <div class="form-check">
-                <input class="form-check-input" type="radio" value="" id="radio1" name="radio1" dmx-bind:checked="value+'=radio1'">
+                <input class="form-check-input" type="radio" value="" id="radio1" name="radio1">
                 <label class="form-check-label" for="radio1">5000</label>
               </div><button id="btn2" class="btn mt-2 btn-primary" dmx-on:click="run([{condition:{if:`form1.radio2.checked`,then:{steps:{run:{action:`modal1.show()`}}}}},{condition:{if:`form1.radio1.checked`,then:{steps:{run:{action:`modal2.show()`}}}}},{condition:{if:`form1.radio3.checked`,then:{steps:{run:{action:`modal2.show()`}}}}},{condition:{if:`form1.radio4.checked`,then:{steps:{run:{action:`modal2.show()`}}}}}])">Submit</button>
             </div>
