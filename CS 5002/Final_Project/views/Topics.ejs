@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <script src="/dmxAppConnect/dmxAppConnect.js"></script>
+  <meta name="ac:route" content="/Topics">
+  <base href="/">
+  <!-- Required meta tags -->
+  <title>Discrete Structures Final Project</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+  <!-- Custom CSS styles-->
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="/dmxAppConnect/dmxBootstrap4Navigation/dmxBootstrap4Navigation.js" defer></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/summernote/dist/summernote-bs4.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/summernote/dist/summernote-bs4.min.js" defer></script>
+  <script src="/dmxAppConnect/dmxSummernote/dmxSummernote.js" defer></script>
+  <script src="/dmxAppConnect/dmxBrowser/dmxBrowser.js" defer></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/summernote/dist/summernote-lite.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/summernote/dist/summernote-lite.min.js" defer></script>
+  <link rel="stylesheet" href="/dmxAppConnect/dmxPreloader/dmxPreloader.css" />
+  <script src="/dmxAppConnect/dmxPreloader/dmxPreloader.js" defer></script>
+  <script src="/dmxAppConnect/dmxBootstrap4Collapse/dmxBootstrap4Collapse.js" defer></script>
+  <link rel="stylesheet" href="/dmxAppConnect/dmxSlideshow/dmxSlideshow.css" />
+  <script src="/dmxAppConnect/dmxSlideshow/dmxSlideshow.js" defer></script>
+  <link rel="stylesheet" href="/dmxAppConnect/dmxSlideshow/themes/default.css" />
+</head>
+
+<body is="dmx-app" id="Topics">
+  <div is="dmx-browser" id="browser1"></div>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid"> <a class="navbar-brand" href="#">CS 5002: Discrete Structures</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+
+        <div class="navbar-nav w-100 flex-row justify-content-end">
+          <a class="nav-item nav-link" href="/">Home</a>
+
+
+
+          <div class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="dropdown1" role="button" aria-haspopup="true" aria-expanded="false">Stories</a>
+            <div class="dropdown-menu" aria-labelledby="dropdown1">
+              <a class="dropdown-item" href="/Chapter_1">Chapter 1</a>
+              <a class="dropdown-item" href="/Chapter2">Chapter 2</a>
+            </div>
+          </div>
+          <div class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="dropdown2" role="button" aria-haspopup="true" aria-expanded="false">Quizzes</a>
+            <div class="dropdown-menu" aria-labelledby="dropdown1">
+              <a class="dropdown-item" href="/Quiz_1">Quiz 1</a>
+              <a class="dropdown-item" href="/Quiz_2">Quiz 2</a>
+            </div>
+          </div><a class="nav-item nav-link" href="/Topics">Topics</a><a class="nav-item nav-link" dmx-on:click="browser1.goto('/Acknowledgements')" dmx-bind:href="'/Acknowledgements'">Acknowledgements</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <header id="page-header">
+    <div class="jumbotron">
+      <h1 class="display-3">Topics</h1>
+      <p class="lead">This is a great resource to use as you work your way through the stories and quizzes.</p>
+      <hr class="my-4">
+    </div>
+
+  </header>
+  <section id="description" class="bg-light">
+    <div class="container">
+      <div class="row">
+        <div class="col-2">
+          <ul class="nav flex-column justify-content-start nav-pills align-content-start flex-wrap" id="navTabs1_tabs" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="navTabs1_1_tab" data-toggle="tab" href="#" data-target="#navTabs1_1" role="tab" aria-controls="navTabs1_1" aria-selected="true">Number Representation</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="navTabs1_2_tab" data-toggle="tab" href="#" data-target="#navTabs1_2" role="tab" aria-controls="navTabs1_2" aria-selected="false">Number Conversion</a>
+            </li>
+            <li class="nav-item">
+            </li>
+          </ul>
+        </div>
+        <div class="col">
+          <div class="tab-content" id="navTabs1_content">
+            <div class="tab-pane fade show active" id="navTabs1_1" role="tabpanel">
+              <div class="container">
+                <div class="accordion" id="accordion1">
+                  <div class="card">
+                    <div class="card-header" id="accordion1_headingOne">
+                      <h5 class="mb-0">
+                        <button id="accordion1_collapseOne_Btn" class="btn btn-light" data-toggle="collapse" data-target="#accordion1_collapseOne" aria-expanded="true" aria-controls="collapseOne">Decimal Notation</button>
+                      </h5>
+                    </div>
+                    <div id="accordion1_collapseOne" class="collapse" is="dmx-bs4-collapse" show="true" aria-labelledby="accordion1_headingOne" data-parent="#accordion1">
+                      <div class="container">
+                        <p>In our daily lives, we use ten digits from 0 to 9 to represent numbers. Each digit represents a power of 10, with the rightmost digit representing 10⁰, the second rightmost representing 10¹, and so on. This is called decimal presentation. For example, the number 135 consists of one hundred, three tens, and five ones.&nbsp;</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card">
+                    <div class="card-header" id="accordion1_headingTwo">
+                      <h5 class="mb-0">
+                        <button id="accordion1_collapseTwo_Btn" class="btn collapsed btn-light" type="button" data-toggle="collapse" data-target="#accordion1_collapseTwo" aria-expanded="false" aria-controls="collapseTwo">Binary Notation</button>
+                      </h5>
+                    </div>
+                    <div id="accordion1_collapseTwo" class="collapse" is="dmx-bs4-collapse" aria-labelledby="accordion1_headingTwo" data-parent="#accordion1">
+                      <div class="container">
+                        <p>There are actually many other ways to represent numbers. In the Binary system, numbers are only represented in two digits: 0, 1. It follows a similar rule as decimal representation. Each digit in a binary number represents a power of 2, with the rightmost digit representing 2⁰, the second rightmost representing 2¹, and so on.
+                        <p><br></p>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card">
+                    <div class="card-header" id="accordion1_headingThree">
+                      <h5 class="mb-0">
+                        <button id="accordion1_collapseThree_Btn" class="btn collapsed btn-light" type="button" data-toggle="collapse" data-target="#accordion1_collapseThree" aria-expanded="false" aria-controls="collapseThree">Hexadecimal Notation</button>
+                      </h5>
+                    </div>
+                    <div id="accordion1_collapseThree" class="collapse" is="dmx-bs4-collapse" aria-labelledby="accordion1_headingThree" data-parent="#accordion1">
+                      <div class="container">
+                        <p>In the Hexadecimal system, we use 16 digits from 0 to 9 and letters A to F to represent numbers. Each digit in a hexadecimal number represents a power of 16, with the rightmost digit representing 16⁰, the second rightmost representing 16¹, and so on.
+                        <p><br></p>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="navTabs1_2" role="tabpanel">
+              <div class="container">
+                <div class="accordion" id="accordion2">
+                  <div class="card">
+                    <div class="card-header" id="accordion1_headingOne1">
+                      <h5 class="mb-0">
+                        <button id="accordion1_collapseOne_Btn1" class="btn btn-light" data-toggle="collapse" data-target="#accordion1_collapseOne1" aria-expanded="true" aria-controls="collapseOne">Definition</button>
+                      </h5>
+                    </div>
+                    <div id="accordion1_collapseOne1" class="collapse" is="dmx-bs4-collapse" show="true" aria-labelledby="accordion1_headingOne" data-parent="#accordion2">
+                      <div class="container">
+                        <p>Numeric conversion refers to the process of changing a number from one base (or number system) to another. In our daily lives, decimal (base-10) numbers are what we use, which means that we use 10 digits (0-9) to represent numbers. However, there are many other number systems that are used in various fields as shown in the previous chapter, including binary (base-2), octal (base-8), and hexadecimal (base-16) numbers.</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card">
+                    <div class="card-header" id="accordion1_headingTwo1">
+                      <h5 class="mb-0">
+                        <button id="accordion1_collapseTwo_Btn1" class="btn collapsed btn-light" data-toggle="collapse" data-target="#accordion1_collapseTwo1" aria-expanded="false" aria-controls="collapseTwo">Converting from one base to another</button>
+                      </h5>
+                    </div>
+                    <div id="accordion1_collapseTwo1" class="collapse" is="dmx-bs4-collapse" aria-labelledby="accordion1_headingTwo" data-parent="#accordion2">
+                      <div class="container">
+                        <p>To convert a number from one base to another, we need to understand how the digits in the original number represent its value, and then apply the same principle in the new base. For example, in binary numbers, each digit represents a power of 2, starting with 2^0 on the right-hand side.&nbsp;</p>
+                        <p>So the binary number 1011 represents the value of 1x(2^3) + 0x(2^2) + 1x(2^1) + 1x(2^0), which is 11 in decimal (base-10)&nbsp;</p>
+                        <p></p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card">
+                    <div class="card-header" id="accordion1_headingThree1">
+                      <h5 class="mb-0">
+                        <button id="accordion1_collapseThree_Btn1" class="btn collapsed btn-light" data-toggle="collapse" data-target="#accordion1_collapseThree1" aria-expanded="false" aria-controls="collapseThree">Converting a Decimal from one base to another</button>
+                      </h5>
+                    </div>
+                    <div id="accordion1_collapseThree1" class="collapse" is="dmx-bs4-collapse" aria-labelledby="accordion1_headingThree" data-parent="#accordion2">
+                      <div class="container">
+                        <p>In the Hexadecimal system, we use 16 digits from 0 to 9 and letters A to F to represent numbers. Each digit in a hexadecimal number represents a power of 16, with the rightmost digit representing 16⁰, the second rightmost representing 16¹, and so on.
+                        </p>
+                        <p>To convert a decimal number from one base to another, we would use an approach that involves dividing the original number by the new base and tracking the remainders. We continue this process until the quotient is zero, and then read the remainders in reverse order to get the new number. For example, to convert the decimal number 25 to binary, we would divide it by 2 as follows:
+                        <p>
+                        </p>
+                        <p>25 / 2 = 12 remainder 1
+                        </p>
+                        <p>12 / 2 = 6 remainder 0
+                        </p>
+                        <p>6 / 2 = 3 remainder 0
+                        </p>
+                        <p>3 / 2 = 1 remainder 1
+                        </p>
+                        <p>1 / 2 = 0 remainder 1
+                        </p>
+                        <p>So the binary representation of 25 is 11001.
+                        </p>
+                        <p><br></p>
+                        </p>
+                        <p></p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card">
+                    <div class="card-header" id="accordion1_headingThree2">
+                      <h5 class="mb-0">
+                        <button id="accordion1_collapseThree_Btn2" class="btn collapsed btn-light" data-toggle="collapse" data-target="#accordion1_collapseThree2" aria-expanded="false" aria-controls="collapseThree">Converting a number from Binary to Decimal</button>
+                      </h5>
+                    </div>
+                    <div id="accordion1_collapseThree2" class="collapse" is="dmx-bs4-collapse" aria-labelledby="accordion1_headingThree" data-parent="#accordion2">
+                      <div class="container">
+                        <p>Similarly, to convert a number from binary to decimal, we can multiply each digit by the corresponding power of 2 and add up the results. To convert a number from octal to decimal, we can multiply each digit by the corresponding power of 8 and add up the results. And to convert a number from hexadecimal to decimal, we can multiply each digit by the corresponding power of 16 and add up the results
+                        <p>
+                        </p>
+                        <p>Another method with different example:
+                        </p>
+                        <p>Converting 6076 to base 6
+                        </p>
+                        <p>(6076) = ( ????)6
+                        </p>
+                        <p>Solution: 6076/6 = 1012
+                        </p>
+                        <p>6076 – 1012 x 6 = 4
+                        </p>
+                        <p>1012/6 = 168
+                        </p>
+                        <p>1012 – 168 x 6 = 4 168/6 = 28
+                        </p>
+                        <p>168 – 28 x 6 = 0
+                        </p>
+                        <p>28/ 6 = 4
+                        </p>
+                        <p>28 – 4 x 6 = 4
+                        </p>
+                        <p>4/6 = 0
+                        </p>
+                        <p>4 – 0x 6=4 Answer: 44044
+                        </p>
+                        <p>(6076) = (44044)6</p>
+                        </p>
+                        <p>
+                        </p>
+                        <p><br></p>
+                        <p></p>
+                        <p></p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card">
+                    <div class="card-header" id="accordion1_headingThree3">
+                      <h5 class="mb-0">
+                        <button id="accordion1_collapseThree_Btn3" class="btn collapsed btn-light" data-toggle="collapse" data-target="#accordion1_collapseThree3" aria-expanded="false" aria-controls="collapseThree">Conclusion</button>
+                      </h5>
+                    </div>
+                    <div id="accordion1_collapseThree3" class="collapse" is="dmx-bs4-collapse" aria-labelledby="accordion1_headingThree" data-parent="#accordion2">
+                      <div class="container">
+                        <p>To recap last chapter and what makes this different, number representation is about how a number is written or expressed in a particular number system, while numeric conversion is about changing a number from one number system to another.</p>
+                        <p>
+                        </p>
+                        <p></p>
+                        <p>
+                        </p>
+                        <p><br></p>
+                        <p></p>
+                        <p></p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <dmx-preloader id="preloader1"></dmx-preloader>
+    </div>
+
+
+
+  </section>
+  <footer id="page-footer" class="bg-light">
+  </footer>
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+</body>
+
+</html>

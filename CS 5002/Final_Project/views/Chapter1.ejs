@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <script src="/dmxAppConnect/dmxAppConnect.js"></script>
+  <meta name="ac:route" content="/Chapter_1">
+  <base href="/">
+  <!-- Required meta tags -->
+  <title>Discrete Structures Final Project</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+  <!-- Custom CSS styles-->
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="/dmxAppConnect/dmxBootstrap4Navigation/dmxBootstrap4Navigation.js" defer></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/summernote/dist/summernote-bs4.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/summernote/dist/summernote-bs4.min.js" defer></script>
+  <script src="/dmxAppConnect/dmxSummernote/dmxSummernote.js" defer></script>
+  <script src="/dmxAppConnect/dmxBrowser/dmxBrowser.js" defer></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/summernote/dist/summernote-lite.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/summernote/dist/summernote-lite.min.js" defer></script>
+  <script src="/dmxAppConnect/dmxBootstrap4Modal/dmxBootstrap4Modal.js" defer></script>
+  <link rel="stylesheet" href="/dmxAppConnect/dmxAnimateCSS/animate.min.css" />
+  <script src="/dmxAppConnect/dmxAnimateCSS/dmxAnimateCSS.js" defer></script>
+  <link rel="stylesheet" href="/dmxAppConnect/dmxPreloader/dmxPreloader.css" />
+  <script src="/dmxAppConnect/dmxPreloader/dmxPreloader.js" defer></script>
+</head>
+
+<body is="dmx-app" id="Chapter1">
+  <div class="modal fade" id="modal1" is="dmx-bs4-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h5 class="modal-title">Congratulations!</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>The coordinates were indeed (17, 29).</p>
+          <img src="/assets/images/cpt1Defeated.png" class="img-fluid">
+          <p>With this new information, the people of Decimal, Binary, and Hexadecimal worked together to destroy the secret weapon and defeat the bad guy.
+          <p>
+          </p>
+          <p>They also realized that by learning about each other's cultures, they could create a better universe where no one was left behind.
+          </p>
+          <p><br></p>
+          <p>Looks like you are doing pretty well with this topic, click on Quiz 1 to test your mastery.</p>
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" dmx-on:click="modal1.hide()">Close</button>
+          <button class="btn btn-primary" dmx-on:click="browser1.goto('/')">Finish</button>
+          <button class="btn btn-primary" dmx-on:click="browser1.goto('/Quiz_1')">Quiz 1</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="modal2" is="dmx-bs4-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h5 class="modal-title">Oh no!</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true"></span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>The coordinates were incorrect!&nbsp;</p>
+          <img src="/assets/images/cpt1Destroy.png" class="img-fluid">
+          <p>The bad guy arrived and started to use his powerful weapon to destroy everything.&nbsp;</p>
+          <p>
+          </p>
+          <p>Just when all hope seemed lost, Alan appeared once again! He said, "Don't worry, I can send you back in time. But this time, you need to work together and figure it out quickly. Are you ready to try again?"</p>
+          <p><br></p>
+          <p></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" dmx-on:click="browser1.goto('/')">No</button>
+          <button class="btn btn-primary" dmx-on:click="modal2.hide()">Yes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div is="dmx-browser" id="browser1"></div>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <dmx-preloader id="preloader1"></dmx-preloader> <a class="navbar-brand" href="#">CS 5002: Discrete Structures</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+
+        <div class="navbar-nav w-100 flex-row justify-content-end">
+          <a class="nav-item nav-link" href="/">Home</a>
+
+
+
+          <div class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="dropdown1" role="button" aria-haspopup="true" aria-expanded="false">Stories</a>
+            <div class="dropdown-menu" aria-labelledby="dropdown1">
+              <a class="dropdown-item" href="/Chapter_1">Chapter 1</a>
+              <a class="dropdown-item" href="/Chapter2">Chapter 2</a>
+            </div>
+          </div>
+          <div class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="dropdown2" role="button" aria-haspopup="true" aria-expanded="false">Quizzes</a>
+            <div class="dropdown-menu" aria-labelledby="dropdown1">
+              <a class="dropdown-item" href="/Quiz_1">Quiz 1</a>
+              <a class="dropdown-item" href="/Quiz_2">Quiz 2</a>
+            </div>
+          </div><a class="nav-item nav-link" href="/Topics">Topics</a><a class="nav-item nav-link" dmx-on:click="browser1.goto('/Acknowledgements')" dmx-bind:href="'/Acknowledgements'">Acknowledgements</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <header id="page-header">
+    <div class="jumbotron">
+      <h1 class="display-3" style="font-size: 60px; font-weight: bold;">Chapter 1: The Secret Weapon</h1>
+      <p class="lead">Three planets, Decimal, Binary, and Hexadecimal, each have their own way of representing numbers. The planets unite to defeat a super bad guy with a secret weapon, but they cannot communicate with each other due to their different number systems.</p>
+      <hr class="my-4">
+    </div>
+
+  </header>
+  <section id="description" class="bg-light">
+    <div class="container wappler-block pt-4 pb-4">
+      <div class="row">
+        <div class="col-12 col-md-6 ">
+
+
+          <p>Once upon a time, in a galaxy far, far away, there were three planets called Decimal, Binary, and Hexadecimal. Each planet had its own way of representing numbers. On the Decimal planet, the people used numbers like we do, but on the Binary planet, they used only 1s and 0s, and on the Hexadecimal planet, they used a combination of numbers and letters.</p>
+          <br><br>
+          <p>For example, the number 46 meant forty-six on the Decimal planet, but on the Binary planet, it was 101110, and on the Hexadecimal planet, it was 2E.</p>
+
+          <img class="wappler-type-picture mb-3 mr-3 float-right" width="320" src="/assets/images/cpt1BadGuy.png">
+
+          <br><br>
+          <p>For centuries, these planets rarely interacted with each other. But one day, a super bad guy appeared with a powerful secret weapon. He wanted to use this weapon to destroy everything in the universe. The people from the three planets knew they had to work together to defeat him. But they had a problem: Their number systems were so different, they couldn't communicate with each other.</p>
+
+          <br><br>
+          <p>That's when a superhero named Alan appeared. He was multilingual and knew how to convert between different number representations. To help the people from the three planets communicate with each other, he taught them how to convert their numbers to decimals.</p>
+          <p><br></p>
+          <p><br></p>
+          <img class="wappler-type-picture mb-3 mr-3 float-left" width="320" src="/assets/images/cpt1Hero.png">
+          <br><br>
+          <p>Alan explained that just like in decimal numbers, each digit corresponds to a power of 10, in binary numbers, each digit corresponds to a power of 2. To convert from binary to decimal, they just needed to multiply each digit by its corresponding power of 2 and add up the results. For example, to convert the binary number 110 to a decimal number, they just needed to do 1 x 2² + 1 x 2¹ + 0 x 2⁰, which equals 6.</p>
+          <p><br></p>
+          <p><br></p>
+          </p>
+
+
+
+        </div>
+        <div class="col-12 col-md-6">
+
+
+
+          <img class="wappler-type-picture mb-3 mr-3 float-right" width="540" src="/assets/images/cpt1Transfer.png">
+          <p>Alan also explained that people on the Hexadecimal planet used numbers 0-9 and letters A-F to represent decimal numbers 0-16. To convert from hexadecimal to decimal, they only needed to multiply each digit by its corresponding power of 16 and add up the results. For example, to convert the hexadecimal number C3 to a decimal number, since C represents 12 in decimal, they just needed to do 12 x 16¹ + 3 x 16⁰, which equals 195.</p>
+          <br><br>
+          <p>Now that people from all three planets could communicate in decimals, Alan revealed a piece of code that contained the coordinates of the bad guy's secret weapon: (10001, 1D). He challenged the people of Decimal, Binary, and Hexadecimal to work together to use what they had learned to find the coordinates and destroy the weapon.</p>
+
+          <br><br>
+          <p>After Alan disappeared, the people worked hard to convert the code to decimal numbers, and finally, they found the coordinates:____.</p>
+          <form id="form1">
+            <h1>Choose an Answer</h1>
+            <div class="form-group bg-light">
+              <div class="form-check">
+                <input class="form-check-input" type="radio" value="" id="radio4" name="radio1" dmx-bind:checked="value+'=radio4'" dmx-on:click="radio4.setValue(value+'=radio4')">
+                <label class="form-check-label" for="radio4">(29, 5)</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" value="" id="radio3" name="radio1">
+                <label class="form-check-label" for="radio3">(29, 17)</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" value="" id="radio2" name="radio1">
+                <label class="form-check-label" for="radio2">(17, 29)</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" value="" id="radio1" name="radio1">
+                <label class="form-check-label" for="radio1">(5, 29)</label>
+              </div><button id="btn2" class="btn mt-2 btn-primary" dmx-on:click="run([{condition:{if:`form1.radio2.checked`,then:{steps:{run:{action:`modal1.show()`}}}}},{condition:{if:`form1.radio1.checked`,then:{steps:{run:{action:`modal2.show()`}}}}},{condition:{if:`form1.radio3.checked`,then:{steps:{run:{action:`modal2.show()`}}}}},{condition:{if:`form1.radio4.checked`,then:{steps:{run:{action:`modal2.show()`}}}}}])">Submit</button>
+            </div>
+
+
+
+
+
+          </form>
+
+          </p>
+
+
+
+
+        </div>
+      </div>
+    </div>
+  </section>
+  <footer id="page-footer" class="bg-light">
+  </footer>
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+</body>
+
+</html>
