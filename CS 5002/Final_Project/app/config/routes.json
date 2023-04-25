@@ -16,10 +16,6 @@
       "routeType": "page"
     },
     {
-      "path": "/contact",
-      "page": "contact"
-    },
-    {
       "path": "/Chapter_1",
       "page": "Chapter1"
     },
