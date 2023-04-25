@@ -11,43 +11,38 @@ import pathlib
 from tensorflow.keras.models import load_model
 
 def generate_zillow_inference():
-    # Define the class names
-    class_names = ['1000', '2000', '3000', '4000', '5000', '6000', '7000', '8000', '9000', '10000']
+    # Load the saved model
+    model = load_model("/Users/michaelmills/Saved_Models/zillow_model")
 
-    # Reload a fresh Keras model from the saved model in directory
-    new_model = tf.keras.models.load_model("C:\\Users\\Michael Mills\\Documents\\Final Project\\Saved_Models\\zillow_model")
+    # Load the new data
+    new_data = pd.read_csv("/Users/michaelmills/Zillow_Dataset/mini-zillow.csv", names=["photo_url", "price", "beds", "baths", "sqft", "doz", "zpid"])
 
-    # Check its architecture
-    new_model.summary()
+    batch_size = 100
+    photo_arrays = []
+    # Loop through each batch of rows in the DataFrame, extract the photo_url, load the image from the URL, convert it to a NumPy array, and append it to the list
+    for i in range(0, len(new_data), batch_size):
+        batch = new_data[i:i+batch_size]
+        batch_arrays = []
+        for index, row in batch.iterrows():
+            response = requests.get(row['photo_url'])
+            img = Image.open(BytesIO(response.content))
+            photo_array = img.resize((360, 360))
+            photo_array = np.array(img)
+            batch_arrays.append(photo_array)
+        photo_arrays.append(np.array(batch_arrays))
+        print ("Loaded batch", i, "of", len(new_data))
+        
+    # Concatenate the list of arrays into a single NumPy array
+    photo_arrays = np.concatenate(photo_arrays, axis=0)
+    # Remove any columns that are not needed for prediction
+    new_data = new_data.drop(['photo_url', 'zpid', 'price'], axis=1)
 
-    # Preprocess the input image
-    def preprocess_image(image_path):
-        img = image.load_img(image_path, target_size=(360, 360))
-        img_array = image.img_to_array(img)
-        img_array = tf.expand_dims(img_array, 0)  # Create batch axis
-        return img_array
-
-    # Make a prediction using the loaded model
-    def predict_image(image_path, model):
-        img_array = preprocess_image(image_path)
-        prediction = model.predict(img_array)
-        return prediction
-
-    # Specify the path to the input image
-    image_path = "C:\\Users\\Michael Mills\\Documents\\Final Project\\Photos\\Zillow_Test_Photo\\test_photo.jpg"
-
-    # Make a prediction using the loaded model
-    prediction = predict_image(image_path, new_model)
-
-    # Print the predicted class name and the corresponding probability
-    predicted_class_index = np.argmax(prediction)
-    predicted_class_name = class_names[predicted_class_index]
-    print("Predicted class:", predicted_class_name)
-    print("Probability:", prediction[0][predicted_class_index])
+    # Convert the new data into a NumPy array
+    new_data_array = np.array(new_data)
 
 
-def main():
-    generate_zillow_inference()
+    # Predict on the new data
+    predictions = model.predict([photo_arrays, new_data_array])
 
-if __name__ == "__main__":
-    main()
+    # Print the predictions
+    print(predictions)
