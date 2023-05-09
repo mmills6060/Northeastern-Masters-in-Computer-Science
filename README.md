@@ -8,3 +8,13 @@ Introduces systematic problem solving through programming. Offers students an op
 Introduces the mathematical structures and methods that form the foundation of computer science. Studies structures such as sets, tuples, sequences, lists, trees, and graphs. Discusses functions, relations, ordering, and equivalence relations. Examines inductive and recursive definitions of structures and functions. Covers principles of proof such as truth tables, inductive proof, and basic logic and the counting techniques and arguments needed to estimate the size of sets, the growth of functions, and the space-time complexity of algorithms. Also, discusses data structures such as arrays, stacks, queues, lists, and the algorithms that manipulate them.
 # CS 5003: Recitation for Intensive Foundations of Computer Science
 Provides a small-group discussion format to cover material in CS 5001.
+# CS 5004: Object-oriented Design
+The course provides an intensive tour of class-based program design and the design of abstractions that support the design of reusable software and libraries. It reviews typical object-oriented concepts such as information hiding, encapsulation and various forms of
+polymorphism. It contrasts the use of inheritance and composition as dual techniques for software reuse. It provides a deeper understanding of object-oriented design using the use of graphical design notations such as UML and object-oriented design patterns. It also examines the
+relationship between algorithms and data structures, as well as basic techniques for analyzing algorithm complexity. Finally, it emphasizes testing, specifically unit testing of components.
+# CS 5005: Recitation for CS 5004
+Provides a small-group discussion format to cover material in CS 5004.
+# CS 5008: Data Str, Algo & App in CmpSys
+This course presents an integrated approach to the study of data structures, algorithms, and their applications within computer systems. We introduce a variety of systems-related topics (models of computation, computer architecture, compilation, system software) and fundamental techniques for solving algorithms (divide-and-conquer, dynamic programming, graph algorithms) as they apply to computer systems. The integration of topics is demonstrated through the implementation of fundamental data structures (lists, queues, trees, maps, graphs) in the C programming language. Additional breadth topics can include programming applications that expose students to primitives of different subsystems such as multi-threading.
+# CS 5009: Recitation for CS 5008
+Provides a small-group discussion format to cover material in CS 5008.
