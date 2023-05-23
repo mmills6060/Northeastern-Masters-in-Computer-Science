@@ -22,7 +22,6 @@ public class Payroll_Test {
         Assertions.assertEquals(40.0, employee.getHoursWorked());
  
     }
-
     @Test
     public void testToString() {
         Employee employee = new Employee("Tiger Woods", 25.0);
