@@ -4,5 +4,6 @@
         "matplotlib"
     ],
     "workbench.colorTheme": "Abyss",
-    "workbench.preferredDarkColorTheme": "Abyss"
+    "workbench.preferredDarkColorTheme": "Abyss",
+    "java.debug.settings.onBuildFailureProceed": true
 }
