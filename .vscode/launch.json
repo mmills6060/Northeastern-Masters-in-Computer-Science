@@ -9,7 +9,25 @@
             "name": "Main",
             "request": "launch",
             "mainClass": "Main",
-            "projectName": "Northeastern-Masters-in-Computer-Science_e2de957f"
+            "projectName": "Northeastern-Masters-in-Computer-Science_4400925c"
+        },
+        {
+            "type": "java",
+            "name": "Launch Game Logic",
+            "request": "launch",
+            "mainClass": "/Users/michaelmills/Documents/GitHub/Northeastern-Masters-in-Computer-Science/CS 5005/Lab 4: Block Factories/Main.class"
+        },
+        {
+            "type": "java",
+            "name": "Launch Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "Launch Java Program",
+            "request": "launch",
+            "mainClass": ""
         }
     ]       
 }
