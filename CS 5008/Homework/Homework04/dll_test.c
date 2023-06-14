@@ -114,14 +114,11 @@ int unitTest5(int status)
 int unitTest6(int status)
 {
     dll_t *myDLL = create_dll();
-
     if (myDLL != NULL)
     {
         printf("Test create_dll 1 passed. DLL created successfully.\n");
-
         // Additional assertions or tests can be performed here
-
-        // Clean up the DLL after testing
+        // Free DLL after testing
         free_dll(myDLL);
     }
     else
@@ -134,10 +131,8 @@ int unitTest6(int status)
 int unitTest7(int status)
 {
     dll_t *myDLL = create_dll();
-
     // Perform additional tests or assertions based on your requirements
-
-    // Clean up the DLL after testing
+    // Free DLL after testing
     free_dll(myDLL);
 }
 
@@ -145,23 +140,20 @@ int unitTest7(int status)
 int unitTest8(int status)
 {
     dll_t *myDLL = create_dll();
-
     int isEmpty = dll_empty(myDLL);
-
     if (isEmpty == 1)
     {
-        printf("Test dll_empty 1 passed. DLL is empty.\n");
+        printf("Test passed. DLL is empty.\n");
     }
     else if (isEmpty == 0)
     {
-        printf("Test dll_empty 1 failed. DLL is not empty.\n");
+        printf("Test failed DLL is not empty.\n");
     }
     else
     {
-        printf("Test dll_empty 1 failed. DLL is NULL.\n");
+        printf("Test failed DLL is NULL.\n");
     }
-
-    // Clean up the DLL after testing
+    // Free DLL after testing
     free_dll(myDLL);
 }
 
@@ -169,10 +161,8 @@ int unitTest8(int status)
 int unitTest9(int status)
 {
     dll_t *myDLL = create_dll();
-
     // Perform additional tests or assertions based on your requirements
-
-    // Clean up the DLL after testing
+    // Free DLL after testing
     free_dll(myDLL);
 }
 
@@ -180,14 +170,11 @@ int unitTest9(int status)
 int unitTest10(int status)
 {
     node_t *myNode = create_node(5);
-
     if (myNode != NULL)
     {
         printf("Test create_node 1 passed. Node created successfully.\n");
-
         // Additional assertions or tests can be performed here
-
-        // Clean up the node after testing
+        // Free DLL after testing
         free(myNode);
     }
     else
@@ -200,9 +187,7 @@ int unitTest10(int status)
 int unitTest11(int status)
 {
     node_t *myNode = create_node(5);
-
     // Perform additional tests or assertions based on your requirements
-
     // Clean up the node after testing
     free(myNode);
 }
@@ -211,11 +196,8 @@ int unitTest11(int status)
 int unitTest12(int status)
 {
     dll_t *myDLL = create_dll();
-
     int item = 42;
-
     int result = dll_push_front(myDLL, item);
-
     if (result == 1)
     {
         printf("Test dll_push_front 1 passed. Item %d pushed to the front.\n", item);
@@ -228,8 +210,7 @@ int unitTest12(int status)
     {
         printf("Test dll_push_front 1 failed. DLL is NULL.\n");
     }
-
-    // Clean up the DLL after testing
+    // Free DLL after testing
     free_dll(myDLL);
 }
 
@@ -237,10 +218,8 @@ int unitTest12(int status)
 int unitTest13(int status)
 {
     dll_t *myDLL = create_dll();
-
     // Perform additional tests or assertions based on your requirements
-
-    // Clean up the DLL after testing
+    // Free DLL after testing
     free_dll(myDLL);
 }
 
@@ -248,11 +227,8 @@ int unitTest13(int status)
 int unitTest14(int status)
 {
     dll_t *myDLL = create_dll();
-
     int item = 42;
-
     int result = dll_push_back(myDLL, item);
-
     if (result == 1)
     {
         printf("Test dll_push_back 1 passed. Item %d pushed to the back.\n", item);
@@ -265,8 +241,7 @@ int unitTest14(int status)
     {
         printf("Test dll_push_back 1 failed. DLL is NULL.\n");
     }
-
-    // Clean up the DLL after testing
+    // Free DLL after testing
     free_dll(myDLL);
 }
 
@@ -274,10 +249,21 @@ int unitTest14(int status)
 int unitTest15(int status)
 {
     dll_t *myDLL = create_dll();
-
-    // Perform additional tests or assertions based on your requirements
-
-    // Clean up the DLL after testing
+    int item = 65;
+    int result = dll_push_back(myDLL, item);
+    if (result == 1)
+    {
+        printf("Test dll_push_back 1 passed. Item %d pushed to the back.\n", item);
+    }
+    else if (result == 0)
+    {
+        printf("Test dll_push_back 1 failed. Unable to push item %d to the back.\n", item);
+    }
+    else
+    {
+        printf("Test dll_push_back 1 failed. DLL is NULL.\n");
+    }
+    // Free DLL after testing
     free_dll(myDLL);
 }
 
@@ -287,12 +273,21 @@ int unitTest16(int status)
     dll_t *myDLL = create_dll();
 
     // Populate the DLL with some nodes
+    dll_push_back(myDLL, 1);
+    dll_push_back(myDLL, 2);
+    dll_push_back(myDLL, 3);
 
     // Perform dll_pop_front and check the result
+    int frontValue = dll_pop_front(myDLL);
 
-    // Perform additional tests or assertions based on your requirements
+    // Perform additional tests or assertions
+    if (frontValue == 1) {
+        printf("dll_pop_front test passed.\n");
+    } else {
+        printf("dll_pop_front test failed.\n");
+    }
 
-    // Clean up the DLL after testing
+    // Free DLL after testing
     free_dll(myDLL);
 }
 
@@ -302,12 +297,23 @@ int unitTest17(int status)
     dll_t *myDLL = create_dll();
 
     // Populate the DLL with some nodes
+    dll_push_back(myDLL, 1);
+    dll_push_back(myDLL, 2);
+    dll_push_back(myDLL, 3);
 
     // Perform dll_pop_front and check the result
+    int frontValue = dll_pop_front(myDLL);
 
-    // Perform additional tests or assertions based on your requirements
+    // Perform additional tests or assertions
+    // Example: Check if the size of the DLL is correct
+    int size = dll_size(myDLL);
+    if (frontValue == 1 && size == 2) {
+        printf("dll_pop_front test passed.\n");
+    } else {
+        printf("dll_pop_front test failed.\n");
+    }
 
-    // Clean up the DLL after testing
+    // Free DLL after testing
     free_dll(myDLL);
 }
 
@@ -317,12 +323,21 @@ int unitTest18(int status)
     dll_t *myDLL = create_dll();
 
     // Populate the DLL with some nodes
+    dll_push_back(myDLL, 1);
+    dll_push_back(myDLL, 2);
+    dll_push_back(myDLL, 3);
 
     // Perform dll_pop_back and check the result
+    int backValue = dll_pop_back(myDLL);
 
-    // Perform additional tests or assertions based on your requirements
+    // Perform additional tests or assertions
+    if (backValue == 3) {
+        printf("dll_pop_back test passed.\n");
+    } else {
+        printf("dll_pop_back test failed.\n");
+    }
 
-    // Clean up the DLL after testing
+    // Free DLL after testing
     free_dll(myDLL);
 }
 
@@ -332,12 +347,23 @@ int unitTest19(int status)
     dll_t *myDLL = create_dll();
 
     // Populate the DLL with some nodes
+    dll_push_back(myDLL, 1);
+    dll_push_back(myDLL, 2);
+    dll_push_back(myDLL, 3);
 
     // Perform dll_pop_back and check the result
+    int backValue = dll_pop_back(myDLL);
 
-    // Perform additional tests or assertions based on your requirements
+    // Perform additional tests or assertions
+    // Example: Check if the size of the DLL is correct
+    int size = dll_size(myDLL);
+    if (backValue == 3 && size == 2) {
+        printf("dll_pop_back test passed.\n");
+    } else {
+        printf("dll_pop_back test failed.\n");
+    }
 
-    // Clean up the DLL after testing
+    // Free DLL after testing
     free_dll(myDLL);
 }
 
@@ -347,12 +373,22 @@ int unitTest20(int status)
     dll_t *myDLL = create_dll();
 
     // Populate the DLL with some nodes
+    dll_push_back(myDLL, 1);
+    dll_push_back(myDLL, 3);
 
     // Perform dll_insert and check the result
+    dll_insert(myDLL, 1, 2);
 
-    // Perform additional tests or assertions based on your requirements
+    // Perform additional tests or assertions
+    // Example: Check if the size of the DLL is correct
+    int size = dll_size(myDLL);
+    if (size == 3) {
+        printf("dll_insert test passed.\n");
+    } else {
+        printf("dll_insert test failed.\n");
+    }
 
-    // Clean up the DLL after testing
+    // Free DLL after testing
     free_dll(myDLL);
 }
 
@@ -362,12 +398,22 @@ int unitTest21(int status)
     dll_t *myDLL = create_dll();
 
     // Populate the DLL with some nodes
+    dll_push_back(myDLL, 1);
+    dll_push_back(myDLL, 3);
 
     // Perform dll_insert and check the result
+    dll_insert(myDLL, 1, 2);
 
-    // Perform additional tests or assertions based on your requirements
+    // Perform additional tests or assertions
+    // Example: Check if the inserted node has the correct value
+    int value = dll_get(myDLL, 1);
+    if (value == 2) {
+        printf("dll_insert test passed.\n");
+    } else {
+        printf("dll_insert test failed.\n");
+    }
 
-    // Clean up the DLL after testing
+    // Free DLL after testing
     free_dll(myDLL);
 }
 
@@ -377,12 +423,21 @@ int unitTest22(int status)
     dll_t *myDLL = create_dll();
 
     // Populate the DLL with some nodes
+    dll_push_back(myDLL, 1);
+    dll_push_back(myDLL, 2);
+    dll_push_back(myDLL, 3);
 
     // Perform dll_get and check the result
+    int value = dll_get(myDLL, 1);
 
-    // Perform additional tests or assertions based on your requirements
+    // Perform additional tests or assertions
+    if (value == 2) {
+        printf("dll_get test passed.\n");
+    } else {
+        printf("dll_get test failed.\n");
+    }
 
-    // Clean up the DLL after testing
+    // Free DLL after testing
     free_dll(myDLL);
 }
 
@@ -392,12 +447,22 @@ int unitTest23(int status)
     dll_t *myDLL = create_dll();
 
     // Populate the DLL with some nodes
+    dll_push_back(myDLL, 1);
+    dll_push_back(myDLL, 2);
+    dll_push_back(myDLL, 3);
 
     // Perform dll_get and check the result
+    int value = dll_get(myDLL, 1);
 
-    // Perform additional tests or assertions based on your requirements
+    // Perform additional tests or assertions
+    // Example: Check if the value at the specified index is correct
+    if (value == 2) {
+        printf("dll_get test passed.\n");
+    } else {
+        printf("dll_get test failed.\n");
+    }
 
-    // Clean up the DLL after testing
+    // Free DLL after testing
     free_dll(myDLL);
 }
 
@@ -407,12 +472,21 @@ int unitTest24(int status)
     dll_t *myDLL = create_dll();
 
     // Populate the DLL with some nodes
+    dll_push_back(myDLL, 1);
+    dll_push_back(myDLL, 2);
+    dll_push_back(myDLL, 3);
 
     // Perform dll_remove and check the result
+    int removedValue = dll_remove(myDLL, 1);
 
-    // Perform additional tests or assertions based on your requirements
+    // Perform additional tests or assertions
+    if (removedValue == 2) {
+        printf("dll_remove test passed.\n");
+    } else {
+        printf("dll_remove test failed.\n");
+    }
 
-    // Clean up the DLL after testing
+    // Free DLL after testing
     free_dll(myDLL);
 }
 
@@ -422,12 +496,23 @@ int unitTest25(int status)
     dll_t *myDLL = create_dll();
 
     // Populate the DLL with some nodes
+    dll_push_back(myDLL, 1);
+    dll_push_back(myDLL, 2);
+    dll_push_back(myDLL, 3);
 
     // Perform dll_remove and check the result
+    int removedValue = dll_remove(myDLL, 1);
 
-    // Perform additional tests or assertions based on your requirements
+    // Perform additional tests or assertions
+    // Example: Check if the size of the DLL is correct after removal
+    int size = dll_size(myDLL);
+    if (removedValue == 2 && size == 2) {
+        printf("dll_remove test passed.\n");
+    } else {
+        printf("dll_remove test failed.\n");
+    }
 
-    // Clean up the DLL after testing
+    // Free DLL after testing
     free_dll(myDLL);
 }
 
@@ -437,12 +522,21 @@ int unitTest26(int status)
     dll_t *myDLL = create_dll();
 
     // Populate the DLL with some nodes
+    dll_push_back(myDLL, 1);
+    dll_push_back(myDLL, 2);
+    dll_push_back(myDLL, 3);
 
     // Perform dll_size and check the result
+    int size = dll_size(myDLL);
 
-    // Perform additional tests or assertions based on your requirements
+    // Perform additional tests or assertions
+    if (size == 3) {
+        printf("dll_size test passed.\n");
+    } else {
+        printf("dll_size test failed.\n");
+    }
 
-    // Clean up the DLL after testing
+    // Free DLL after testing
     free_dll(myDLL);
 }
 
@@ -452,48 +546,66 @@ int unitTest27(int status)
     dll_t *myDLL = create_dll();
 
     // Populate the DLL with some nodes
+    dll_push_back(myDLL, 1);
+    dll_push_back(myDLL, 2);
+    dll_push_back(myDLL, 3);
 
     // Perform dll_size and check the result
+    int size = dll_size(myDLL);
 
-    // Perform additional tests or assertions based on your requirements
+    // Perform additional tests or assertions
+    // Example: Check if the size of the DLL is correct
+    if (size == 3) {
+        printf("dll_size test passed.\n");
+    } else {
+        printf("dll_size test failed.\n");
+    }
 
-    // Clean up the DLL after testing
+    // Free DLL after testing
     free_dll(myDLL);
 }
+
 
 // Test free_dll 1
 int unitTest28(int status)
 {
-    dll_t *myDLL = create_dll();
-
+     dll_t *myDLL = create_dll();
+    // Perform additional operations on the DLL before freeing it
+    // Insert some nodes into the DLL
+    dll_push_back(myDLL, 1);
+    dll_push_back(myDLL, 2);
+    // remove a node from the DLL
+    dll_remove(myDLL, 1);
+    // Get the size of the DLL before freeing it
+    int sizeBefore = dll_size(myDLL);
     // Perform free_dll and check if the DLL is successfully freed
+    free_dll(myDLL);
 
-    free_dll(myDLL); 
-   // Perform additional tests or assertions based on your requirements
+
 }
-
 // Test free_dll 2
 int unitTest29(int status)
 {
     dll_t *myDLL = create_dll();
-
+    // Perform additional operations on the DLL before freeing it
+    // Insert some nodes into the DLL
+    dll_push_back(myDLL, 1);
+    dll_push_back(myDLL, 2);
+    // Get the size of the DLL before freeing it
+    int sizeBefore = dll_size(myDLL);
     // Perform free_dll and check if the DLL is successfully freed
+    free_dll(myDLL);
 
-    // Perform additional tests or assertions based on your requirements
-    free_dll(myDLL); 
 }
 
 // Test print_dll 1
 int unitTest30(int status)
 {
     dll_t *myDLL = create_dll();
-
     // Populate the DLL with some nodes
-
     printf("Test print_dll 1: ");
     print_dll(myDLL);
-
-    // Clean up the DLL after testing
+    // Free DLL after testing
     free_dll(myDLL);
 }
 
@@ -501,13 +613,10 @@ int unitTest30(int status)
 int unitTest31(int status)
 {
     dll_t *myDLL = create_dll();
-
     // Populate the DLL with some nodes
-
     printf("Test print_dll 2: ");
     print_dll(myDLL);
-
-    // Clean up the DLL after testing
+    // Free DLL after testing
     free_dll(myDLL);
 }
 
