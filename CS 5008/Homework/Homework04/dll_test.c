@@ -9,7 +9,7 @@
 #include <stdio.h>  // For IO operations
 #include <stdlib.h> // for malloc/free
 #include "my_dll.h"
-
+#include <assert.h>
 
 // A sample collection of tests for your program
 // We will be adding our own to test your program.
@@ -619,6 +619,75 @@ int unitTest31(int status)
     // Free DLL after testing
     free_dll(myDLL);
 }
+int unitTest32(int status)
+{
+    dll_t *myDLL = create_dll();
+
+    // Populate the DLL with some nodes
+    dll_push_back(myDLL, 10);
+    dll_push_back(myDLL, 20);
+    dll_push_back(myDLL, 30);
+    dll_push_back(myDLL, 40);
+    dll_push_back(myDLL, 50);
+
+    // Test retrieving values at different positions
+    int value1 = dll_get(myDLL, 0);   // Get value at position 0
+    int value2 = dll_get(myDLL, 2);   // Get value at position 2
+    int value3 = dll_get(myDLL, 4);   // Get value at position 4
+
+    // Perform assertions to check the retrieved values
+    assert(value1 == 10);
+    assert(value2 == 30);
+    assert(value3 == 50);
+
+    // Free DLL after testing
+    free_dll(myDLL);
+}
+// Test to insert nodes at various spots
+int unitTest33(int status)
+{
+    dll_t *myDLL = create_dll();
+
+    // Populate the DLL with initial nodes
+    dll_push_back(myDLL, 10);
+    dll_push_back(myDLL, 20);
+    dll_push_back(myDLL, 30);
+
+    // Insert nodes at various positions
+    dll_insert(myDLL, 1, 15);   // Insert node with value 15 at position 1
+    dll_insert(myDLL, 3, 25);   // Insert node with value 25 at position 3
+    dll_insert(myDLL, 0, 5);    // Insert node with value 5 at position 0
+
+    // Perform assertions or additional tests based on your requirements
+    // ...
+
+    // Free DLL after testing
+    free_dll(myDLL);
+}
+
+// Test to remove nodes at various spots
+int unitTest34(int status)
+{
+    dll_t *myDLL = create_dll();
+
+    // Populate the DLL with some nodes
+    dll_push_back(myDLL, 10);
+    dll_push_back(myDLL, 20);
+    dll_push_back(myDLL, 30);
+    dll_push_back(myDLL, 40);
+    dll_push_back(myDLL, 50);
+
+    // Remove nodes at various positions
+    dll_remove(myDLL, 2);   // Remove node at position 2
+    dll_remove(myDLL, 4);   // Remove node at position 4
+    dll_remove(myDLL, 0);   // Remove node at position 0
+
+    // Perform assertions or additional tests based on your requirements
+    // ...
+
+    // Free DLL after testing
+    free_dll(myDLL);
+}
 
 // An array of function pointers to all of the tests
 // that main() can use iterate over them.
@@ -657,6 +726,9 @@ int (*unitTests[])(int) = {
     unitTest29,
     unitTest30,
     unitTest31,
+    unitTest32,
+    unitTest33,
+    unitTest34,
     NULL};
 
 // ====================================================

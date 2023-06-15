@@ -14,6 +14,7 @@
 #ifndef MYDLL_H
 #define MYDLL_H
 
+#include <stdio.h>
 #include <stdlib.h>
 
 // Create a node data structure to store data within
@@ -209,35 +210,55 @@ int dll_pop_back(dll_t* l) {
 //  * we tried to insert at a negative location.
 //  * we tried to insert past the size of the list
 //   (inserting at the size should be equivalent as calling push_back).
-int dll_insert(dll_t* l, int pos, int item) {
-    if (l == NULL || pos < 0 || pos > l->count) {
-        return 0;   // Invalid parameters
+int dll_insert(dll_t* l, int pos, int data) {
+    if (l == NULL) {
+        return -1;  // Invalid list
     }
 
+    if (pos < 0 || pos > l->count) {
+        return 0;  // Failure: Invalid position
+    }
+
+    node_t* newNode = (node_t*)malloc(sizeof(node_t));
+    if (newNode == NULL) {
+        return 0;  // Failure: Unable to allocate memory for new node
+    }
+
+    newNode->data = data;
+
     if (pos == 0) {
-        return dll_push_front(l, item);
+        newNode->next = l->head;
+        newNode->previous = NULL;
+
+        if (l->head != NULL) {
+            l->head->previous = newNode;
+        } else {
+            l->tail = newNode;
+        }
+
+        l->head = newNode;
     } else if (pos == l->count) {
-        return dll_push_back(l, item);
+        newNode->next = NULL;
+        newNode->previous = l->tail;
+
+        l->tail->next = newNode;
+        l->tail = newNode;
     } else {
         node_t* currentNode = l->head;
         for (int i = 0; i < pos; i++) {
             currentNode = currentNode->next;
         }
 
-        node_t* newNode = create_node(item);
-        if (newNode == NULL) {
-            return 0;   // Unable to allocate memory for the new node
-        }
-
-        newNode->previous = currentNode->previous;
         newNode->next = currentNode;
+        newNode->previous = currentNode->previous;
+
         currentNode->previous->next = newNode;
         currentNode->previous = newNode;
-
-        l->count++;
-
-        return 1;
     }
+
+    l->count++;
+
+    return 1;  // Success
 }
 
 // Returns the item at position pos starting at 0 ( 0 being the first item )
@@ -248,8 +269,12 @@ int dll_insert(dll_t* l, int pos, int item) {
 //  * we tried to get past the size of the list
 // Assume no negative numbers in the list or the number zero.
 int dll_get(dll_t* l, int pos) {
-    if (l == NULL || pos < 0 || pos >= l->count) {
-        return -1;  // Invalid parameters
+    if (l == NULL) {
+        return -1;  // Invalid list
+    }
+
+    if (pos < 0 || pos >= l->count) {
+        return 0;  // Failure: Invalid position
     }
 
     node_t* currentNode = l->head;
@@ -268,29 +293,37 @@ int dll_get(dll_t* l, int pos) {
 // Assume no negative numbers in the list or the number zero.
 // Otherwise returns the value of the node removed.
 int dll_remove(dll_t* l, int pos) {
-    if (l == NULL || pos < 0 || pos >= l->count) {
-        return -1;  // Invalid parameters
+    if (l == NULL) {
+        return -1;  // Invalid list
     }
 
-    if (pos == 0) {
-        return dll_pop_front(l);
-    } else if (pos == l->count - 1) {
-        return dll_pop_back(l);
+    if (pos < 0 || pos >= l->count) {
+        return 0;  // Failure: Invalid position
+    }
+
+    node_t* currentNode = l->head;
+    for (int i = 0; i < pos; i++) {
+        currentNode = currentNode->next;
+    }
+
+    int removedValue = currentNode->data;
+
+    if (currentNode == l->head) {
+        l->head = currentNode->next;
     } else {
-        node_t* currentNode = l->head;
-        for (int i = 0; i < pos; i++) {
-            currentNode = currentNode->next;
-        }
-
-        int data = currentNode->data;
         currentNode->previous->next = currentNode->next;
-        currentNode->next->previous = currentNode->previous;
-
-        free(currentNode);
-        l->count--;
-
-        return data;
     }
+
+    if (currentNode == l->tail) {
+        l->tail = currentNode->previous;
+    } else {
+        currentNode->next->previous = currentNode->previous;
+    }
+
+    free(currentNode);
+    l->count--;
+
+    return removedValue;
 }
 // DLL Size
 // Returns -1 if the DLL is NULL.
