@@ -11,5 +11,10 @@
         "CS 5005/Lab 2: Employee Paycheck",
         "CS 5005/Lab 1: Hello World",
         "CS 5005/Lab 3: Library Card"
-    ]
+    ],
+    "files.associations": {
+        "sort_helper.h": "c"
+    },
+    "workbench.colorCustomizations": {}
+    
 }
