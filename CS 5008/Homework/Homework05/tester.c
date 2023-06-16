@@ -42,7 +42,7 @@ double sort_and_time(int *array, int size, int type, int print)
     return (end.tv_nsec - begin.tv_nsec) / 1000000000.0 +
            (end.tv_sec - begin.tv_sec);
 }
-
+  
 int main(int argc, char const *argv[])
 {
     if (!(argc > 2 && argc < 5))

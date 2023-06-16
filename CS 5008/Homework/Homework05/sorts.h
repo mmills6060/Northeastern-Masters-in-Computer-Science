@@ -39,17 +39,32 @@ int findMinimum(int *array, int start, int stop)
 // Output: No value is returned, but 'array' should be modified to store a sorted array of numbers.
 void selectionSortIntegers(int *array, unsigned int size, int print)
 {
-    unsigned int i;
-    for (i = 0; i < size - 1; i++)
-    {
-        int minIndex = findMinimum(array, i, size - 1);
-        swap(&array[i], &array[minIndex]);
-        if (print)
-        {
-            printf("Iteration %d: ", i + 1);
-            printIntArray(array, size);
-        }
+  // Loop over each element in the array, starting from the second element.
+  for (unsigned int i = 1; i < size; i++) {
+
+    // Set the minimum element to be sorted.
+    int min_element = i;
+
+    // Loop over the elements before the current element, and find the minimum element.
+    for (unsigned int j = i - 1; j >= 0; j--) {
+      if (array[j] < array[min_element]) {
+        min_element = j;
+      }
     }
+
+    // Swap the current element with the minimum element.
+    int temp = array[i];
+    array[i] = array[min_element];
+    array[min_element] = temp;
+
+    // If the 'print' flag is set, print out the array after each iteration.
+    if (print) {
+      for (unsigned int k = 0; k < size; k++) {
+        printf("%d ", array[k]);
+      }
+      printf("\n");
+    }
+  }
 }
 
 /***  Code for Insertion Sort ***/
@@ -67,17 +82,24 @@ void selectionSortIntegers(int *array, unsigned int size, int print)
 // Output: No value is returned, but 'array' should be modified to store a sorted array of numbers.
 void insertionSortIntegers(int *array, unsigned int size, int print)
 {
-    if (array == NULL)
-    {
-        printf("Error: Invalid array\n");
-        return;
+  // Loop over each element in the array, starting from the second element.
+  for (int i = 1; i < size; i++) {
+
+    // Set the current element to be sorted.
+    int key = array[i];
+
+    // Loop over the elements before the current element, and move them up if they are greater than the current element.
+    int j = i - 1;
+    while (j >= 0 && array[j] > key) {
+      array[j + 1] = array[j];
+      j--;
     }
-    else
-    {
-        printf("Success");
-    }
-    
+
+    // Finally, insert the current element into the correct position.
+    array[j + 1] = key;
+  }
 }
+
 /** Code for Bubble Sort (from Lab -if not compiling, comment out the internals, but leave the function definition) ***/
 
 // =============== Sort Function ==============
