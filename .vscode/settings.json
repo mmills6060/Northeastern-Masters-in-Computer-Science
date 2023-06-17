@@ -7,10 +7,7 @@
     "workbench.preferredDarkColorTheme": "Abyss",
     "java.debug.settings.onBuildFailureProceed": true,
     "java.project.sourcePaths": [
-        "CS 5005/Lab 4: Block Factories",
-        "CS 5005/Lab 2: Employee Paycheck",
-        "CS 5005/Lab 1: Hello World",
-        "CS 5005/Lab 3: Library Card"
+        "CS 5005/Lab 5_Automated_Block_Factories"
     ],
     "files.associations": {
         "sort_helper.h": "c"
