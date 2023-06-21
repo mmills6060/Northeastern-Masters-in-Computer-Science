@@ -1,49 +1,29 @@
-import java.util.Random;
-import java.lang.Math;
+public class WoodBlockFactory implements Factory {
+    private double binWeight;
 
-/*
-creates a class woodblockfactory
-
-
-*/
-public class WoodBlockFactory implements Factory<Block>, Factory {
-    private int woodCount;
-
-    public WoodBlockFactory() {
-        woodCount = 0;
+    public void takeResource(Object resource) {
+        if (resource instanceof Resource) {
+            Resource woodResource = (Resource) resource;
+            if (woodResource.getType() == ResourceType.WOOD) {
+                binWeight += woodResource.getWeight();
+            } else {
+                throw new IllegalArgumentException("Invalid resource type. Expected wood.");
+            }
+        } else {
+            throw new IllegalArgumentException("Invalid resource object. Expected Resource.");
+        }
     }
 
-    @Override
-    public void takeResource(Object obj) throws InvalidResourceException {
-        if (obj == null) {
-            throw new InvalidResourceException("Invalid resource. Null object cannot be accepted.");
-        }
-
-        if (!(obj instanceof Resource)) {
-            throw new InvalidResourceException("Invalid resource. Only Resource objects can be accepted.");
-        }
-
-        Resource resource = (Resource) obj;
-
-        if (resource.getType() != ResourceType.WOOD) {
-            throw new InvalidResourceException("Invalid resource type. Only wood resources are accepted.");
-        }
-
-        woodCount++;
-    }
-
-    @Override
     public Block produce() {
-        if (woodCount > 0) {
-            woodCount--;
-            return new Block(ResourceType.WOOD);
+        if (binWeight >= Const.WOOD_BLOCK_WEIGHT) {
+            binWeight -= Const.WOOD_BLOCK_WEIGHT;
+            return new WoodBlock(binWeight, null);
+        } else {
+            return null;
         }
+    }
 
-        return null;
+    public void displayInventory() {
+        System.out.println(binWeight);
     }
 }
-
-
-
-
-

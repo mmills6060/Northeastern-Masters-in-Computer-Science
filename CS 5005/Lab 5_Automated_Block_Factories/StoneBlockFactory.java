@@ -1,48 +1,29 @@
-import java.util.Random;
-import java.lang.Math;
+public class StoneBlockFactory implements Factory {
+    private double binWeight;
 
-/*
-creates a stone block factory class
-
-*/
-public class StoneBlockFactory implements Factory<Block>, Factory {
-    private int stoneCount;
-
-    public StoneBlockFactory() {
-        stoneCount = 0;
+    public void takeResource(Object resource) {
+        if (resource instanceof Resource) {
+            Resource stoneResource = (Resource) resource;
+            if (stoneResource.getType() == ResourceType.STONE) {
+                binWeight += stoneResource.getWeight();
+            } else {
+                throw new IllegalArgumentException("Invalid resource type. Expected stone.");
+            }
+        } else {
+            throw new IllegalArgumentException("Invalid resource object. Expected Resource.");
+        }
     }
 
-    @Override
-    public void takeResource(Object obj) throws InvalidResourceException {
-        if (obj == null) {
-            throw new InvalidResourceException("Invalid resource. Null object cannot be accepted.");
-        }
-
-        if (!(obj instanceof Resource)) {
-            throw new InvalidResourceException("Invalid resource. Only Resource objects can be accepted.");
-        }
-
-        Resource resource = (Resource) obj;
-
-        if (resource.getType() != ResourceType.STONE) {
-            throw new InvalidResourceException("Invalid resource type. Only stone resources are accepted.");
-        }
-
-        stoneCount++;
-    }
-
-    @Override
     public Block produce() {
-        if (stoneCount > 0) {
-            stoneCount--;
-            return new Block(ResourceType.STONE);
+        if (binWeight >= Const.STONE_BLOCK_WEIGHT) {
+            binWeight -= Const.STONE_BLOCK_WEIGHT;
+            return new StoneBlock(binWeight, null);
+        } else {
+            return null;
         }
+    }
 
-        return null;
+    public void displayInventory() {
+        System.out.println(binWeight);
     }
 }
-
-
-
-
-

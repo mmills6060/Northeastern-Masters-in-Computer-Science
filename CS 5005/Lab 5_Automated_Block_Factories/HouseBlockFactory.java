@@ -1,31 +1,46 @@
 public class HouseBlockFactory implements Factory {
-    private static final int STONE_BLOCKS_REQUIRED = 5;
-    private static final int WOOD_BLOCKS_REQUIRED = 10;
-    
     private int stoneBlockAccumulator;
     private int woodBlockAccumulator;
-    
-    public class HouseFactory() {
-        stoneBlockAccumulator = 0;
-        woodBlockAccumulator = 0;
+
+    @Override
+    public void takeResource(Object resource) {
+        try {
+            if (resource instanceof Block) {
+                Block block = (Block) resource;
+                ResourceType type = block.getType();
+
+                switch (type) {
+                    case STONE:
+                        stoneBlockAccumulator++;
+                        break;
+                    case WOOD:
+                        woodBlockAccumulator++;
+                        break;
+                }
+            } else {
+                // Handle the case where the resource is not a Block (if needed)
+                System.out.println("Invalid resource type: " + resource.getClass().getName());
+            }
+        } catch (IllegalArgumentException e) {
+            System.out.println("Invalid resource: " + resource);
+            e.printStackTrace(); // Print the stack trace for debugging purposes
+        }
     }
-    
-    public void takeResource(Object obj) throws InvalidBlockException {
-        if (!(obj instanceof Block)) {
-            throw new InvalidBlockException("Invalid object. Only blocks can be accepted.");
+
+    @Override
+    public Block produce() {
+        if (stoneBlockAccumulator >= Const.STONE_WEIGHT && woodBlockAccumulator >= Const.WOOD_WEIGHT) {
+            stoneBlockAccumulator -= Const.STONE_WEIGHT;
+            woodBlockAccumulator -= Const.WOOD_WEIGHT;
+            return new HouseBlock(null, null);
+        } else {
+            return new NullBlock(); // Return a special NullBlock indicating that a block couldn't be produced
         }
-        
-        Block block = (Block) obj;
-        
-        switch (block.getType()) {
-            case STONE:
-                stoneBlockAccumulator++;
-                break;
-            case WOOD:
-                woodBlockAccumulator++;
-                break;
-            default:
-                throw new InvalidBlockException("Invalid block type. Only stone and wood blocks are accepted.");
-        }
+    }
+
+    @Override
+    public void displayInventory() {
+        System.out.println("Stone block accumulator: " + stoneBlockAccumulator);
+        System.out.println("Wood block accumulator: " + woodBlockAccumulator);
     }
 }
