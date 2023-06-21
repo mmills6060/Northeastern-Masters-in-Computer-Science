@@ -1,3 +1,6 @@
+/*
+ defines the weight of each type of block
+ */
 public class Const {
     public static final int STONE_BLOCK_WEIGHT = 5;
     public static final int WOOD_BLOCK_WEIGHT = 2;

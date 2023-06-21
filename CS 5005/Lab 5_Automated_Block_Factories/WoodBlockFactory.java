@@ -1,3 +1,7 @@
+/*
+Defines woodblockfactory. implements factory. produces woodbblocks if there are sufficient resources. 
+*/
+
 public class WoodBlockFactory implements Factory {
     private double binWeight;
 
@@ -22,7 +26,7 @@ public class WoodBlockFactory implements Factory {
             return null;
         }
     }
-
+// displays current bin weight
     public void displayInventory() {
         System.out.println(binWeight);
     }

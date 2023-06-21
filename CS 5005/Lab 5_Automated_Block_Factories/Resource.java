@@ -1,3 +1,6 @@
+/*
+Defines a resource and assigns its weight and type. 
+*/
 public class Resource {
     private double weight;
     private ResourceType type;

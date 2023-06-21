@@ -3,7 +3,7 @@
         "firstnumber",
         "matplotlib"
     ],
-    "workbench.colorTheme": "Bearded Theme Black & Diamond",
+    "workbench.colorTheme": "Visual Studio 2017 Dark - C++",
     "workbench.preferredDarkColorTheme": "Abyss",
     "java.debug.settings.onBuildFailureProceed": true,
     "java.project.sourcePaths": [

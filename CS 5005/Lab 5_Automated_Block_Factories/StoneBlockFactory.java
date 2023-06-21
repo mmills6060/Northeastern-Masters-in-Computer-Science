@@ -1,3 +1,8 @@
+/*
+Defines stonelockfactory. implements factory. produces woodbblocks if there are sufficient resources. 
+*/
+
+
 public class StoneBlockFactory implements Factory {
     private double binWeight;
 
@@ -22,7 +27,7 @@ public class StoneBlockFactory implements Factory {
             return null;
         }
     }
-
+// displays current bin weight
     public void displayInventory() {
         System.out.println(binWeight);
     }

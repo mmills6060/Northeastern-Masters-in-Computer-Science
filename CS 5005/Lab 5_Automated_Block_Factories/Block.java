@@ -1,3 +1,7 @@
+/*
+Block class. defines resource type and weight of each block.
+*/
+
 public abstract class Block {
     private double weight;
     private ResourceType type;
