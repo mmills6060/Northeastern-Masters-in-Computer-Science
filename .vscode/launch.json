@@ -57,6 +57,15 @@
         },
         {
             "type": "java",
+            "name": "Launch Lab 6: Words in a Sentence",
+            "request": "launch",
+            "mainClass": "C:\\Users\\mmill\\Github Repositories\\Northeastern-Masters-in-Computer-Science\\CS 5005\\Lab_6_Words_In_A_Sentence\\Main.java"
+        },
+
+
+
+        {
+            "type": "java",
             "name": "Launch Current File",
             "request": "launch",
             "mainClass": "${file}"
