@@ -13,6 +13,7 @@
     "files.associations": {
         "sort_helper.h": "c"
     },
-    "workbench.colorCustomizations": {}
+    "workbench.colorCustomizations": {},
+    "C_Cpp.errorSquiggles": "enabled"
     
 }

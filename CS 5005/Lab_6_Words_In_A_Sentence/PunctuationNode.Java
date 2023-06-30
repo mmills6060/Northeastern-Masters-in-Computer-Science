@@ -5,7 +5,12 @@ public class PunctuationNode implements Node {
         this.punctuation = punctuation;
     }
 
-    public String getValue() {
+    public String getPunctuation() {
+        return punctuation;
+    }
+
+    @Override
+    public String getStringValue() {
         return punctuation;
     }
 }

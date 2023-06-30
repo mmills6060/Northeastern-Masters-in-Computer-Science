@@ -5,7 +5,18 @@ public class WordNode implements Node {
         this.word = word;
     }
 
-    public String getValue() {
+    public String getWord() {
         return word;
+    }
+
+    @Override
+    public String getStringValue() {
+        return word;
+    }
+
+    @Override
+    public String getValue() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getValue'");
     }
 }

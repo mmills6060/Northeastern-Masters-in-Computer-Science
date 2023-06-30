@@ -1,8 +1,36 @@
 public class Sentence {
     private Node head;
 
-    public Sentence(Node head) {
-        this.head = head;
+    public Sentence() {
+        this.head = new EmptyNode();
+    }
+
+    public void addWord(String word) {
+        Node newNode = new WordNode(word);
+
+        if (head instanceof EmptyNode) {
+            head = newNode;
+        } else {
+            Node current = head;
+            while (!(current instanceof EmptyNode)) {
+                current = current.getNext();
+            }
+            current.setNext(newNode);
+        }
+    }
+
+    public void addPunctuation(String punctuation) {
+        Node newNode = new PunctuationNode(punctuation);
+
+        if (head instanceof EmptyNode) {
+            head = newNode;
+        } else {
+            Node current = head;
+            while (!(current instanceof EmptyNode)) {
+                current = current.getNext();
+            }
+            current.setNext(newNode);
+        }
     }
 
     public int getNumberOfWords() {
@@ -12,7 +40,7 @@ public class Sentence {
             if (current instanceof WordNode) {
                 count++;
             }
-            current = getNextNode(current);
+            current = current.getNext();
         }
         return count;
     }
@@ -22,101 +50,77 @@ public class Sentence {
         Node current = head;
         while (!(current instanceof EmptyNode)) {
             if (current instanceof WordNode) {
-                String word = current.getValue();
-                if (isWordValid(word) && word.length() > longest.length()) {
+                String word = ((WordNode) current).getWord();
+                if (word.length() > longest.length()) {
                     longest = word;
                 }
             }
-            current = getNextNode(current);
+            current = current.getNext();
         }
         return longest;
     }
 
+    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         Node current = head;
         while (!(current instanceof EmptyNode)) {
             if (current instanceof WordNode) {
-                sb.append(current.getValue()).append(" ");
+                sb.append(current.getStringValue()).append(" ");
             } else if (current instanceof PunctuationNode) {
-                sb.append(current.getValue());
+                sb.append(current.getStringValue());
             }
-            current = getNextNode(current);
+            current = current.getNext();
         }
-        String result = sb.toString().trim();
-        if (result.isEmpty() || result.endsWith(".")) {
-            return result;
-        } else {
-            return result + ".";
+
+        if (sb.length() > 0) {
+            sb.deleteCharAt(sb.length() - 1);
+            if (current instanceof PunctuationNode) {
+                sb.append(current.getStringValue());
+            } else {
+                sb.append(".");
+            }
         }
+
+        return sb.toString();
     }
 
     public Sentence clone() {
+        Sentence clone = new Sentence();
         Node current = head;
-        Node clonedHead = cloneNode(current);
-        Node clonedCurrent = clonedHead;
-
         while (!(current instanceof EmptyNode)) {
-            Node nextNode = getNextNode(current);
-            Node clonedNextNode = cloneNode(nextNode);
-            setNextNode(clonedCurrent, clonedNextNode);
-
-            current = nextNode;
-            clonedCurrent = clonedNextNode;
+            if (current instanceof WordNode) {
+                clone.addWord(((WordNode) current).getWord());
+            } else if (current instanceof PunctuationNode) {
+                clone.addPunctuation(((PunctuationNode) current).getPunctuation());
+            }
+            current = current.getNext();
         }
-
-        return new Sentence(clonedHead);
+        return clone;
     }
 
     public Sentence merge(Sentence other) {
+        Sentence merged = new Sentence();
         Node current = head;
-        Node mergedHead = cloneNode(current);
-        Node mergedCurrent = mergedHead;
-
         while (!(current instanceof EmptyNode)) {
-            Node nextNode = getNextNode(current);
-            Node mergedNextNode = cloneNode(nextNode);
-            setNextNode(mergedCurrent, mergedNextNode);
-
-            current = nextNode;
-            mergedCurrent = mergedNextNode;
+            if (current instanceof WordNode) {
+                merged.addWord(((WordNode) current).getWord());
+            } else if (current instanceof PunctuationNode) {
+                merged.addPunctuation(((PunctuationNode) current).getPunctuation());
+            }
+            current = current.getNext();
         }
 
-        Node otherCurrent = other.head;
-        while (!(otherCurrent instanceof EmptyNode)) {
-            Node clonedOtherNode = cloneNode(otherCurrent);
-            setNextNode(mergedCurrent, clonedOtherNode);
-
-            otherCurrent = getNextNode(otherCurrent);
-            mergedCurrent = clonedOtherNode;
+        current = other.head;
+        while (!(current instanceof EmptyNode)) {
+            if (current instanceof WordNode) {
+                merged.addWord(((WordNode) current).getWord());
+            } else if (current instanceof PunctuationNode) {
+                merged.addPunctuation(((PunctuationNode) current).getPunctuation());
+            }
+            current = current.getNext();
         }
 
-        return new Sentence(mergedHead);
-    }
-
-    private Node getNextNode(Node current) {
-        // Implement this method according to your linked list implementation
-        // It should return the next node after the current node
-        // If current is the last node, it should return an instance of EmptyNode
-        return null;
-    }
-
-    private void setNextNode(Node current, Node next) {
-        // Implement this method according to your linked list implementation
-        // It should set the next node of the current node to the provided next node
-    }
-
-    private Node cloneNode(Node node) {
-        // Implement this method to create a copy of the provided node
-        // and return the cloned node
-        // Make sure the cloned node has the same value as the original node
-        return null;
-    }
-
-    private boolean isWordValid(String word) {
-        // Implement this method to check if the word is valid
-        // You can define your own conditions for a valid word
-        // For example, you can check if the word matches a regular expression
-        return true;
+        return merged;
     }
 }
