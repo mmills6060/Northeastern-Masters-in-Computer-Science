@@ -90,54 +90,56 @@ void printFibonacciSeries(Fibonacci fibonacci) {
 
 void printElapsedTime(clock_t start, clock_t end, FILE* file) {
     double elapsedSeconds = ((double)(end - start)) / CLOCKS_PER_SEC;
-    fprintf(file, "%.10f\n", elapsedSeconds);
+    fprintf(file, ",%.10f\n", elapsedSeconds);
 }
 
 void destroyFibonacciSeries(Fibonacci fibonacci) {
     free(fibonacci.fibonacciSeries);
 }
 
-int main() {
-    int choice = 2; // Set the default choice to Fibonacci Recursive
-
-    FILE* file = fopen("C:\\Users\\mmill\\Github Repositories\\Northeastern-Masters-in-Computer-Science\\fibonacci_data.csv", "w");
-    if (file == NULL) {
-        printf("Failed to open the file.\n");
+// ./c_implementation {N} {type} {print type}
+// type: 0 for recursive, 1 for iterative, 2 for dynamic
+// print type: 0 for no print, 1 for print
+int main(int argc, char* argv[])
+{
+    if (argc < 2) {
+        printf("At least two arguments needed!\n");
         return 1;
     }
 
-    fprintf(file, "n,Elapsed Time\n");
+    const int n = atoi(argv[1]);
+    int type = 0;
+    int print = 0;
 
-    for (int n = 1; n <= 30; n++) {
-        Fibonacci result;
-        clock_t start, end;
-
-        switch (choice) {
-            case 1:
-                start = clock();
-                result = fibonacciIterative(n);
-                end = clock();
-                break;
-            case 2:
-                start = clock();
-                result = fibonacciRecursive(n);
-                end = clock();
-                break;
-            case 3:
-                start = clock();
-                result = fibonacciDynamic(n);
-                end = clock();
-                break;
-            default:
-                printf("Invalid choice.\n");
-                return 1;
-        }
-        printElapsedTime(start, end, file);
-        destroyFibonacciSeries(result);
-
-        printf("\n");
+    if (argc > 2) {
+        type = atoi(argv[2]);
     }
 
-    fclose(file);
+    if (argc > 3) {
+        print = atoi(argv[3]);
+    }
+
+    Fibonacci result;
+
+    if (type == 0) {
+        result = fibonacciRecursive(n);
+    }
+    else if (type == 1) {
+        result = fibonacciIterative(n);
+    }
+    else if (type == 2) {
+        result = fibonacciDynamic(n);
+    }
+    else {
+        printf("Invalid type argument!\n");
+        return 1;
+    }
+
+    if (print == 1) {
+        printFibonacciSeries(result);
+    }
+
+    destroyFibonacciSeries(result);
+
     return 0;
 }

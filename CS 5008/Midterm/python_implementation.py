@@ -1,19 +1,17 @@
+import sys
 import time
 import csv
 
 
 def fibonacci_iterative(n):
-    if n <= 0:
-        return -1  # Invalid input
-
-    if n == 1 or n == 2:
-        return 1
-
-    prev, curr = 1, 1
     fibonacci_series = []
-    for _ in range(1, n + 1):
-        fibonacci_series.append(curr)
-        prev, curr = curr, prev + curr
+    a, b = 0, 1
+
+    for _ in range(n):
+        fibonacci_series.append(a)
+        a, b = b, a + b
+
+    curr = a
 
     return fibonacci_series, curr
 
@@ -70,54 +68,21 @@ def print_fibonacci_series(n):
         prev, curr = curr, prev + curr
     print()
 
+def main(n:int, algo: str, print_type:str):
+# print the n'th row 
 
-n = 100
-option = 0  # 0 = Print everything, 1 = Print final result, 2 = Print nothing
-
-if option == 0:
-    fibonacci_series, final_result = fibonacci_iterative(n)
-    print("Fibonacci iterative:")
-    with open('fibonacci_data.csv', 'w', newline='') as csvfile:
-        writer = csv.writer(csvfile)
-        writer.writerow(['n', 'Elapsed Time - Python'])
-        start_time = time.time()
-        for i, result in enumerate(fibonacci_series, start=1):
-
-            end_time = time.time()
-            elapsed_time = end_time - start_time
-            writer.writerow([i, elapsed_time])
-            print(f"{elapsed_time:.15f}")
-    print()
-
-    fibonacci_series, final_result = fibonacci_recursive(n)
-    print("Fibonacci recursive:")
-    for i, result in enumerate(fibonacci_series, start=1):
-        print(f"F({i}) = {result}")
-        start_time = time.time()
-        end_time = time.time()
-        elapsed_time = end_time - start_time
-        print(f"Elapsed Time: {elapsed_time:.6f} seconds")
-    print()
-
-    fibonacci_series, final_result = fibonacci_dynamic(n)
-    print("Fibonacci dynamic programming:")
-    for i, result in enumerate(fibonacci_series, start=1):
-        print(f"F({i}) = {result}")
-        start_time = time.time()
-        end_time = time.time()
-        elapsed_time = end_time - start_time
-        print(f"Elapsed Time: {elapsed_time:.6f} seconds")
-    print()
-
-    print_fibonacci_series(n)
-
-elif option == 1:
-    fibonacci_series, final_result = fibonacci_iterative(n)
-    print(f"The {n}th Fibonacci number is: {final_result}")
-    start_time = time.time()
-    end_time = time.time()
-    elapsed_time = end_time - start_time
-    print(f"Elapsed Time: {elapsed_time:.6f} seconds")
-
-elif option == 2:
-    pass
+# Args:
+#   algo:
+#   print_type: 
+#   n: the nth row to generate
+    print_it = print_type == 'all'
+    result = fibonacci_iterative(n)
+    if algo == 'recursive':
+        result = fibonacci_recursive(n)
+    elif algo == 'dp':
+        result = fibonacci_dynamic(n)
+if __name__ == "__main__":
+    _n = 30 if len(sys.argv) < 2 else int(sys.argv[1])
+    algo = "iterative"  # Replace with the desired algorithm
+    print_type = "csv"  # Replace with the desired print type
+    main(_n, algo, print_type)

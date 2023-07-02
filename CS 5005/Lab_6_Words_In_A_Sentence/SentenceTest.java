@@ -1,70 +1,119 @@
+import static org.junit.Assert.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
+
 public class SentenceTest {
-    
-// Test 1 for EmptyNode.java
+
     @Test
-    public void testEmptyNode() {
+    public void testGetStringRepresentation() {
         Node emptyNode = new EmptyNode();
-        org.junit.jupiter.api.Assertions.assertEquals("", emptyNode.getValue());
+        assertEquals(null, emptyNode.getStringRepresentation());
+    }
+    @Test
+    public void testPunctuationNode() 
+    {
+        Node punctuationNode = new PunctuationNode('!');
+        org.junit.jupiter.api.Assertions.assertEquals("!", punctuationNode.getStringRepresentation());
     }
 
+   @Test
+    public void testAddWord() {
+        Sentence sentence = new Sentence(new EmptyNode());
+        sentence.addWord("Hello");
+        sentence.addWord("world");
+        assertEquals(2, sentence.getNumberOfWords());
+    }
 
-// Test 2 for EmptyNode.java
     @Test
-    public void testEmptyNode2() {
-        Node emptyNode = new EmptyNode();
-        org.junit.jupiter.api.Assertions.assertEquals(0, emptyNode.count());
+    public void testAddPunctuation() {
+        Sentence sentence = new Sentence(new EmptyNode());
+        sentence.addPunctuation('!');
+        sentence.addWord("Hello");
+        assertEquals("Hello!", sentence.toString());
     }
-// Test 1 for Node.java
+
     @Test
-    public void testNode() {
-        Node node = new Node("Hello");
-        org.junit.jupiter.api.Assertions.assertEquals("Hello", node.getValue());
+    public void testGetNumberOfWords() {
+        Sentence sentence = new Sentence(new EmptyNode());
+        sentence.addWord("This");
+        sentence.addWord("is");
+        sentence.addWord("a");
+        sentence.addWord("sentence");
+        assertEquals(4, sentence.getNumberOfWords());
     }
-// Test 2 for Node.java
+
     @Test
-    public void testNode2() {
-        Node node = new Node("Hello");
-        org.junit.jupiter.api.Assertions.assertEquals(1, node.count());
+    public void testLongestWord() {
+        Sentence sentence = new Sentence(new EmptyNode());
+        sentence.addWord("Hello");
+        sentence.addWord("world");
+        sentence.addWord("beautiful");
+        assertEquals("beautiful", sentence.longestWord());
     }
-// Test 1 fro PunctuationNode.java
+
     @Test
-    public void testPunctuationNode() {
-        Node punctuationNode = new PunctuationNode("!");
-        org.junit.jupiter.api.Assertions.assertEquals("!", punctuationNode.getValue());
+    public void testToString() {
+        Sentence sentence = new Sentence(new EmptyNode());
+        sentence.addWord("Hello");
+        sentence.addWord("world");
+        sentence.addPunctuation('!');
+        assertEquals("Hello world!", sentence.toString());
     }
-// Test 2 for PunctuationNode.java
+
     @Test
-    public void testPunctuationNode2() {
-        Node punctuationNode = new PunctuationNode("!");
-        org.junit.jupiter.api.Assertions.assertEquals(1, punctuationNode.count());
+    public void testClone() {
+        Sentence sentence = new Sentence(new EmptyNode());
+        sentence.addWord("Hello");
+        sentence.addWord("world");
+
+        Sentence clonedSentence = sentence.clone();
+        assertEquals(sentence.toString(), clonedSentence.toString());
+        assertNotSame(sentence, clonedSentence);
     }
-// Test 1 for Sentence.java
+
     @Test
-    public void testSentence() {
-        Node node = new Node("Hello");
-        Sentence sentence = new Sentence(node);
-        org.junit.jupiter.api.Assertions.assertEquals("Hello", sentence.toString());
+    public void testMerge() {
+        Sentence sentence1 = new Sentence(new EmptyNode());
+        sentence1.addWord("Hello");
+
+        Sentence sentence2 = new Sentence(new EmptyNode());
+        sentence2.addWord("world");
+
+        Sentence mergedSentence = sentence1.merge(sentence2);
+        assertEquals("Hello world", mergedSentence.toString());
     }
-// Test 2 for Sentence.java
-    @Test
-    public void testSentence2() {
-        Node node = new Node("Hello");
-        Sentence sentence = new Sentence(node);
-        org.junit.jupiter.api.Assertions.assertEquals(1, sentence.getNumberOfWords());
-    }
-// Test 1 for WordNode.java
     @Test
     public void testWordNode() {
         Node wordNode = new WordNode("Hello");
         org.junit.jupiter.api.Assertions.assertEquals("Hello", wordNode.getValue());
     }
-// Test 2 for WordNode.java
     @Test
-    public void testWordNode2() {
+    public void testGetWord() {
         Node wordNode = new WordNode("Hello");
-        org.junit.jupiter.api.Assertions.assertEquals(1, wordNode.count());
+        assertEquals("Hello", ((WordNode) wordNode).getWord());
     }
 
+    @Test
+    public void testGetStringRepresentationword() {
+        Node wordNode = new WordNode("Hello");
+        assertEquals("Hello", wordNode.getStringRepresentation());
+    }
+
+    @Test
+    public void testCloneNode() {
+        Node wordNode = new WordNode("Hello");
+        Node clonedNode = wordNode.cloneNode();
+        assertEquals("Hello", clonedNode.getValue());
+        assertNotSame(wordNode, clonedNode);
+    }
+
+    @Test
+    public void testwordMerge() {
+        Node wordNode = new WordNode("Hello");
+        Node otherNode = new PunctuationNode('!');
+        Node mergedNode = wordNode.merge(otherNode);
+        assertEquals('!', mergedNode.getValue());
+        assertNotSame(wordNode, mergedNode);
+    }
 }

@@ -1,3 +1,6 @@
 public interface Node {
-    String getValue();
+    String getStringRepresentation();
+    Node cloneNode();
+    Node merge(Node other);
+    Object getValue();
 }
