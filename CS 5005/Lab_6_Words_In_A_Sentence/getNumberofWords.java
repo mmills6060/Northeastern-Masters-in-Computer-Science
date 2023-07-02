@@ -2,6 +2,13 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Author: Michael Arthur Mills 
+ * Class: CS 5005 
+ * Date: July 1 2023
+ */
+
+
 public class getNumberofWords {
     public static int getNumberOfWords(String sentence) {
         // Removing leading and trailing whitespace

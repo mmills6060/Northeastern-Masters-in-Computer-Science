@@ -1,3 +1,9 @@
+/**
+ * Author: Michael Arthur Mills 
+ * Class: CS 5005 
+ * Date: July 1 2023
+ */
+
 public class PunctuationNode implements Node {
     private char punctuation;
     private Node next;

@@ -1,3 +1,10 @@
+/**
+ * Author: Michael Arthur Mills 
+ * Class: CS 5005 
+ * Date: July 1 2023
+ */
+
+
 public class Main {
     public static void main(String[] args) {
         // perform unit tests

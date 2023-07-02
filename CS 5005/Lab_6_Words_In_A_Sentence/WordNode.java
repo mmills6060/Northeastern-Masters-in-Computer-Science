@@ -1,3 +1,10 @@
+/**
+ * Author: Michael Arthur Mills 
+ * Class: CS 5005 
+ * Date: July 1 2023
+ */
+
+
 public class WordNode implements Node {
     private String word;
 // define a field named word of type string

@@ -2,6 +2,12 @@ import static org.junit.Assert.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
+/**
+ * Author: Michael Arthur Mills 
+ * Class: CS 5005 
+ * Date: July 1 2023
+ */
+
 
 public class SentenceTest {
 

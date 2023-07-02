@@ -1,3 +1,9 @@
+/**
+ * Author: Michael Arthur Mills 
+ * Class: CS 5005 
+ * Date: July 1 2023
+ */
+
 // define a class called emptynode that implements node
 public class EmptyNode implements Node {
     private String word;
