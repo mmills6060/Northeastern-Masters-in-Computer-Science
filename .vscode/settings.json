@@ -3,12 +3,13 @@
         "firstnumber",
         "matplotlib"
     ],
-    "workbench.colorTheme": "Atom Material Theme",
+    "workbench.colorTheme": "Bearded Theme Black & Diamond",
     "workbench.preferredDarkColorTheme": "Abyss",
     "java.debug.settings.onBuildFailureProceed": true,
     "java.project.sourcePaths": [
+        "CS 5005/Lab_6_Words_In_A_Sentence",
         "CS 5005/Lab 5_Automated_Block_Factories",
-        "CS 5005/Lab_6_Words_In_A_Sentence"
+        "CS 5005/Midterm"
     ],
     "files.associations": {
         "sort_helper.h": "c"
