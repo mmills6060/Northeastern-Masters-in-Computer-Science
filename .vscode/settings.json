@@ -7,14 +7,17 @@
     "workbench.preferredDarkColorTheme": "Abyss",
     "java.debug.settings.onBuildFailureProceed": true,
     "java.project.sourcePaths": [
+        "CS 5005/Midterm",
         "CS 5005/Lab_6_Words_In_A_Sentence",
         "CS 5005/Lab 5_Automated_Block_Factories",
-        "CS 5005/Midterm"
+        "CS 5005/Quizzes/Quiz_8/pong/src/pong"
     ],
     "files.associations": {
         "sort_helper.h": "c"
     },
     "workbench.colorCustomizations": {},
-    "C_Cpp.errorSquiggles": "enabled"
+    "C_Cpp.errorSquiggles": "enabled",
+    "makefile.makefilePath": "",
+    "makefile.makePath": "C:\\Program Files\\mingw64\\bin\\cmake.exe"
     
 }

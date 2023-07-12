@@ -9,18 +9,32 @@ void print_single_node(Node *node)
 
 /** inOrder DFS print of the Tree.h*/
 void printTreeInOrder(Node* root) {
-
+	if (root == NULL) {
+		return;
+	}
+	printTreeInOrder(root->left);
+	print_single_node(root);
+	printTreeInOrder(root->right);
 }
 
 /** post order DFS print of the Tree.h */
 void printTreePostOrder(Node* root) {
-
+	if (root == NULL) {
+		return;
+	}
+	printTreePostOrder(root->left);
+	printTreePostOrder(root->right);
+	print_single_node(root);
 }
 
 /** pre order DFS print of the Tree.h*/
 void printTreePreOrder(Node* root) {
-
-
+	if (root == NULL) {
+		return;
+	}
+	print_single_node(root);
+	printTreePreOrder(root->left);
+	printTreePreOrder(root->right);
 }
 
 /** iterative breadth-first print of the tree.h*/

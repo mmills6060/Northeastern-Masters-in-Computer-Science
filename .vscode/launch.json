@@ -4,11 +4,13 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-        
-
-
-
-
+        {
+            "type": "java",
+            "name": "Pong",
+            "request": "launch",
+            "mainClass": "Pong",
+            "projectName": "Northeastern-Masters-in-Computer-Science_e2de957f"
+        },
         {
             "type": "java",
             "name": "Main",
@@ -66,16 +68,18 @@
             "request": "launch",
             "mainClass": "C:\\Users\\mmill\\Github Repositories\\Northeastern-Masters-in-Computer-Science\\CS 5005\\Lab_6_Words_In_A_Sentence\\Main.java"
         },
-{
+        {
             "type": "java",
             "name": "Midterm",
             "request": "launch",
             "mainClass": "C:\\Users\\mmill\\Github Repositories\\Northeastern-Masters-in-Computer-Science\\CS 5005\\Midterm\\Main.java"
         },
-
-
-
-
+        {
+            "type": "java",
+            "name": "Pong",
+            "request": "launch",
+            "mainClass": "C:\\Users\\mmill\\Github Repositories\\Northeastern-Masters-in-Computer-Science\\CS 5005\\Quizzes\\Quiz_8\\pong\\src\\pong\\Pong.java"
+        },
         {
             "type": "java",
             "name": "Launch Current File",
