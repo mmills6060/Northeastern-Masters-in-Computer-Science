@@ -1,3 +1,4 @@
+package StarterCode;
 
 /**
  * This class represents an internal employee who has no managerial

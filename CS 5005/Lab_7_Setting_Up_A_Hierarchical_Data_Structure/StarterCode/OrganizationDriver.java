@@ -1,3 +1,4 @@
+package StarterCode;
 /*
 This is your starting point and your testing file. 
 Except for task 3 the code should work without modifications once you have everything else implemented.

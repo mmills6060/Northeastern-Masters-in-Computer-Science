@@ -10,7 +10,8 @@
         "CS 5005/Midterm",
         "CS 5005/Lab_6_Words_In_A_Sentence",
         "CS 5005/Lab 5_Automated_Block_Factories",
-        "CS 5005/Quizzes/Quiz_8/pong/src/pong"
+        "CS 5005/Quizzes/Quiz_8/pong/src/pong",
+        "CS 5005\\Lab_7_Setting_Up_A_Hierarchical_Data_Structure"
     ],
     "files.associations": {
         "sort_helper.h": "c"

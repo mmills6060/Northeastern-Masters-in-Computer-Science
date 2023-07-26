@@ -48,7 +48,12 @@ AdjMatrix * buildRandomMatrix(int size, int type) {
 
 int main(int argc, char** argv) {
  
-    AdjMatrix * matrix = buildRandomMatrix(5, UNDIRECTED);
+    int type = UNDIRECTED;
+    if(argc > 1) {
+        type = atoi(argv[1]);
+    }
+
+    AdjMatrix * matrix = buildRandomMatrix(5, type);
 
     print_matrix(matrix);
 

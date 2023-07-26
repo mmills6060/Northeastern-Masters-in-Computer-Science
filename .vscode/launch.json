@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Main",
+            "request": "launch",
+            "mainClass": "second_try.Main",
+            "projectName": "Northeastern-Masters-in-Computer-Science_e2de957f"
+        },
+        {
+            "type": "java",
             "name": "Pong",
             "request": "launch",
             "mainClass": "Pong",
