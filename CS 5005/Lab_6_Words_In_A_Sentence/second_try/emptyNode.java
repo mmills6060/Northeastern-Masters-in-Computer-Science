@@ -1,13 +1,17 @@
 package second_try;
 
-public class emptyNode implements Node {
+// Implementation for the EmptyNode
+
+public class EmptyNode implements Node {
+    private Node next;
+
     @Override
-    public String get_value() {
-        return null;
+    public Node getNext() {
+        return next;
     }
 
     @Override
-    public Node get_next() {
-        return null;
+    public void setNext(Node next) {
+        this.next = next;
     }
 }

@@ -1,33 +1,12 @@
 package second_try;
+// this is the sentence class. I really wasn't sure if I should split up add punctuation and add word but I did. 
 
-import first_try.EmptyNode;
 
 public class Sentence {
-    private Node head;
+    Node head; // Points to the first node in the sentence
 
+// create an empty node at the head. this is good so we can determine that it is a new sentence.  
     public Sentence() {
-        this.head = new EmptyNode();
-    }
-
-    public void append_word(String word) {
-        WordNode new_node = new WordNode(word);
-        Node current_node = this.head;
-        while (current_node.get_next() != null) {
-            current_node = current_node.get_next();
-        }
-        ((WordNode) current_node).set_next(new_node);
-    }
-
-    public void append_punctuation(String punctuation) {
-        PunctuationNode new_node = new PunctuationNode(punctuation);
-        Node current_node = this.head;
-        while (current_node.get_next() != null) {
-            current_node = current_node.get_next();
-        }
-        ((WordNode) current_node).set_next(new_node);
-    }
-
-    public Node getHead() {
-        return head;
+        head = new EmptyNode(); 
     }
 }

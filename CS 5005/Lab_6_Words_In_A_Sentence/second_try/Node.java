@@ -1,6 +1,9 @@
 package second_try;
+// this is the node interface with linked list features 
+
 
 public interface Node {
-    String get_value();
-    Node get_next();
+    
+    Node getNext();
+    void setNext(Node next);
 }

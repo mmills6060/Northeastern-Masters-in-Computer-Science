@@ -1,25 +1,25 @@
 package second_try;
+// I think there is something wrong with my interpreter because it is telling me 
+// that word is not visible even though im pretty sure it is. 
+// 
+// everything compiles despite the error. 
 
 public class WordNode implements Node {
-    private String word;
+    public String word; 
+
     private Node next;
 
     public WordNode(String word) {
         this.word = word;
-        this.next = null;
     }
 
     @Override
-    public String get_value() {
-        return word;
-    }
-
-    @Override
-    public Node get_next() {
+    public Node getNext() {
         return next;
     }
 
-    public void set_next(Node next) {
+    @Override
+    public void setNext(Node next) {
         this.next = next;
     }
 }

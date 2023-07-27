@@ -1,25 +1,22 @@
 package second_try;
+// this is the punctuation node that is logically implemented.
+
 
 public class PunctuationNode implements Node {
-    private String punctuation;
+    String punctuation;
     private Node next;
 
     public PunctuationNode(String punctuation) {
         this.punctuation = punctuation;
-        this.next = null;
     }
 
     @Override
-    public String get_value() {
-        return punctuation;
-    }
-
-    @Override
-    public Node get_next() {
+    public Node getNext() {
         return next;
     }
 
-    public void set_next(Node next) {
+    @Override
+    public void setNext(Node next) {
         this.next = next;
     }
 }

@@ -3,15 +3,15 @@
 
 package second_try;
 
-public class getNumberOfWords {
+public class SentenceGetNumberOfWords {
     public static int getNumberOfWords(Sentence sentence) {
-        Node current_node = sentence.getHead();
         int count = 0;
-        while (current_node.get_next() != null) {
-            current_node = current_node.get_next();
-            if (current_node instanceof WordNode) {
+        Node current = sentence.head;
+        while (current != null) {
+            if (current instanceof WordNode) {
                 count++;
             }
+            current = current.getNext();
         }
         return count;
     }
