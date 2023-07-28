@@ -3,7 +3,8 @@
         {
             "name": "Win32",
             "includePath": [
-                "${workspaceFolder}/**"
+                "${workspaceFolder}/**",
+                "${workspaceFolder}/CS 5008/Homework/Homework11"
             ],
             "defines": [
                 "_DEBUG",

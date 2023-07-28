@@ -1,0 +1,32 @@
+// Controller.java
+import java.util.Scanner;
+
+public class Controller {
+    private Model model;
+    private View view;
+
+    public Controller(Model model, View view) {
+        this.model = model;
+        this.view = view;
+    }
+
+    public void calculateDistance(double lat1, double lon1, double lat2, double lon2) {
+        double distance = model.calculateDistance(lat1, lon1, lat2, lon2);
+        view.displayDistance(distance);
+    }
+
+    public void calculateTime(double distance, double speed) {
+        double time = model.calculateTime(distance, speed);
+        view.displayTime(time);
+    }
+
+    public void calculateTimeToRefuel(double fuelEfficiency, double currentSpeed, double remainingFuel) {
+        double timeToRefuel = model.calculateTimeToRefuel(fuelEfficiency, currentSpeed, remainingFuel);
+        view.displayTimeToRefuel(timeToRefuel);
+    }
+
+    public void calculateStoppingTime(double currentSpeed, double distanceToStop, double decelerationRate) {
+        double stoppingTime = model.calculateStoppingTime(currentSpeed, distanceToStop, decelerationRate);
+        view.displayStoppingTime(stoppingTime);
+    }
+}
