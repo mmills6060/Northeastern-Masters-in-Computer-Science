@@ -1,0 +1,8 @@
+what did you learn that you were not expecting to in doing this project?
+
+one thing that I learned is how to calculate the distance between two points given the coordinates. I had
+absolutely no clue how to do that before this project.
+
+how did the required MVC design change your approach to building a program? did it help or did it make things more difficult?
+
+do you have any questions baout MVC?
