@@ -1,4 +1,8 @@
 // Model.java
+
+import java.util.List;
+import java.util.Map;
+
 public class Model {
 
     // Method to calculate distance between two points using their latitude and longitude
@@ -40,5 +44,23 @@ public class Model {
         // Time to stop = Current speed / Deceleration rate
         double stoppingTime = currentSpeed / decelerationRate;
         return stoppingTime;
+    }
+
+    public void addUser(String username, String email) {
+    }
+
+    public void addUploadedFile(String username, String filename) {
+    }
+
+    public static int getTotalUsers() {
+        return 0;
+    }
+
+    public List<String> getMostActiveUsers() {
+        return null;
+    }
+
+    public Map<String, Integer> getFileTypeDistribution() {
+        return null;
     }
 }

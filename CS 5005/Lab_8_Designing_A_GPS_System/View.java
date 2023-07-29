@@ -19,4 +19,7 @@ public class View {
         // Display stopping time to the user
         System.out.println("Stopping time: " + stoppingTime + " seconds");
     }
+
+    public void displayMessage(String string) {
+    }
 }
