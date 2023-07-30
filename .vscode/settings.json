@@ -13,7 +13,8 @@
         "CS 5005/Lab_7_Setting_Up_A_Hierarchical_Data_Structure",
         "CS 5005/Lab_6_Words_In_A_Sentence",
         "CS 5005/Lab 5_Automated_Block_Factories",
-        "CS 5005/Final"
+        "CS 5005/Final",
+        "CS 5005/Lab_9_Tic_Tac_Toe/Tic_Tac_Toe"
     ],
     "files.associations": {
         "sort_helper.h": "c"

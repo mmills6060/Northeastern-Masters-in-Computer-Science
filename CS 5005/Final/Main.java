@@ -31,4 +31,5 @@ public class Main {
         int totalUsers = userController.getTotalUsers();
         System.out.println("Total Number of Users: " + totalUsers);
        }
-    }
+       }
+

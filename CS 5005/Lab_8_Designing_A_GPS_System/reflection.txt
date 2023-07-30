@@ -1,8 +1,15 @@
 what did you learn that you were not expecting to in doing this project?
 
-one thing that I learned is how to calculate the distance between two points given the coordinates. I had
-absolutely no clue how to do that before this project.
+In this project, I really had no idea how you could calculate the distance between two points using latitude and longitude. This is super interesting, especially since the earth is curved. 
+
 
 how did the required MVC design change your approach to building a program? did it help or did it make things more difficult?
 
-do you have any questions baout MVC?
+the MVC design comnpletely changeed my approach. Rather than worrying about what is inheriting what and what should be a separate file and what shouldn't, my overall 
+approach was to think about what part of the program am I writing right now. Am I writing something that will be presented to the user or is this backend logic that is used to 
+manage data in some way. I like this approach much better. It makes things much neater and easier to read and manage. I think MVC would be a good approach especially as things scale.
+It would probably lead to more spaghetti code but I would honestly prefer spaghetti code over a million different files. 
+
+do you have any questions about MVC?
+
+I don't have any questions about MVC. 

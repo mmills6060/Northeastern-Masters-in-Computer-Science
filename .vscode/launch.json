@@ -4,6 +4,7 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+
         {
             "type": "java",
             "name": "Main",
@@ -75,6 +76,13 @@
             "request": "launch",
             "mainClass": "C:\\Users\\mmill\\Github Repositories\\Northeastern-Masters-in-Computer-Science\\CS 5005\\Lab_6_Words_In_A_Sentence\\Main.java"
         },
+         {
+            "type": "java",
+            "name": "Launch Lab 9: Tic Tac Toe",
+            "request": "launch",
+            "mainClass": "C:\\Users\\mmill\\Github Repositories\\Northeastern-Masters-in-Computer-Science\\CS 5005\\Lab_9_Tic_Tac_Toe\\Tic_Tac_Toe\\Main.java"
+        },
+        
         {
             "type": "java",
             "name": "Midterm",

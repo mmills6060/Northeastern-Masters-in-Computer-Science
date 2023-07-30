@@ -1,0 +1,6 @@
+I definitely learned a lot with this project. This was by far the most difficult project I have done in this class. For one, I became more comfortable with MVC. I also learned a lot about scanners and string builders.
+
+It was difficult to work with string builders as the terminal output can be completely different than the output you receive with the tests. I had an incredibly hard time with the tests. 
+
+This was also a relatively large project, so I feel as if I can handle larger projects in Java. It really made me think about how in the real world, I wont be starting a new project every week, and that I will most
+likely be building and scaling on an already existing program. It is much easier to build on an already existing program than it is to start from scratch.
