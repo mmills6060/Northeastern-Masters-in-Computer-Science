@@ -138,10 +138,10 @@ def allocate_files_with_priority_duplication_file_sharing(files, devices, priori
     return total_storage_used, allocation, files_not_allocated
 @profile
 def main():
-    num_files = 10000
+    num_files = 100000
     file_sizes = [random.randint(1, 500) for _ in range(num_files)]
     num_devices = 10
-    storage_sizes = [random.randint(25000, 1000000) for _ in range(num_devices)]
+    storage_sizes = [random.randint(250000, 10000000) for _ in range(num_devices)]
     duplication_factor = 2
     sharing_factor = 2
     priority = [random.randint(1, 1000000) for _ in range(num_files)]
