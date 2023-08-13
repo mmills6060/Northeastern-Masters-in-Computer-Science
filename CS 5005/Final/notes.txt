@@ -1,5 +1,0 @@
-Project Ideas:
-
-1. Tennis Scheduling App
-2. Athena
-3. Web 3.0 Decentralized File Storage

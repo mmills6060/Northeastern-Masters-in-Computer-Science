@@ -7,6 +7,13 @@
 
         {
             "type": "java",
+            "name": "main",
+            "request": "launch",
+            "mainClass": "main",
+            "projectName": "Northeastern-Masters-in-Computer-Science_e2de957f"
+        },
+        {
+            "type": "java",
             "name": "Main",
             "request": "launch",
             "mainClass": "second_try.Main",
@@ -72,17 +79,22 @@
         },
         {
             "type": "java",
-            "name": "Launch Lab 6: Words in a Sentence",
+            "name": "Launch Lab 5: Automated Block Factories",
             "request": "launch",
-            "mainClass": "C:\\Users\\mmill\\Github Repositories\\Northeastern-Masters-in-Computer-Science\\CS 5005\\Lab_6_Words_In_A_Sentence\\Main.java"
+            "mainClass": "/Users/michaelmills/Documents/GitHub/Northeastern-Masters-in-Computer-Science/CS 5005/Lab 5: Automated Block Factories/Main.java"
         },
-         {
+        {
+            "type": "java",
+            "name": "Final",
+            "request": "launch",
+            "mainClass": "C:\\Users\\mmill\\Github Repositories\\Northeastern-Masters-in-Computer-Science\\CS 5005\\Final\\Main.java"
+        },
+        {
             "type": "java",
             "name": "Launch Lab 9: Tic Tac Toe",
             "request": "launch",
             "mainClass": "C:\\Users\\mmill\\Github Repositories\\Northeastern-Masters-in-Computer-Science\\CS 5005\\Lab_9_Tic_Tac_Toe\\Tic_Tac_Toe\\Main.java"
         },
-        
         {
             "type": "java",
             "name": "Midterm",
