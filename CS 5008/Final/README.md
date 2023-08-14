@@ -2,7 +2,7 @@
 Name: Michael Mills
 Semester: Summer 2023
 Topic: Combinatorial Optimization Algorithms
-Link The Repository:
+Link The Repository: https://github.com/Su23-CS5008-Online-Lionelle/finalresearchpaper-mmills6060
 
 ## Introduction
 For my final project, I decided to implement a few algorithms that are directly related to a project that I have been working on for the greater part of the year. I have been working on an application that aims to improve the way that we are able to access files. Currently, it is often the case that we will subscribe to some cloud storage service. This costs a lot of money, and the files are also stored in some unknown location. This project aims to decentralize cloud storage, so we can seamlessly access our files across all of our devices, without the need for some expensive cloud subscription plan. The cool thing about this project is that there are many strategies that can be used to determine what would be the best way to store all of these files. Should we store all of the files on just one device and leave the rest empty? Should we store the same file on multiple different devices? Should we split up files to multiple different devices, so device has one entire file? These problems are where my algorithms are able to come into play. 
