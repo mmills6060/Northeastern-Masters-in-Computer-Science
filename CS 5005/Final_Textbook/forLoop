@@ -1,0 +1,12 @@
+public class BallMachine {
+    public static void main(String[] args) {
+        int numberOfBallsToShoot = 20;
+
+        for (int i = 1; i <= numberOfBallsToShoot; i++) {
+            System.out.println("Shooting ball " + i);
+            
+        }
+
+        System.out.println("All balls have been shot.");
+    }
+}

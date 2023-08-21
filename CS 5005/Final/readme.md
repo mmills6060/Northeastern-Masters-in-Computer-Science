@@ -1,0 +1,7 @@
+## Introduction
+
+In my free time, I am a tennis director for various tennis tournaments. Oftentimes I wll host "round robin" matchplay which is essentially a format of playing where each player will play eachother, and the player with the most amount of points will win. It can oftentimes be very difficult to keep track of who's playing on a court already, who hasn't played eachother, and who should be sent out to play next. I wrote this program to automate the task of keeping track of this information and automatically send out players to play when there is an available court. The program will also keep track of the amount of points each player will get and determine who is winning or has won the tournament. 
+
+## Reflection
+
+I certainly learned a lot during this project. It was really interesting to take certain logic that seems relatively easy to do in person and translate it into code. Normally I would do all of this on pen and paper, and it was very interesting to turn this into an actual program. I would say that the actual logic of figuring out who should be sent out to play was by far the most difficult part of this program, as there are a lot of factors and variables to keep track of. I didn't really think of the logic as iterating through possibilities, as that isn't really what I do in real life. However, it seemed to work well in this program. 

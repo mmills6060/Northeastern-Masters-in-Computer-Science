@@ -14,6 +14,7 @@ class TennisMatchController {
     public void run() {
         while (true) {
             boolean matchplayStarted = false;
+             // Display matches if matchplay has started
             if (matchplayStarted = true) {
                 view.displayMatches(model.getMatches());
             }
@@ -22,13 +23,16 @@ class TennisMatchController {
             int choice = view.getInput();
             switch (choice) {
                 case 1:
+                // add a player
                     String playerName = view.getPlayerName();
                     model.addPlayer(playerName);
                     break;
                 case 2:
+                // add a court
                     model.addCourt();
                     break;
                 case 3:
+                // Check that theres enough players and courts before starting matchplay
                     if (model.getPlayers().size() < 2) {
                         System.out.println("Add at least two players before starting matchplay.");
                         break;
@@ -40,6 +44,7 @@ class TennisMatchController {
                     startMatchplay();
                     break;
                 case 4:
+                // begins the matches and logic behind matchmaking
                     List<Match> matches = model.getMatches();
                     view.displayMatches(matches);
                     int matchIndex = view.getMatchIndex(matches);
@@ -66,6 +71,7 @@ class TennisMatchController {
                     }
                     break;
                 case 5:
+                // display the results 
                     List<Player> players = model.getPlayers();
                     players.sort((p1, p2) -> Integer.compare(p2.points, p1.points));
                     view.displayResults(players);
@@ -158,7 +164,7 @@ private void startMatchplay() {
         return false;
     }
 private int getMatchId(int player1Id, int player2Id) {
-    // Assuming player1Id < player2Id
+    
     return player1Id * 100 + player2Id;
 }
     private Court getAvailableCourt(List<Court> courts) {

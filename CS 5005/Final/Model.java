@@ -61,7 +61,7 @@ class TennisMatchModel {
     }
 
     public void addPlayer(String playerName) {
-        int playerId = players.size(); // Assign a unique ID to each player
+        int playerId = players.size(); // Assign an ID to each player
         players.add(new Player(playerName, playerId));
     }
 

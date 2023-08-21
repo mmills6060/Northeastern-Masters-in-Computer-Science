@@ -22,7 +22,7 @@ class TennisMatchView {
 
     public String getPlayerName() {
         System.out.print("Enter player name: ");
-        scanner.nextLine(); // Consume newline
+        scanner.nextLine(); // new line
         return scanner.nextLine();
     }
     public void displayPlayers(List<Player> players) {
