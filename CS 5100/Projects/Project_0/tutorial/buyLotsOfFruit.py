@@ -30,13 +30,22 @@ fruitPrices = {'apples': 2.00, 'oranges': 1.50, 'pears': 1.75,
 
 def buyLotsOfFruit(orderList):
     """
-        orderList: List of (fruit, numPounds) tuples
+    orderList: List of (fruit, numPounds) tuples
 
     Returns cost of order
     """
-    "*** YOUR CODE HERE ***"
-    totalCost = fruitPrices['apples'] + fruitPrices['limes'] + fruitPrices['oranges'] + fruitPrices['pears'] + fruitPrices['strawberries']
+    totalCost = 0
+    
+    for fruit, pounds in orderList:
+        if fruit in fruitPrices:
+            totalCost += fruitPrices[fruit] * pounds
+        else:
+            print(f"Error: {fruit} is not in the fruitPrices dictionary.")
+            return None
+
     return totalCost
+
+
 
 
 # Main Method
