@@ -110,46 +110,32 @@ def depthFirstSearch(problem):
     return []  # Return an empty list if no solution is found
 
 def breadthFirstSearch(problem):
-    """
-    Search the shallowest nodes in the search tree first.
-    """
-    # Initialize a queue to store nodes to explore
-    queue = util.Queue()
-
-    # Initialize a set to keep track of visited states
-    visited = set()
-
-    # Push the start state onto the queue as a tuple (state, actions)
-    start_state = (problem.getStartState(), [])
-    queue.push(start_state)
-
-    while not queue.isEmpty():
-        # Dequeue the front state and its corresponding actions
-        state, actions = queue.pop()
-
-        # Check if the current state is the goal state
+    # create fringe to store nodes
+    fringe = util.Queue()
+    # track visited nodes
+    visited = []
+    # push initial state to fringe
+    fringe.push((problem.getStartState(), [], 1))
+    
+    while not fringe.isEmpty():
+        node = fringe.pop()
+        state = node[0]
+        actions = node[1]
+        # goal check
         if problem.isGoalState(state):
-            return actions  # Return the list of actions to reach the goal
-
-        # Convert the state to a tuple for checking visited states
-        state_tuple = tuple(state)
-
-        # Mark the current state as visited
-        visited.add(state_tuple)
-
-        # Get successor states and actions
-        successors = problem.getSuccessors(state)
-
-        for next_state, action, _ in successors:
-            # Convert the next_state to a tuple for checking visited states
-            next_state_tuple = tuple(next_state)
-
-            if next_state_tuple not in visited:
-                # Enqueue unvisited successor states with the updated list of actions
-                queue.push((next_state, actions + [action]))
-
-    return []  # Return an empty list if no solution is found
-
+            return actions
+        if state not in visited:
+            visited.append(state)
+            # visit child nodes
+            successors = problem.getSuccessors(state)
+            for child in successors:
+                # store state, action and cost = 1
+                child_state = child[0]
+                child_action = child[1]
+                if child_state not in visited:
+                    # add child nodes
+                    child_action = actions + [child_action]
+                    fringe.push((child_state, child_action, 1))
 def uniformCostSearch(problem):
     """
     Search the node of least total cost first.

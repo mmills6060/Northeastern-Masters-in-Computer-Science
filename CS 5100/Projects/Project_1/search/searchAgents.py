@@ -288,24 +288,30 @@ class CornersProblem(search.SearchProblem):
         # Please add any code here which you would like to use
         # in initializing the problem
         "*** YOUR CODE HERE ***"
-
+        self.cornerList = []
+        self.startState = (self.startingPosition, self.cornerList)
     def getStartState(self):
         """
         Returns the start state (in your state space, not the full Pacman state
         space)
         """
         "*** YOUR CODE HERE ***"
-        return (self.startingPosition, (False, False, False, False))
-
+        return self.startState
 
     def isGoalState(self, state):
         """
         Returns whether this search state is a goal state of the problem.
         """
         "*** YOUR CODE HERE ***"
-        position, visited_corners = state
-        return len(visited_corners) == 4
+        node = state[0]
+        visitedCorners = state[1]
 
+        if node in self.corners:
+            if node not in visitedCorners:
+                visitedCorners.append(node)
+                print(visitedCorners)
+            return len(visitedCorners) == 4
+        return False
     def getSuccessors(self, state):
         """
         Returns successor states, the actions they require, and a cost of 1.
@@ -334,6 +340,21 @@ class CornersProblem(search.SearchProblem):
 
 
             "*** YOUR CODE HERE ***"
+            x,y = state[0]
+            visitedCorners = state[1]        
+            dx, dy = Actions.directionToVector(action)
+            nextx, nexty = int(x + dx), int(y + dy)
+            hitsWall = self.walls[nextx][nexty]
+            if not hitsWall:
+                next_state = (nextx, nexty)
+                successVisitedCorners = list(visitedCorners)
+                if next_state in self.corners:
+                    corner_state = next_state
+                    if corner_state not in successVisitedCorners:
+                        successVisitedCorners.append(corner_state)
+                child = ((next_state, successVisitedCorners), action, 1)
+                successors.append(child)
+
 
         self._expanded += 1 # DO NOT CHANGE
         return successors
@@ -344,12 +365,15 @@ class CornersProblem(search.SearchProblem):
         include an illegal move, return 999999.  This is implemented for you.
         """
         if actions == None: return 999999
-        x,y= self.startingPosition
+        x,y= self.getStartState()
+        cost = 0
         for action in actions:
+            # Check figure out the next state and see whether its' legal
             dx, dy = Actions.directionToVector(action)
             x, y = int(x + dx), int(y + dy)
             if self.walls[x][y]: return 999999
-        return len(actions)
+            cost += self.costFn((x,y))
+        return cost
 
 
 def cornersHeuristic(state, problem):
