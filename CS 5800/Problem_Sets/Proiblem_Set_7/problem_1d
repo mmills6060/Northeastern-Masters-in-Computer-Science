@@ -1,0 +1,15 @@
+def longest_increasing_subsequence(array):
+
+    n = len(array) 
+
+    longest_increasing_subsequence = [1] * n 
+
+    for i in range(1, n): 
+
+        for j in range(0, i): 
+
+            if array[j] < array[i] and longest_increasing_subsequence[i] < longest_increasing_subsequence[j] + 1: 
+
+                longest_increasing_subsequence[i] = longest_increasing_subsequence[j] + 1
+
+    return max(longest_increasing_subsequence) 
