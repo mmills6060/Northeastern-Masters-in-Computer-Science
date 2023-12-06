@@ -180,6 +180,7 @@ text_generation_callback = TopKTextGenerator(k=10)
 model.fit(train_ds.take(1), verbose=2, epochs=2, callbacks=[text_generation_callback])
 
 
+
 # Save the entire model (including architecture, weights, and optimizer state)
-model.save("kerasModel")
+model.save("demo_model.h5")
 
