@@ -19,6 +19,7 @@ import tensorflow as tf
 
 import tensorflow_text
 
+############### Data Handling #####################
 examples, metadata = tfds.load('ted_hrlr_translate/pt_to_en',
                                with_info=True,
                                as_supervised=True)
@@ -116,6 +117,7 @@ def make_batches(ds):
       .prefetch(buffer_size=tf.data.AUTOTUNE))
 
 
+############### Test The Dataset #####################
 # Create training and validation set batches.
 train_batches = make_batches(train_examples)
 val_batches = make_batches(val_examples)
@@ -537,6 +539,7 @@ transformer.compile(
 
 transformer.fit(train_batches,
                 epochs=20,
+                #epochs=1,
                 validation_data=val_batches)
 
 # Run Inference ####################################
@@ -626,12 +629,89 @@ translated_text, translated_tokens, attention_weights = translator(
 print_translation(sentence, translated_text, ground_truth)
 
 
+############### Create attention plots #####################
+
+sentence = 'este é o primeiro livro que eu fiz.'
+ground_truth = "this is the first book i've ever done."
+
+translated_text, translated_tokens, attention_weights = translator(
+    tf.constant(sentence))
+print_translation(sentence, translated_text, ground_truth)
+
+
+def plot_attention_head(in_tokens, translated_tokens, attention):
+  # The model didn't generate `<START>` in the output. Skip it.
+  translated_tokens = translated_tokens[1:]
+
+  ax = plt.gca()
+  ax.matshow(attention)
+  ax.set_xticks(range(len(in_tokens)))
+  ax.set_yticks(range(len(translated_tokens)))
+
+  labels = [label.decode('utf-8') for label in in_tokens.numpy()]
+  ax.set_xticklabels(
+      labels, rotation=90)
+
+  labels = [label.decode('utf-8') for label in translated_tokens.numpy()]
+  ax.set_yticklabels(labels)
+
+
+head = 0
+# Shape: `(batch=1, num_heads, seq_len_q, seq_len_k)`.
+attention_heads = tf.squeeze(attention_weights, 0)
+attention = attention_heads[head]
+attention.shape
+
+in_tokens = tf.convert_to_tensor([sentence])
+in_tokens = tokenizers.pt.tokenize(in_tokens).to_tensor()
+in_tokens = tokenizers.pt.lookup(in_tokens)[0]
+in_tokens
+
+
+translated_tokens
+
+plot_attention_head(in_tokens, translated_tokens, attention)
+
+def plot_attention_weights(sentence, translated_tokens, attention_heads):
+  in_tokens = tf.convert_to_tensor([sentence])
+  in_tokens = tokenizers.pt.tokenize(in_tokens).to_tensor()
+  in_tokens = tokenizers.pt.lookup(in_tokens)[0]
+
+  fig = plt.figure(figsize=(16, 8))
+
+  for h, head in enumerate(attention_heads):
+    ax = fig.add_subplot(2, 4, h+1)
+
+    plot_attention_head(in_tokens, translated_tokens, head)
+
+    ax.set_xlabel(f'Head {h+1}')
+
+  plt.tight_layout()
+  plt.show()
+
+
+plot_attention_weights(sentence,
+                       translated_tokens,
+                       attention_weights[0])
+
+
+sentence = 'Eu li sobre triceratops na enciclopédia.'
+ground_truth = 'I read about triceratops in the encyclopedia.'
+
+translated_text, translated_tokens, attention_weights = translator(
+    tf.constant(sentence))
+print_translation(sentence, translated_text, ground_truth)
+
+plot_attention_weights(sentence, translated_tokens, attention_weights[0])
+
+
+
+
 ############### Export the model #####################
 
 class ExportTranslator(tf.Module):
   def __init__(self, translator):
     self.translator = translator
-
   @tf.function(input_signature=[tf.TensorSpec(shape=[], dtype=tf.string)])
   def __call__(self, sentence):
     (result,
