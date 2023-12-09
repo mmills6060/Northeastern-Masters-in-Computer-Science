@@ -17,14 +17,3 @@ model = tf.saved_model.load('translator')
 
 response1 = model('este é o primeiro livro que eu fiz.').numpy()
 print(response1)
-response2 = model('este é o primeiro livro que eu fiz.').numpy()
-print(response2)
-
-response3 = model('este é o primeiro livro que eu fiz.').numpy()
-print(response3)
-
-response4 = model('este é o primeiro livro que eu fiz.').numpy()
-print(response4)
-
-response5 = model('este é o primeiro livro que eu fiz.').numpy()
-print(response5)
