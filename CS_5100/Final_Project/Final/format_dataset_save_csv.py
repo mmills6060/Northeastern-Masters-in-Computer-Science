@@ -33,7 +33,7 @@ def extract_comment_code_pairs(content):
     return comment_code_pairs
 
 # Load your dataset
-dataset = load_dataset("bigcode/the-stack-dedup", data_dir="data/python", streaming=True, split="train")
+dataset = load_dataset("bigcode/the-stack-dedup", data_dir="data/python", streaming=False, split="train")
 
 # Prepare a file to save the pairs
 output_file = 'comment_code_pairs.csv'
