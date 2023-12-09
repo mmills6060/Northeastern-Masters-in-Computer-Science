@@ -1,0 +1,13 @@
+Comment,Code
+# Split the data into training and validation sets,"train_comments, val_comments, train_code, val_code = train_test_split(comments, code, test_size=0.2)"
+# Convert to TensorFlow datasets,"train_dataset = tf.data.Dataset.from_tensor_slices((train_comments, train_code))
+val_dataset = tf.data.Dataset.from_tensor_slices((val_comments, val_code))"
+# Example: Processing a batch of data,"for comment_batch, code_batch in train_dataset.batch(3).take(1):
+    print('> Examples of comments:')
+    for comment in comment_batch.numpy():
+        print(comment.decode('utf-8'))
+    print()
+
+    print('> Examples of code:')
+    for code_snippet in code_batch.numpy():
+        print(code_snippet.decode('utf-8'))"
