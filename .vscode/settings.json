@@ -15,6 +15,7 @@
     "workbench.colorCustomizations": {},
     "C_Cpp.errorSquiggles": "enabled",
     "makefile.makefilePath": "",
-    "makefile.makePath": "C:\\Program Files\\mingw64\\bin\\cmake.exe"
+    "makefile.makePath": "C:\\Program Files\\mingw64\\bin\\cmake.exe",
+    "editor.fontFamily": "'SF Mono', 'monospace', monospace"
     
 }

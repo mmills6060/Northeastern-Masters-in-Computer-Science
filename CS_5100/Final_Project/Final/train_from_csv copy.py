@@ -508,7 +508,7 @@ transformer.compile(
     metrics=[masked_accuracy])
 
 transformer.fit(train_batches,
-                epochs=5,
+                epochs=20,
                 #epochs=1,
                 validation_data=val_batches)
 
@@ -578,13 +578,13 @@ def print_translation(sentence, tokens, ground_truth):
   print(f'{"Ground truth":15s}: {ground_truth}')
 
 sentence = 'Print hello world'
-
+ground_truth = 'print("hello world")'
 translated_text, translated_tokens, attention_weights = translator(
     tf.constant(sentence))
 print_translation(sentence, translated_text, ground_truth)
 
 sentence = 'calculate 5 + 5'
-
+ground_truth = 'print(5 + 5)'
 translated_text, translated_tokens, attention_weights = translator(
     tf.constant(sentence))
 print_translation(sentence, translated_text, ground_truth)
