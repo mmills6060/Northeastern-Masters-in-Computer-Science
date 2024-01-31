@@ -52,8 +52,10 @@ intersecting edges, we can see that we now have a new tour, but with a total dis
 shorter than the original. Since the tour has a smaller total distance than the original,
 we can see that the original is not the optimal solution. With that being said, we can now 
 see that the edges cannot cross. 
-2a)
 
-2b)
 
 2c)
+My algorithm performs better with smaller cities in general. As it gets to later cities,
+it gradually takes longer and longer to calculate. I believe we are receiving a relative approximation
+due to the fact that we are measuring results based on the number of runs it takes, I believe it 
+is safe to assume that we are working with a relative approximation. 
