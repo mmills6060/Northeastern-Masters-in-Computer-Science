@@ -77,19 +77,19 @@ def generate_distance_matrix(cities):
 def main():
     hk_times = []
     cw_times = []
-    num_cities_to_read = 2
-    while num_cities_to_read < 20:
+    num_cities_to_read = 10
+    while num_cities_to_read < 110:
         cities_filepath = 'medium.csv'
         cities = read_cities(cities_filepath, num_cities_to_read)
         distance_matrix = generate_distance_matrix(cities)
  
         # Held-Karp Algorithm Execution
         start_time_hk = time.time()
-        hk_path, hk_cost = held_karp(distance_matrix)
-        end_time_hk = time.time()
-        hk_execution_time = format(end_time_hk - start_time_hk, '.20f')
-        print(f"HK cost: {hk_cost}")
-        print(f"HK execution time: {hk_execution_time}")
+        #hk_path, hk_cost = held_karp(distance_matrix)
+        #end_time_hk = time.time()
+        #hk_execution_time = format(end_time_hk - start_time_hk, '.20f')
+        #print(f"HK cost: {hk_cost}")
+        #print(f"HK execution time: {hk_execution_time}")
         # Clark-Wright Algorithm Execution
         start_time_cw = time.time()
         cw_routes, cw_cost = clark_wright(distance_matrix)
@@ -97,19 +97,7 @@ def main():
         cw_execution_time = format(end_time_cw - start_time_cw, '.20f')
         print(f"cw cost: {cw_cost}")
         print(f"cw execution time: {cw_execution_time}")
-        num_cities_to_read = num_cities_to_read + 1
-        hk_times.append(end_time_hk - start_time_hk)
+        num_cities_to_read = num_cities_to_read + 10
         cw_times.append(end_time_cw - start_time_cw)
-    # Plotting execution times
-    fig, ax = plt.subplots()
-    indices = np.arange(1, len(hk_times) + 1)
-    ax.plot(indices, hk_times, label='Held-Karp', marker='o')
-    ax.plot(indices, cw_times, label='Clark-Wright', marker='x')
-    ax.set_xlabel('Run Number')
-    ax.set_ylabel('Execution Time (s)')
-    ax.set_title('Execution Times for Held-Karp vs. Clark-Wright')
-    ax.legend()
-    plt.show()
-
 if __name__ == "__main__":
     main()

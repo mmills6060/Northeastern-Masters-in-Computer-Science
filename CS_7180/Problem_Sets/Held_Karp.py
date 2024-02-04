@@ -84,7 +84,7 @@ def load_coordinates_and_generate_matrix(file_path):
     return distance_matrix
 
 # Example usage
-file_path = 'medium.csv'  # Update this to your actual file path
+file_path = '20cities.csv'  # Update this to your actual file path
 print("Loading coordinates and generating matrix")
 distance_matrix = load_coordinates_and_generate_matrix(file_path)
 

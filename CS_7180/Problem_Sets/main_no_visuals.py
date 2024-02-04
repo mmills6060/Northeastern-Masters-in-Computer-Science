@@ -75,14 +75,13 @@ def generate_distance_matrix(cities):
     return squareform(pdist(cities, 'euclidean'))
 
 def main():
-    hk_times = []
-    cw_times = []
-    num_cities_to_read = 2
-    while num_cities_to_read < 20:
-        cities_filepath = 'medium.csv'
-        cities = read_cities(cities_filepath, num_cities_to_read)
-        distance_matrix = generate_distance_matrix(cities)
- 
+    cities_filepath = 'medium.csv'
+    num_cities_to_read = 10
+    cities = read_cities(cities_filepath, num_cities_to_read)
+    distance_matrix = generate_distance_matrix(cities)
+
+    n = 0
+    while n < 11:
         # Held-Karp Algorithm Execution
         start_time_hk = time.time()
         hk_path, hk_cost = held_karp(distance_matrix)
@@ -97,19 +96,7 @@ def main():
         cw_execution_time = format(end_time_cw - start_time_cw, '.20f')
         print(f"cw cost: {cw_cost}")
         print(f"cw execution time: {cw_execution_time}")
-        num_cities_to_read = num_cities_to_read + 1
-        hk_times.append(end_time_hk - start_time_hk)
-        cw_times.append(end_time_cw - start_time_cw)
-    # Plotting execution times
-    fig, ax = plt.subplots()
-    indices = np.arange(1, len(hk_times) + 1)
-    ax.plot(indices, hk_times, label='Held-Karp', marker='o')
-    ax.plot(indices, cw_times, label='Clark-Wright', marker='x')
-    ax.set_xlabel('Run Number')
-    ax.set_ylabel('Execution Time (s)')
-    ax.set_title('Execution Times for Held-Karp vs. Clark-Wright')
-    ax.legend()
-    plt.show()
+        n = n + 1
 
 if __name__ == "__main__":
     main()
