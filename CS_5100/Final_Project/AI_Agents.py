@@ -7,7 +7,7 @@ class MasterAgent:
     def initialize():
         print("")
         prompt = input("-->") 
-        MasterAgent.communicate(prompt) 
+        MjsterAgent.communicate(prompt) 
     def communicate(prompt):
         role = "Master Agent: "
         llm = Ollama(model="llama2")
