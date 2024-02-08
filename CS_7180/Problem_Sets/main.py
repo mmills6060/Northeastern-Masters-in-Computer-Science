@@ -6,26 +6,44 @@ from scipy.spatial.distance import euclidean
 from itertools import combinations
 
 def held_karp(distance_matrix):
-    n = len(distance_matrix)
-    C = {(1 << k, k): (distance_matrix[0, k], 0) for k in range(1, n)}
-    for subset_size in range(2, n):
-        for subset in combinations(range(1, n), subset_size):
+    num_cities = len(distance_matrix)
+    memo = {(1 << k, k): (distance_matrix[0, k], 0) for k in range(1, num_cities)}
+    for subset_size in range(2, num_cities):
+        for subset in combinations(range(1, num_cities), subset_size):
             bits = sum(1 << bit for bit in subset)
             for k in subset:
-                prev = bits & ~(1 << k)
-                res = min(((C[(prev, m)][0] + distance_matrix[m, k], m) for m in subset if m != k), key=lambda x: x[0])
-                C[(bits, k)] = res
-    bits = (2**n - 1) - 1
-    res = min(((C[(bits, k)][0] + distance_matrix[k, 0], k) for k in range(1, n)), key=lambda x: x[0])
-    opt, parent = res
+                prev_bits = bits & ~(1 << k)
+                min_distance = float('inf')
+                min_index = None
+                for m in subset:
+                    if m != k:
+                        distance = memo[(prev_bits, m)][0] + distance_matrix[m, k]
+                        if distance < min_distance:
+                            min_distance = distance
+                            min_index = m
+                memo[(bits, k)] = (min_distance, min_index)
+    final_bits = (2 ** num_cities - 1) - 1
+    min_distance = float('inf')
+    min_index = None
+    for k in range(1, num_cities):
+        distance = memo[(final_bits, k)][0] + distance_matrix[k, 0]
+        if distance < min_distance:
+            min_distance = distance
+            min_index = k
     path = [0]
-    for _ in range(n - 1):
+    parent = min_index
+    bits = final_bits
+    for _ in range(num_cities - 1):
         path.append(parent)
         new_bits = bits & ~(1 << parent)
-        _, parent = C[(bits, parent)]
+        parent = memo[(bits, parent)][1]
         bits = new_bits
     path.append(0)
-    return path, opt
+    
+    return path, min_distance
+
+
+
 
 def clark_wright(distance_matrix):
     num_locations = len(distance_matrix)
@@ -60,18 +78,7 @@ def visualize_solution(cities, solution):
     ax.plot(cities[solution[0], 0], cities[solution[0], 1], 'o', color='green')  # Start
     plt.show()
 
-def tsp_solver_silly(cities):
-    best_solution = None
-    best_dist = float('inf')
-    for _ in range(1000):
-        solution = np.random.permutation(len(cities))
-        dist = score_solution(cities, solution)
-        if dist < best_dist:
-            best_dist, best_solution = dist, solution
-    return best_solution
-
 def generate_distance_matrix(cities):
-    """Generate a distance matrix from city coordinates using Euclidean distance."""
     return squareform(pdist(cities, 'euclidean'))
 
 def main():
