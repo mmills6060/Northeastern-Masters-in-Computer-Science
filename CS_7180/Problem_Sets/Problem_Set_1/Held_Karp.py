@@ -92,3 +92,6 @@ distance_matrix = load_coordinates_and_generate_matrix(file_path)
 print("Determining path and cost")
 path, cost = held_karp(distance_matrix)
 print(path, cost)
+
+
+

@@ -1,7 +1,17 @@
+from scipy.spatial.distance import pdist, squareform
 import random
+import time
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.spatial.distance import euclidean
+from itertools import combinations
+
 def tsp_cost(matrix, tour):
     # Calculate the total cost of the tour
     return sum(matrix[tour[i-1]][tour[i]] for i in range(len(tour)))
+
+
+
 def random_restart_tsp(matrix, max_restarts):
     best_tour = None
     best_cost = float('inf')
@@ -20,49 +30,51 @@ def random_restart_tsp(matrix, max_restarts):
                 best_cost = cost
     return best_tour, best_cost
 
-def knapsack_value(weights, profits, capacity, selection):
-    # Calculate the total weight and profit of the selection
-    total_weight = sum(weights[i] for i in range(len(weights)) if selection[i])
-    total_profit = sum(profits[i] for i in range(len(profits)) if selection[i])
-    # If the total weight exceeds the capacity, return 0
-    return total_profit if total_weight <= capacity else 0
-def random_restart_knapsack(weights, profits, capacity, max_restarts):
-    best_selection = None
-    best_value = 0
-    for _ in range(max_restarts):
-        # Generate a random selection
-        selection = [random.choice([0, 1]) for _ in range(len(weights))]
-        # Hill climbing
-        for _ in range(len(weights)**2):
-            i = random.randint(0, len(weights) - 1)
-            # Flip the selection of an item and see if it improves the value
-            selection[i] = 1 - selection[i]
-            value = knapsack_value(weights, profits, capacity, selection)
-            if value > best_value:
-                best_selection = selection[:]
-                best_value = value
-    return best_selection, best_value
 
+def read_cities(filepath, number_lines):
+    cities = np.loadtxt(filepath, delimiter=',', max_rows=number_lines)
+    return cities
 
+def score_solution(cities, solution):
+    return sum(euclidean(cities[solution[i-1]], cities[solution[i]]) for i in range(len(solution)))
 
+def visualize_solution(cities, solution):
+    fig, ax = plt.subplots(figsize=(10, 6))
+    dist = score_solution(cities, solution)
+    ax.set_title(f'Total Distance: {dist:.2f}')
+    ax.plot(cities[solution, 0], cities[solution, 1], 'o-', mfc='r')
+    ax.plot(cities[solution[0], 0], cities[solution[0], 1], 'o', color='green')  # Start
+    plt.show()
 
-capacity = 165
-weights = [23, 31, 29, 44, 53, 38, 63, 85, 89, 82]
-profits = [92, 57, 49, 68, 60, 43, 67, 84, 87, 72]
-max_restarts = 10
+def generate_distance_matrix(cities):
+    return squareform(pdist(cities, 'euclidean'))
 
+def main():
+    stochastic_times = []
+    num_cities_to_read = 2
+    while num_cities_to_read < 100:
+        cities_filepath = 'medium.csv'
+        cities = read_cities(cities_filepath, num_cities_to_read)
+        matrix = generate_distance_matrix(cities)
+        max_restarts = 10 
+        # Stochastic Algorithm Execution
+        start_time_stochastic = time.time()
+        stochastic_path, stochastic_cost = random_restart_tsp(matrix, max_restarts)
+        end_time_stochastic = time.time()
+        hk_execution_time = format(end_time_stochastic - start_time_stochastic, '.20f')
+        print(f"HK cost: {stochastic_cost}")
+        print(f"HK execution time: {hk_execution_time}")
+        stochastic_times.append(end_time_stochastic - start_time_stochastic)
+        num_cities_to_read += 10
+    # Plotting execution times
+    fig, ax = plt.subplots()
+    indices = np.arange(1, len(stochastic_times) + 1)
+    ax.plot(indices, stochastic_times, label='Stochastic', marker='o')
+    ax.set_xlabel('Run Number')
+    ax.set_ylabel('Execution Time (s)')
+    ax.set_title('Execution Times for Held-Karp vs. Clark-Wright')
+    ax.legend()
+    plt.show()
 
-best_selection, best_value = random_restart_knapsack(weights, profits, capacity, max_restarts)
-print(f"Best Selection: {best_selection}")
-print(f"Best Value: {best_value}")
-
-
-
-
-
-
-
-
-
-
-
+if __name__ == "__main__":
+    main()
