@@ -1,4 +1,5 @@
 from scipy.spatial.distance import pdist, squareform
+import csv
 import random
 import time
 import numpy as np
@@ -52,8 +53,8 @@ def generate_distance_matrix(cities):
 def main():
     stochastic_times = []
     num_cities_to_read = 2
-    while num_cities_to_read < 100:
-        cities_filepath = 'medium.csv'
+    while num_cities_to_read < 1000:
+        cities_filepath = 'large.csv'
         cities = read_cities(cities_filepath, num_cities_to_read)
         matrix = generate_distance_matrix(cities)
         max_restarts = 10 
@@ -62,10 +63,14 @@ def main():
         stochastic_path, stochastic_cost = random_restart_tsp(matrix, max_restarts)
         end_time_stochastic = time.time()
         hk_execution_time = format(end_time_stochastic - start_time_stochastic, '.20f')
-        print(f"HK cost: {stochastic_cost}")
-        print(f"HK execution time: {hk_execution_time}")
+        print(f"Number of Cities: {num_cities_to_read} Stochastic cost: {stochastic_cost} Stochastic execution time: {hk_execution_time}")
         stochastic_times.append(end_time_stochastic - start_time_stochastic)
-        num_cities_to_read += 10
+        num_cities_to_read += 1
+
+        with open('tsp_medium_stochastic.csv', 'a', newline='') as file:
+            writer = csv.writer(file)
+            writer.writerow([num_cities_to_read, stochastic_cost, hk_execution_time])
+
     # Plotting execution times
     fig, ax = plt.subplots()
     indices = np.arange(1, len(stochastic_times) + 1)
