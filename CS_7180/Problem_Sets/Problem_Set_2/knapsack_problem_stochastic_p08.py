@@ -8,6 +8,28 @@ from scipy.spatial.distance import euclidean
 from itertools import combinations
 import requests
 
+def stochastic_knapsack(weights, profits, capacity, max_restarts=1000, max_iterations=1000):
+    n = len(profits)
+    best_weights = [0] * n
+    best_profit = 0
+    for _ in range(max_restarts):
+        current_weights = [0] * n
+        current_profit = 0
+        current_capacity = capacity
+        for _ in range(max_iterations):
+            i = random.randint(0, n - 1)  # Choose a random item
+            if weights[i] <= current_capacity:  # If the item fits, add it
+                current_weights[i] = 1
+                current_profit += profits[i]
+                current_capacity -= weights[i]
+            if current_profit > best_profit:  # If this is the best solution so far, keep it
+                best_profit = current_profit
+                best_weights = current_weights.copy()
+        if current_profit >= best_profit:  # If we didn't find a better solution, restart
+            current_weights = [0] * n
+            current_profit = 0
+            current_capacity = capacity
+    return best_profit, best_weights
 
 def knapsack(weights, profits, capacity):
     n = len(profits)
@@ -47,7 +69,7 @@ def knapsack(weights, profits, capacity):
 knapsack_capacity = 165
 weights = [23, 31, 29, 44, 53, 38, 63, 85, 89, 82]
 profits = [92, 57, 49, 68, 60, 43, 67, 84, 87, 72]
-max_profit, optimal_weights = knapsack(weights, profits, knapsack_capacity)
+max_profit, optimal_weights = stochastic_knapsack(weights, profits, knapsack_capacity)
 print(f"Maximum profit: {max_profit}")
 print(f"Optimal selection of weights: {optimal_weights}")
 
@@ -56,16 +78,16 @@ print(f"Optimal selection of weights: {optimal_weights}")
 def main():
 
 
-    problem_number = 1
+    problem_number = 8
     knapsack_times = []
-
-    while problem_number < 9:
+    iterations = 1
+    while iterations < 21:
+        print(f"Iteration: {iterations}")
         capacity_url = f"https://people.sc.fsu.edu/~jburkardt/datasets/knapsack_01/p0{problem_number}_c.txt"
         response = requests.get(capacity_url)
         # Ensure we fetched the file successfully
         if response.status_code == 200:
             capacity = int(response.text.strip())
-            print(f"Capacity: {capacity}")
         else:
             print(f"Failed to fetch the file: {response.status_code}")
 
@@ -74,7 +96,6 @@ def main():
         # Ensure we fetched the file successfully
         if response.status_code == 200:
             weights = [int(weight) for weight in response.text.split('\n') if weight]
-            print(f"Weights: {weights}")
         else:
             print(f"Failed to fetch the file: {response.status_code}")
 
@@ -83,7 +104,6 @@ def main():
         # Ensure we fetched the file successfully
         if response.status_code == 200:
             profits = [int(profit) for profit in response.text.split('\n') if profit]
-            print(f"Profits: {profits}")
         else:
             print(f"Failed to fetch the file: {response.status_code}")
 
@@ -92,7 +112,6 @@ def main():
         # Ensure we fetched the file successfully
         if response.status_code == 200:
             optimals = [int(optimal) for optimal in response.text.split('\n') if optimal]
-            print(f"Optimals: {optimals}")
         else:
             print(f"Failed to fetch the file: {response.status_code}")
 
@@ -102,12 +121,12 @@ def main():
         end_time_knapsack = time.time()
         knapsack_execution_time = (end_time_knapsack - start_time_knapsack) * 1000
         knapsack_times.append(knapsack_execution_time)
-        with open('knapsack.csv', 'a', newline='') as file:
+        with open('stochastic_knapsack_p08.csv', 'a', newline='') as file:
             writer = csv.writer(file)
             writer.writerow([problem_number, max_profit, knapsack_execution_time])
 
 
-        problem_number += 1
+        iterations += 1
 
 
 
