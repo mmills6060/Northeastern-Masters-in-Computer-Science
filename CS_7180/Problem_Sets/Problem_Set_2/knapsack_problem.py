@@ -111,7 +111,6 @@ def main():
 
 
 
-'''
     # Plotting execution times
     fig, ax = plt.subplots()
     indices = np.arange(1, len(knapsack_times) + 1)
@@ -121,7 +120,6 @@ def main():
     ax.set_title('Execution Times for Held-Karp vs. Clark-Wright')
     ax.legend()
     plt.show()
-'''
 
 if __name__ == "__main__":
     main()
