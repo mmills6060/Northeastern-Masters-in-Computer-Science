@@ -100,7 +100,7 @@ def main():
         start_time_knapsack = time.time()
         max_profit, optimal_weights = knapsack(weights, profits, capacity)
         end_time_knapsack = time.time()
-        knapsack_execution_time = (end_time_knapsack - start_time_knapsack) * 1000
+        knapsack_execution_time = (end_time_knapsack - start_time_knapsack)
         knapsack_times.append(knapsack_execution_time)
         with open('knapsack.csv', 'a', newline='') as file:
             writer = csv.writer(file)
@@ -117,7 +117,7 @@ def main():
     ax.plot(indices, knapsack_times, label='Stochastic', marker='o')
     ax.set_xlabel('Run Number')
     ax.set_ylabel('Execution Time (s)')
-    ax.set_title('Execution Times for Held-Karp vs. Clark-Wright')
+    ax.set_title('Execution Times for knapsack problem')
     ax.legend()
     plt.show()
 

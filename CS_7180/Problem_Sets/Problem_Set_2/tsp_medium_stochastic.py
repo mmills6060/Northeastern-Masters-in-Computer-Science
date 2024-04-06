@@ -77,7 +77,7 @@ def main():
     ax.plot(indices, stochastic_times, label='Stochastic', marker='o')
     ax.set_xlabel('Run Number')
     ax.set_ylabel('Execution Time (s)')
-    ax.set_title('Execution Times for Held-Karp vs. Clark-Wright')
+    ax.set_title('Execution Times for Stochastic')
     ax.legend()
     plt.show()
 

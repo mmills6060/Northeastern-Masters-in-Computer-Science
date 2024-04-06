@@ -132,18 +132,15 @@ def main():
         problem_number += 1
 
 
-
-'''
     # Plotting execution times
-    fig, ax = plt.subplots()
-    indices = np.arange(1, len(knapsack_times) + 1)
-    ax.plot(indices, knapsack_times, label='Stochastic', marker='o')
-    ax.set_xlabel('Run Number')
-    ax.set_ylabel('Execution Time (s)')
-    ax.set_title('Execution Times for Held-Karp vs. Clark-Wright')
-    ax.legend()
-    plt.show()
-'''
+    # fig, ax = plt.subplots()
+    # indices = np.arange(1, len(knapsack_times) + 1)
+    # ax.plot(indices, knapsack_times, label='Stochastic', marker='o')
+    # ax.set_xlabel('Run Number')
+    # ax.set_ylabel('Execution Time (s)')
+    # ax.set_title('Execution Times for Held-Karp vs. Clark-Wright')
+    # ax.legend()
+    # plt.show()
 
 if __name__ == "__main__":
     main()
