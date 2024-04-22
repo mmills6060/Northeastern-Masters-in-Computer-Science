@@ -212,11 +212,11 @@ filename = "brazil.xml"
 distance_matrix = get_distance_matrix(filename)
 number_of_cities = len(distance_matrix)
 
-number_of_ants = 50 #number of ants used in the colony 10/50/100
-alpha = 1.0 #influence of pheromone on direction 
-beta = 2.0 #influence of heuristic information on direction
-rho = 0.5 #evaporation rate 0.1/0.2/0.3/0.4/0.5/0.6/0.7/0.8/0.9/1
-q = 1.0 #constant used in pheromone update formula 
+number_of_ants = 50
+alpha = 1.0 #influence of pheromone on direction
+beta = 2.0 # influence of heuristic information on direction
+rho = 0.5 # evaporation rate
+q = 1.0 # constant used in pheromone update formula 
 
 number_of_trials = 1 # number of times the ACO algorithm will be run
 aco(distance_matrix, number_of_cities, number_of_ants, alpha, beta, rho, q, number_of_trials)
