@@ -128,8 +128,7 @@ def aco(distance_matrix, number_of_cities, number_of_ants, alpha, beta, rho, q, 
     best_costs_elitist = []
 
     for run in range(num_runs):
-        print(f"\nRun {run + 1}/{num_runs}")
-
+        # print(f"\nRun {run + 1}/{num_runs}")
         # Normal ACO
         fitness_evaluations_aco = 0
         heuristic_matrix = initialize_heuristic_matrix(distance_matrix, number_of_cities)
@@ -184,41 +183,239 @@ def aco(distance_matrix, number_of_cities, number_of_ants, alpha, beta, rho, q, 
             best_costs_elitist = best_costs_elitist_run
 
     # Print the final best solution and its total cost for normal ACO
-    print("\nBest Solution (Normal ACO):", best_solution_aco)
+    # print("\nBest Solution (Normal ACO):", best_solution_aco)
     print("Best Total Cost (Normal ACO):", best_total_cost_aco)
 
     # Print the final best solution and its total cost for elitist ACO
-    print("\nBest Solution (Elitist ACO):", best_solution_elitist)
+    # print("\nBest Solution (Elitist ACO):", best_solution_elitist)
     print("Best Total Cost (Elitist ACO):", best_total_cost_elitist)
 
-    # Plot the graph for the best result of normal ACO
-    plt.figure(figsize=(10, 5))  # Adjust the figsize parameter for a wider graph
-    plt.plot(best_costs_aco, label='Normal ACO')
-    caption_aco = "Best TSP Cost (Normal ACO, " + str(number_of_ants) + " ants, " + str(rho) + " evaporation rate): " + str(best_costs_aco[-1])
-    plt.figtext(0.5, 0.5, caption_aco, wrap=True, horizontalalignment='center', fontsize=10, color='black')
-    # Plot the graph for the best result of elitist ACO
-    plt.plot(best_costs_elitist, label='Elitist ACO')
-    caption_elitist = "Best TSP Cost (Elitist ACO, " + str(number_of_ants) + " ants, " + str(rho) + " evaporation rate): " + str(best_costs_elitist[-1])
-    plt.figtext(0.5, 0.45, caption_elitist, wrap=True, horizontalalignment='center', fontsize=10, color='black')
 
-    # Display the graph
-    plt.xlabel('Iteration')
-    plt.ylabel('Best TSP Cost')
-    plt.title('Best TSP Cost vs Iteration')
-    plt.legend()
-    plt.show()
+    # # Plot the graph for the best result of normal ACO
+    # plt.figure(figsize=(10, 5))  # Adjust the figsize parameter for a wider graph
+    # plt.plot(best_costs_aco, label='Normal ACO')
+    # caption_aco = "Best TSP Cost (Normal ACO, " + str(number_of_ants) + " ants, " + str(rho) + " evaporation rate): " + str(best_costs_aco[-1])
+    # plt.figtext(0.5, 0.5, caption_aco, wrap=True, horizontalalignment='center', fontsize=10, color='black')
+    # # Plot the graph for the best result of elitist ACO
+    # plt.plot(best_costs_elitist, label='Elitist ACO')
+    # caption_elitist = "Best TSP Cost (Elitist ACO, " + str(number_of_ants) + " ants, " + str(rho) + " evaporation rate): " + str(best_costs_elitist[-1])
+    # plt.figtext(0.5, 0.45, caption_elitist, wrap=True, horizontalalignment='center', fontsize=10, color='black')
+
+    # # Display the graph
+    # plt.xlabel('Iteration')
+    # plt.ylabel('Best TSP Cost')
+    # plt.title('Best TSP Cost vs Iteration')
+    # plt.legend()
+    # plt.show()
+
+
+    return best_total_cost_aco, best_total_cost_elitist
 
 filename = "brazil.xml"
 distance_matrix = get_distance_matrix(filename)
 number_of_cities = len(distance_matrix)
 
-number_of_ants = 50 #number of ants used in the colony 10/50/100
+number_of_ants = 10 #number of ants used in the colony 10/50/100
 alpha = 1.0 #influence of pheromone on direction 
 beta = 2.0 #influence of heuristic information on direction
 rho = 0.5 #evaporation rate 0.1/0.2/0.3/0.4/0.5/0.6/0.7/0.8/0.9/1
-q = 1.0 #constant used in pheromone update formula 
-
+q = 1.0 #constant used in pheromone update formula 0.5/1/2/5/10
 number_of_trials = 1 # number of times the ACO algorithm will be run
-aco(distance_matrix, number_of_cities, number_of_ants, alpha, beta, rho, q, number_of_trials)
+
+test_number = 1
+
+list_aco = []
+list_elitist = []
+average_aco_number_of_ants_10 = 0 
+average_elitist_number_of_ants_10 = 0
+average_aco_number_of_ants_50 = 0 
+average_elitist_number_of_ants_50 = 0
+average_aco_number_of_ants_100 = 0 
+average_elitist_number_of_ants_100 = 0
+average_aco_rho_01 = 0 
+average_elitist_rho_01 = 0
+average_aco_rho_02 = 0 
+average_elitist_rho_02 = 0
+average_aco_rho_03 = 0 
+average_elitist_rho_03 = 0
+average_aco_rho_04 = 0 
+average_elitist_rho_04 = 0
+average_aco_rho_05 = 0 
+average_elitist_rho_05 = 0
+average_aco_rho_06 = 0 
+average_elitist_rho_06 = 0
+average_aco_rho_07 = 0 
+average_elitist_rho_07 = 0
+average_aco_rho_08 = 0 
+average_elitist_rho_08 = 0
+average_aco_rho_09 = 0 
+average_elitist_rho_09 = 0
+average_aco_rho_1 = 0 
+average_elitist_rho_1 = 0
+average_aco_q_05 = 0 
+average_elitist_q_05 = 0
+average_aco_q_1 = 0 
+average_elitist_q_1 = 0
+average_aco_q_2 = 0 
+average_elitist_q_2 = 0
+average_aco_q_5 = 0 
+average_elitist_q_5 = 0
+average_aco_q_10 = 0 
+average_elitist_q_10 = 0
+
+
+
+def get_average_cost(distance_matrix, number_of_cities, number_of_ants, alpha, beta, rho, q, number_of_trials):
+    n = 1
+    average_elitist = 0
+    average_aco = 0
+    while n <= 10:
+        # print("run : ", n) 
+        best_total_cost_aco, best_total_cost_elitist = aco(distance_matrix, number_of_cities, number_of_ants, alpha, beta, rho, q, number_of_trials)
+        list_aco.append(best_total_cost_aco)
+        list_elitist.append(best_total_cost_elitist)
+        average_aco = sum(list_aco) / len(list_aco)
+        average_elitist = sum(list_elitist) / len(list_elitist)
+        n += 1
+    return average_aco, average_elitist
+
+
+while test_number <= 18:
+    if test_number == 1:
+        number_of_ants = 10
+        average_aco_number_of_ants_10, average_elitist_number_of_ants_10 = get_average_cost(distance_matrix, number_of_cities, number_of_ants, alpha, beta, rho, q, number_of_trials)
+    elif test_number == 2:
+        number_of_ants = 50
+        average_aco_number_of_ants_50, average_elitist_number_of_ants_50 = get_average_cost(distance_matrix, number_of_cities, number_of_ants, alpha, beta, rho, q, number_of_trials)
+    elif test_number == 3:
+        number_of_ants = 100
+        average_aco_number_of_ants_100, average_elitist_number_of_ants_100 = get_average_cost(distance_matrix, number_of_cities, number_of_ants, alpha, beta, rho, q, number_of_trials)
+    elif test_number == 4:
+        number_of_ants = 50
+        rho = 0.1
+        average_aco_rho_01, average_elitist_rho_01 = get_average_cost(distance_matrix, number_of_cities, number_of_ants, alpha, beta, rho, q, number_of_trials)
+    elif test_number == 5:
+        rho = 0.2
+        average_aco_rho_02, average_elitist_rho_02 = get_average_cost(distance_matrix, number_of_cities, number_of_ants, alpha, beta, rho, q, number_of_trials)
+    elif test_number == 6:
+        rho = 0.3
+        average_aco_rho_03, average_elitist_rho_03 = get_average_cost(distance_matrix, number_of_cities, number_of_ants, alpha, beta, rho, q, number_of_trials)
+    elif test_number == 7:
+        rho = 0.4
+        average_aco_rho_04, average_elitist_rho_04 = get_average_cost(distance_matrix, number_of_cities, number_of_ants, alpha, beta, rho, q, number_of_trials)
+    elif test_number == 8:
+        rho = 0.5
+        average_aco_rho_05, average_elitist_rho_05 = get_average_cost(distance_matrix, number_of_cities, number_of_ants, alpha, beta, rho, q, number_of_trials)
+    elif test_number == 9:
+        rho = 0.6
+        average_aco_rho_06, average_elitist_rho_06 = get_average_cost(distance_matrix, number_of_cities, number_of_ants, alpha, beta, rho, q, number_of_trials)
+    elif test_number == 10:
+        rho = 0.7
+        average_aco_rho_07, average_elitist_rho_07 = get_average_cost(distance_matrix, number_of_cities, number_of_ants, alpha, beta, rho, q, number_of_trials)
+    elif test_number == 11:
+        rho = 0.8
+        average_aco_rho_08, average_elitist_rho_08 = get_average_cost(distance_matrix, number_of_cities, number_of_ants, alpha, beta, rho, q, number_of_trials)
+    elif test_number == 12:
+        rho = 0.9
+        average_aco_rho_09, average_elitist_rho_09 = get_average_cost(distance_matrix, number_of_cities, number_of_ants, alpha, beta, rho, q, number_of_trials)
+    elif test_number == 13:
+        rho = 1.0
+        average_aco_rho_1, average_elitist_rho_1 = get_average_cost(distance_matrix, number_of_cities, number_of_ants, alpha, beta, rho, q, number_of_trials)
+    elif test_number == 14:
+        rho = 0.5
+        q = 0.5
+        average_aco_q_05, average_elitist_q_05 = get_average_cost(distance_matrix, number_of_cities, number_of_ants, alpha, beta, rho, q, number_of_trials)
+    elif test_number == 15:
+        q = 1.0
+        average_aco_q_1, average_elitist_q_1 = get_average_cost(distance_matrix, number_of_cities, number_of_ants, alpha, beta, rho, q, number_of_trials)
+    elif test_number == 16:
+        q = 2.0
+        average_aco_q_2, average_elitist_q_2 = get_average_cost(distance_matrix, number_of_cities, number_of_ants, alpha, beta, rho, q, number_of_trials)
+    elif test_number == 17:
+        q = 5.0
+        average_aco_q_5, average_elitist_q_5 = get_average_cost(distance_matrix, number_of_cities, number_of_ants, alpha, beta, rho, q, number_of_trials)
+    elif test_number == 18:
+        q = 10.0
+        average_aco_q_10, average_elitist_q_10 = get_average_cost(distance_matrix, number_of_cities, number_of_ants, alpha, beta, rho, q, number_of_trials)
+    test_number += 1
+    print("Test Number: ", test_number)
+
+print("Average ACO Best Total Cost - Number of ants = 10: ", average_aco_number_of_ants_10)
+print("Average Elitist Best Total Cost - Number of ants = 10 : ", average_elitist_number_of_ants_10)
+print("Average ACO Best Total Cost - Number of ants = 50: ", average_aco_number_of_ants_50)
+print("Average Elitist Best Total Cost - Number of ants = 50: ", average_elitist_number_of_ants_50)
+print("Average ACO Best Total Cost - Number of ants = 100: ", average_aco_number_of_ants_100)
+print("Average Elitist Best Total Cost - Number of ants = 100: ", average_elitist_number_of_ants_100)
+print("Average ACO Best Total Cost - Rho = 0.1: ", average_aco_rho_01)
+print("Average Elitist Best Total Cost - Rho = 0.1: ", average_elitist_rho_01)
+print("Average ACO Best Total Cost - Rho = 0.2: ", average_aco_rho_02)
+print("Average Elitist Best Total Cost - Rho = 0.2: ", average_elitist_rho_02)
+print("Average ACO Best Total Cost - Rho = 0.3: ", average_aco_rho_03)
+print("Average Elitist Best Total Cost - Rho = 0.3: ", average_elitist_rho_03)
+print("Average ACO Best Total Cost - Rho = 0.4: ", average_aco_rho_04)
+print("Average Elitist Best Total Cost - Rho = 0.4: ", average_elitist_rho_04)
+print("Average ACO Best Total Cost - Rho = 0.5: ", average_aco_rho_05)
+print("Average Elitist Best Total Cost - Rho = 0.5: ", average_elitist_rho_05)
+print("Average ACO Best Total Cost - Rho = 0.6: ", average_aco_rho_06)
+print("Average Elitist Best Total Cost - Rho = 0.6: ", average_elitist_rho_06)
+print("Average ACO Best Total Cost - Rho = 0.7: ", average_aco_rho_07)
+print("Average Elitist Best Total Cost - Rho = 0.7: ", average_elitist_rho_07)
+print("Average ACO Best Total Cost - Rho = 0.8: ", average_aco_rho_08)
+print("Average Elitist Best Total Cost - Rho = 0.8: ", average_elitist_rho_08)
+print("Average ACO Best Total Cost - Rho = 0.9: ", average_aco_rho_09)
+print("Average Elitist Best Total Cost - Rho = 0.9: ", average_elitist_rho_09)
+print("Average ACO Best Total Cost - Rho = 1.0: ", average_aco_rho_1)
+print("Average Elitist Best Total Cost - Rho = 1.0: ", average_elitist_rho_1)
+print("Average ACO Best Total Cost - Q = 0.5: ", average_aco_q_05)
+print("Average Elitist Best Total Cost - Q = 0.5: ", average_elitist_q_05)
+print("Average ACO Best Total Cost - Q = 1.0: ", average_aco_q_1)
+print("Average Elitist Best Total Cost - Q = 1.0: ", average_elitist_q_1)
+print("Average ACO Best Total Cost - Q = 2.0: ", average_aco_q_2)
+print("Average Elitist Best Total Cost - Q = 2.0: ", average_elitist_q_2)
+print("Average ACO Best Total Cost - Q = 5.0: ", average_aco_q_5)
+print("Average Elitist Best Total Cost - Q = 5.0: ", average_elitist_q_5)
+print("Average ACO Best Total Cost - Q = 10.0: ", average_aco_q_10)
+
+
+# Plot the results in a graph
+plt.figure(figsize=(10, 5))  # Adjust the figsize parameter for a wider graph
+plt.plot(average_aco_number_of_ants_10, label='Average ACO - Number of ants = 10')
+plt.plot(average_elitist_number_of_ants_10, label='Average Elitist - Number of ants = 10')
+plt.plot(average_aco_number_of_ants_50, label='Average ACO - Number of ants = 50')
+plt.plot(average_elitist_number_of_ants_50, label='Average Elitist - Number of ants = 50')
+plt.plot(average_aco_number_of_ants_100, label='Average ACO - Number of ants = 100')
+plt.plot(average_elitist_number_of_ants_100, label='Average Elitist - Number of ants = 100')
+plt.plot(average_aco_rho_01, label='Average ACO - Rho = 0.1')
+plt.plot(average_elitist_rho_01, label='Average Elitist - Rho = 0.1')
+plt.plot(average_aco_rho_02, label='Average ACO - Rho = 0.2')
+plt.plot(average_elitist_rho_02, label='Average Elitist - Rho = 0.2')
+plt.plot(average_aco_rho_03, label='Average ACO - Rho = 0.3')
+plt.plot(average_elitist_rho_03, label='Average Elitist - Rho = 0.3')
+plt.plot(average_aco_rho_04, label='Average ACO - Rho = 0.4')
+plt.plot(average_elitist_rho_04, label='Average Elitist - Rho = 0.4')
+plt.plot(average_aco_rho_05, label='Average ACO - Rho = 0.5')
+plt.plot(average_elitist_rho_05, label='Average Elitist - Rho = 0.5')
+plt.plot(average_aco_rho_06, label='Average ACO - Rho = 0.6')
+plt.plot(average_elitist_rho_06, label='Average Elitist - Rho = 0.6')
+plt.plot(average_aco_rho_07, label='Average ACO - Rho = 0.7')
+plt.plot(average_elitist_rho_07, label='Average Elitist - Rho = 0.7')
+plt.plot(average_aco_rho_08, label='Average ACO - Rho = 0.8')
+plt.plot(average_elitist_rho_08, label='Average Elitist - Rho = 0.8')
+plt.plot(average_aco_rho_09, label='Average ACO - Rho = 0.9')
+plt.plot(average_elitist_rho_09, label='Average Elitist - Rho = 0.9')
+plt.plot(average_aco_rho_1, label='Average ACO - Rho = 1.0')
+plt.plot(average_elitist_rho_1, label='Average Elitist - Rho = 1.0')
+plt.plot(average_aco_q_05, label='Average ACO - Q = 0.5')
+plt.plot(average_elitist_q_05, label='Average Elitist - Q = 0.5')
+plt.plot(average_aco_q_1, label='Average ACO - Q = 1.0')
+plt.plot(average_elitist_q_1, label='Average Elitist - Q = 1.0')
+plt.plot(average_aco_q_2, label='Average ACO - Q = 2.0')
+plt.plot(average_elitist_q_2, label='Average Elitist - Q = 2.0')
+plt.plot(average_aco_q_5, label='Average ACO - Q = 5.0')
+plt.plot(average_elitist_q_5, label='Average Elitist - Q = 5.0')
+plt.plot(average_aco_q_10, label='Average ACO - Q = 10.0')
+plt.plot(average_elitist_q_10, label='Average Elitist - Q = 10.0')
+plt.xlabel('Best Total Cost')
+
 
 
