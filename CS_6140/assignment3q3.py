@@ -1,516 +1,212 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from sklearn.datasets import make_moons, make_circles
-from sklearn.model_selection import KFold
-from sklearn.preprocessing import StandardScaler
-import time
-from typing import Tuple, List
-import pandas as pd
+from sklearn.model_selection import train_test_split
+from typing import List, Tuple
+import seaborn as sns
 
-class SVM:
-    def __init__(self, kernel='linear', C=1.0, max_iter=100, tol=1e-3):
+class SimpleRNN:
+    def __init__(self, input_size: int, hidden_size: int, output_size: int):
         """
-        Initialize SVM with kernel and hyperparameters
-        
+        Initialize RNN parameters
         Args:
-            kernel (str): The kernel type ('linear', 'poly', 'rbf', 'sigmoid')
-            C (float): Regularization parameter
-            max_iter (int): Maximum number of iterations
-            tol (float): Tolerance for stopping criterion
+            input_size: dimension of input features
+            hidden_size: dimension of hidden state (memory size)
+            output_size: dimension of output
         """
-        self.kernel = kernel
-        self.C = C
-        self.max_iter = max_iter
-        self.tol = tol
-        self.alphas = None
-        self.support_vectors = None
-        self.support_vector_labels = None
-        self.b = 0
-        self.K = None  # Cache for kernel matrix
+        # Initialize weights with random values
+        self.Wxh = np.random.randn(hidden_size, input_size) * 0.01
+        self.Whh = np.random.randn(hidden_size, hidden_size) * 0.01
+        self.Why = np.random.randn(output_size, hidden_size) * 0.01
         
-    def _kernel_function(self, x1, x2):
-        """Compute kernel function between x1 and x2"""
-        if self.kernel == 'linear':
-            return np.dot(x1, x2.T)
-        elif self.kernel == 'poly':
-            degree = 2  # Reduced from 3 to 2 for faster computation
-            return (np.dot(x1, x2.T) + 1) ** degree
-        elif self.kernel == 'rbf':
-            gamma = 1.0  # Increased from 0.1 for better separation
-            if len(x1.shape) == 1:
-                x1 = x1.reshape(1, -1)
-            if len(x2.shape) == 1:
-                x2 = x2.reshape(1, -1)
-            return np.exp(-gamma * np.sum((x1[:, np.newaxis] - x2) ** 2, axis=2))
-        elif self.kernel == 'sigmoid':
-            gamma = 0.1
-            coef0 = 1.0  # Changed from 0.0 for better performance
-            return np.tanh(gamma * np.dot(x1, x2.T) + coef0)
-            
-    def _compute_error(self, i, X, y):
-        """Compute error for index i"""
-        if self.K is None:
-            output_i = self._decision_function(X[i], X, y)
-        else:
-            output_i = np.sum(self.alphas * y * self.K[i]) + self.b
-        return output_i - y[i]
-            
-    def fit(self, X, y, max_time=30):
+        # Initialize biases
+        self.bh = np.zeros((hidden_size, 1))
+        self.by = np.zeros((output_size, 1))
+        
+        self.hidden_size = hidden_size
+        
+    def forward(self, inputs: np.ndarray) -> Tuple[List[np.ndarray], List[np.ndarray]]:
         """
-        Train the SVM classifier using Sequential Minimal Optimization (SMO)
-        
+        Forward pass of the RNN
         Args:
-            X (np.ndarray): Training features
-            y (np.ndarray): Training labels (-1 or 1)
-            max_time (int): Maximum training time in seconds
-        """
-        start_time = time.time()
-        n_samples = X.shape[0]
-        
-        # Initialize alphas and b
-        self.alphas = np.zeros(n_samples)
-        self.b = 0
-        
-        # Compute and cache kernel matrix
-        self.K = self._kernel_function(X, X)
-        
-        # SMO optimization
-        iter_counter = 0
-        max_passes = 5  # Reduced from 10 to 5
-        passes = 0
-        
-        while passes < max_passes and iter_counter < self.max_iter:
-            if time.time() - start_time > max_time:
-                print(f"Training stopped after {max_time} seconds")
-                break
-                
-            alpha_pairs_changed = 0
-            
-            # Randomly shuffle indices for better convergence
-            indices = np.random.permutation(n_samples)
-            
-            for i in indices:
-                # Calculate error
-                Ei = self._compute_error(i, X, y)
-                
-                # Check KKT conditions with stricter tolerance
-                if ((y[i] * Ei < -self.tol and self.alphas[i] < self.C) or
-                    (y[i] * Ei > self.tol and self.alphas[i] > 0)):
-                    
-                    # Choose second alpha heuristically
-                    if Ei > 0:
-                        j = np.argmin([self._compute_error(k, X, y) for k in range(n_samples)])
-                    else:
-                        j = np.argmax([self._compute_error(k, X, y) for k in range(n_samples)])
-                    
-                    # Calculate error for j
-                    Ej = self._compute_error(j, X, y)
-                    
-                    # Save old alphas
-                    alpha_i_old = self.alphas[i].copy()
-                    alpha_j_old = self.alphas[j].copy()
-                    
-                    # Compute bounds L and H
-                    if y[i] != y[j]:
-                        L = max(0, self.alphas[j] - self.alphas[i])
-                        H = min(self.C, self.C + self.alphas[j] - self.alphas[i])
-                    else:
-                        L = max(0, self.alphas[i] + self.alphas[j] - self.C)
-                        H = min(self.C, self.alphas[i] + self.alphas[j])
-                    
-                    if abs(L - H) < 1e-4:
-                        continue
-                    
-                    # Compute eta
-                    eta = 2.0 * self.K[i,j] - self.K[i,i] - self.K[j,j]
-                    if eta >= 0:
-                        continue
-                    
-                    # Update alpha j
-                    self.alphas[j] -= y[j] * (Ei - Ej) / eta
-                    self.alphas[j] = min(H, max(L, self.alphas[j]))
-                    
-                    if abs(self.alphas[j] - alpha_j_old) < 1e-5:
-                        continue
-                    
-                    # Update alpha i
-                    self.alphas[i] += y[i] * y[j] * (alpha_j_old - self.alphas[j])
-                    
-                    # Compute b
-                    b1 = self.b - Ei - y[i] * (self.alphas[i] - alpha_i_old) * self.K[i,i] - \
-                         y[j] * (self.alphas[j] - alpha_j_old) * self.K[i,j]
-                    b2 = self.b - Ej - y[i] * (self.alphas[i] - alpha_i_old) * self.K[i,j] - \
-                         y[j] * (self.alphas[j] - alpha_j_old) * self.K[j,j]
-                    
-                    if 0 < self.alphas[i] < self.C:
-                        self.b = b1
-                    elif 0 < self.alphas[j] < self.C:
-                        self.b = b2
-                    else:
-                        self.b = (b1 + b2) / 2
-                    
-                    alpha_pairs_changed += 1
-            
-            if alpha_pairs_changed == 0:
-                passes += 1
-            else:
-                passes = 0
-                
-            iter_counter += 1
-            if iter_counter % 10 == 0:
-                print(f"Iteration {iter_counter}, passes without change: {passes}")
-        
-        # Save support vectors
-        support_vector_indices = self.alphas > 1e-5
-        self.support_vectors = X[support_vector_indices]
-        self.support_vector_labels = y[support_vector_indices]
-        self.alphas = self.alphas[support_vector_indices]
-        
-        # Clear kernel cache
-        self.K = None
-        
-        training_time = time.time() - start_time
-        print(f"Training completed in {training_time:.2f} seconds with {len(self.support_vectors)} support vectors")
-        
-    def _decision_function(self, X, support_vectors, support_vector_labels):
-        """Compute decision function for samples X"""
-        if len(X.shape) == 1:
-            X = X.reshape(1, -1)
-        kernel_matrix = self._kernel_function(X, support_vectors)
-        return np.sum(self.alphas * support_vector_labels * kernel_matrix, axis=1) + self.b
-        
-    def predict(self, X):
-        """
-        Predict class labels for samples in X
-        
-        Args:
-            X (np.ndarray): Features to predict
-            
+            inputs: sequence of input vectors
         Returns:
-            np.ndarray: Predicted class labels
+            hidden_states: list of hidden states
+            outputs: list of outputs
         """
-        if self.support_vectors is None:
-            raise Exception("Model not trained yet!")
-            
-        if len(X.shape) == 1:
-            X = X.reshape(1, -1)
-            
-        decision_values = self._decision_function(X, self.support_vectors, self.support_vector_labels)
-        return np.sign(decision_values)
-
-class MLP:
-    def __init__(self, input_size, hidden_size, output_size, learning_rate=0.01, max_epochs=1000):
-        """
-        Initialize Multi-Layer Perceptron
+        h = np.zeros((self.hidden_size, 1))  # Initial hidden state
+        hidden_states, outputs = [], []
         
-        Args:
-            input_size (int): Number of input features
-            hidden_size (int): Number of neurons in hidden layer
-            output_size (int): Number of output classes
-            learning_rate (float): Learning rate for gradient descent
-            max_epochs (int): Maximum number of training epochs
-        """
-        self.weights1 = np.random.randn(input_size, hidden_size) * 0.01
-        self.bias1 = np.zeros((1, hidden_size))
-        self.weights2 = np.random.randn(hidden_size, output_size) * 0.01
-        self.bias2 = np.zeros((1, output_size))
-        self.learning_rate = learning_rate
-        self.max_epochs = max_epochs
-        
-    def _sigmoid(self, x):
-        """Sigmoid activation function"""
-        return 1 / (1 + np.exp(-np.clip(x, -500, 500)))  # Clip to avoid overflow
+        # Forward pass for each time step
+        for x in inputs:
+            x = x.reshape(-1, 1)
+            h = np.tanh(np.dot(self.Wxh, x) + np.dot(self.Whh, h) + self.bh)
+            y = np.dot(self.Why, h) + self.by
+            hidden_states.append(h)
+            outputs.append(y)
+            
+        return hidden_states, outputs
     
-    def _sigmoid_derivative(self, x):
-        """Derivative of sigmoid function"""
-        return x * (1 - x)
-        
-    def fit(self, X, y):
+    def train(self, X: np.ndarray, y: np.ndarray, learning_rate: float = 0.01, epochs: int = 100) -> List[float]:
         """
-        Train the MLP classifier using backpropagation
-        
+        Train the RNN using backpropagation through time (BPTT)
         Args:
-            X (np.ndarray): Training features
-            y (np.ndarray): Training labels
-        """
-        # Convert y to one-hot encoding if needed
-        if len(y.shape) == 1:
-            y_one_hot = np.zeros((y.shape[0], 2))
-            y_one_hot[np.arange(y.shape[0]), y] = 1
-            y = y_one_hot
-            
-        for epoch in range(self.max_epochs):
-            # Forward propagation
-            layer1 = self._sigmoid(np.dot(X, self.weights1) + self.bias1)
-            output = self._sigmoid(np.dot(layer1, self.weights2) + self.bias2)
-            
-            # Backpropagation
-            output_error = y - output
-            output_delta = output_error * self._sigmoid_derivative(output)
-            
-            layer1_error = np.dot(output_delta, self.weights2.T)
-            layer1_delta = layer1_error * self._sigmoid_derivative(layer1)
-            
-            # Update weights and biases
-            self.weights2 += self.learning_rate * np.dot(layer1.T, output_delta)
-            self.bias2 += self.learning_rate * np.sum(output_delta, axis=0, keepdims=True)
-            self.weights1 += self.learning_rate * np.dot(X.T, layer1_delta)
-            self.bias1 += self.learning_rate * np.sum(layer1_delta, axis=0, keepdims=True)
-            
-            # Early stopping if error is small enough
-            if np.mean(np.abs(output_error)) < 1e-4:
-                break
-                
-    def predict(self, X):
-        """
-        Predict class labels for samples in X
-        
-        Args:
-            X (np.ndarray): Features to predict
-            
+            X: input sequences
+            y: target sequences
+            learning_rate: learning rate for gradient descent
+            epochs: number of training epochs
         Returns:
-            np.ndarray: Predicted class labels
+            losses: list of losses during training
         """
-        layer1 = self._sigmoid(np.dot(X, self.weights1) + self.bias1)
-        output = self._sigmoid(np.dot(layer1, self.weights2) + self.bias2)
-        return np.argmax(output, axis=1)
-
-def generate_datasets(n_samples: int) -> Tuple[List[np.ndarray], List[np.ndarray]]:
-    """
-    Generate half-circles and moons datasets
-    
-    Args:
-        n_samples (int): Number of samples to generate
+        losses = []
         
+        for epoch in range(epochs):
+            total_loss = 0
+            
+            for i in range(len(X)):
+                # Forward pass
+                hidden_states, outputs = self.forward(X[i])
+                
+                # Compute loss
+                loss = np.mean((np.array(outputs) - y[i].reshape(-1, 1)) ** 2)
+                total_loss += loss
+                
+                # Backward pass
+                dWxh = np.zeros_like(self.Wxh)
+                dWhh = np.zeros_like(self.Whh)
+                dWhy = np.zeros_like(self.Why)
+                dbh = np.zeros_like(self.bh)
+                dby = np.zeros_like(self.by)
+                dhnext = np.zeros((self.hidden_size, 1))
+                
+                # Backpropagate through time
+                for t in reversed(range(len(X[i]))):
+                    dy = 2 * (outputs[t] - y[i][t].reshape(-1, 1))
+                    dWhy += np.dot(dy, hidden_states[t].T)
+                    dby += dy
+                    
+                    dh = np.dot(self.Why.T, dy) + dhnext
+                    dhraw = (1 - hidden_states[t] ** 2) * dh
+                    dbh += dhraw
+                    dWxh += np.dot(dhraw, X[i][t].reshape(1, -1))
+                    dWhh += np.dot(dhraw, hidden_states[t-1].T) if t > 0 else np.dot(dhraw, np.zeros((self.hidden_size, 1)).T)
+                    dhnext = np.dot(self.Whh.T, dhraw)
+                
+                # Update weights using gradient descent
+                self.Wxh -= learning_rate * dWxh
+                self.Whh -= learning_rate * dWhh
+                self.Why -= learning_rate * dWhy
+                self.bh -= learning_rate * dbh
+                self.by -= learning_rate * dby
+            
+            losses.append(total_loss / len(X))
+            
+            if epoch % 10 == 0:
+                print(f'Epoch {epoch}, Loss: {total_loss/len(X)}')
+                
+        return losses
+
+def generate_long_term_dependency_data(n_samples: int, sequence_length: int, dependency_lag: int) -> Tuple[np.ndarray, np.ndarray]:
+    """
+    Generate time series data with long-term dependencies
+    Args:
+        n_samples: number of sequences to generate
+        sequence_length: length of each sequence
+        dependency_lag: how far back the dependency goes
     Returns:
-        Tuple containing lists of X and y for both datasets
+        X: input sequences
+        y: target sequences
     """
-    # Generate half circles
-    X_circles, y_circles = make_circles(n_samples=n_samples, noise=0.1, factor=0.5)
+    X = np.zeros((n_samples, sequence_length))
+    y = np.zeros((n_samples, sequence_length))
     
-    # Generate moons
-    X_moons, y_moons = make_moons(n_samples=n_samples, noise=0.1)
-    
-    # Scale the features
-    scaler = StandardScaler()
-    X_circles = scaler.fit_transform(X_circles)
-    X_moons = scaler.fit_transform(X_moons)
-    
-    return [X_circles, X_moons], [y_circles, y_moons]
-
-def visualize_dataset(X: np.ndarray, y: np.ndarray, title: str):
-    """
-    Visualize a dataset with different colors for different classes
-    
-    Args:
-        X (np.ndarray): Features
-        y (np.ndarray): Labels
-        title (str): Plot title
-    """
-    plt.figure(figsize=(8, 6))
-    plt.scatter(X[y == 0][:, 0], X[y == 0][:, 1], color='blue', label='Class 0')
-    plt.scatter(X[y == 1][:, 0], X[y == 1][:, 1], color='red', label='Class 1')
-    plt.title(title)
-    plt.xlabel('Feature 1')
-    plt.ylabel('Feature 2')
-    plt.legend()
-    plt.show()
-
-def visualize_decision_boundary(model, X, y, title):
-    """
-    Visualize the decision boundary of a trained model
-    
-    Args:
-        model: Trained model (SVM or MLP)
-        X (np.ndarray): Features
-        y (np.ndarray): Labels
-        title (str): Plot title
-    """
-    # Create a mesh grid
-    x_min, x_max = X[:, 0].min() - 0.5, X[:, 0].max() + 0.5
-    y_min, y_max = X[:, 1].min() - 0.5, X[:, 1].max() + 0.5
-    xx, yy = np.meshgrid(np.arange(x_min, x_max, 0.02),
-                        np.arange(y_min, y_max, 0.02))
-    
-    # Make predictions on the mesh grid
-    Z = model.predict(np.c_[xx.ravel(), yy.ravel()])
-    Z = Z.reshape(xx.shape)
-    
-    # Plot decision boundary and points
-    plt.figure(figsize=(8, 6))
-    plt.contourf(xx, yy, Z, alpha=0.4)
-    plt.scatter(X[y == 0][:, 0], X[y == 0][:, 1], color='blue', label='Class 0')
-    plt.scatter(X[y == 1][:, 0], X[y == 1][:, 1], color='red', label='Class 1')
-    plt.title(title)
-    plt.xlabel('Feature 1')
-    plt.ylabel('Feature 2')
-    plt.legend()
-    plt.show()
-
-def evaluate_model(model, X_train, y_train, X_test, y_test):
-    """
-    Evaluate a model's performance
-    
-    Args:
-        model: Trained model (SVM or MLP)
-        X_train (np.ndarray): Training features
-        y_train (np.ndarray): Training labels
-        X_test (np.ndarray): Test features
-        y_test (np.ndarray): Test labels
+    for i in range(n_samples):
+        # Generate random binary signal
+        signal = np.random.choice([0, 1], size=sequence_length)
         
-    Returns:
-        dict: Dictionary containing various performance metrics
+        # Create dependency: if signal[t-dependency_lag] == 1, add a sine wave component
+        for t in range(dependency_lag, sequence_length):
+            if signal[t-dependency_lag] == 1:
+                signal[t] += 0.5 * np.sin(t/5)
+        
+        X[i] = signal
+        y[i] = np.roll(signal, -1)  # Target is next time step
+    
+    return X, y
+
+def plot_results(true_values: np.ndarray, predicted_values: np.ndarray, title: str):
     """
-    # Start timing
-    start_time = time.time()
-    
-    # Train the model
-    model.fit(X_train, y_train)
-    
-    # End timing
-    training_time = time.time() - start_time
-    
-    # Get predictions
-    y_train_pred = model.predict(X_train)
-    y_test_pred = model.predict(X_test)
-    
-    # Calculate accuracy
-    train_accuracy = np.mean(y_train_pred == y_train)
-    test_accuracy = np.mean(y_test_pred == y_test)
-    
-    return {
-        'train_accuracy': train_accuracy,
-        'test_accuracy': test_accuracy,
-        'training_time': training_time
-    }
+    Plot true vs predicted values
+    """
+    plt.figure(figsize=(12, 6))
+    plt.plot(true_values, label='True Values', color='blue')
+    plt.plot(predicted_values, label='Predicted Values', color='red', linestyle='--')
+    plt.title(title)
+    plt.legend()
+    plt.grid(True)
+    plt.show()
 
 def main():
-    # Generate datasets
-    n_samples_list = [1000, 10000]
-    datasets = []
-    labels = []
+    # Generate data
+    n_samples = 100
+    sequence_length = 20
+    dependency_lag = 5
+    X, y = generate_long_term_dependency_data(n_samples, sequence_length, dependency_lag)
     
-    for n_samples in n_samples_list:
-        X_list, y_list = generate_datasets(n_samples)
-        datasets.extend(X_list)
-        labels.extend(y_list)
+    # Split data
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
     
-    # Visualize datasets
-    dataset_names = ['Half-circles (1000)', 'Moons (1000)', 
-                    'Half-circles (10000)', 'Moons (10000)']
+    # Visualize sample data
+    plt.figure(figsize=(12, 6))
+    plt.plot(X[0], label='Sample Sequence')
+    plt.title('Example of Generated Time Series with Long-term Dependencies')
+    plt.legend()
+    plt.grid(True)
+    plt.show()
     
-    for X, y, name in zip(datasets, labels, dataset_names):
-        visualize_dataset(X, y, name)
+    # Test different memory sizes
+    memory_sizes = [2, 5]
+    results = {}
     
-    # Initialize results dictionary
-    results = {
-        'dataset': [],
-        'model': [],
-        'train_accuracy': [],
-        'test_accuracy': [],
-        'training_time': []
-    }
-    
-    # Perform k-fold cross validation
-    k_folds = 5
-    kf = KFold(n_splits=k_folds, shuffle=True, random_state=42)
-    
-    # Models to evaluate
-    svm_kernels = ['linear', 'poly', 'rbf', 'sigmoid']
-    
-    for i, (X, y) in enumerate(zip(datasets, labels)):
-        dataset_name = dataset_names[i]
-        print(f"\nProcessing {dataset_name}...")
+    for memory_size in memory_sizes:
+        print(f"\nTraining RNN with memory size {memory_size}")
+        rnn = SimpleRNN(input_size=1, hidden_size=memory_size, output_size=1)
         
-        # Evaluate SVM with different kernels
-        for kernel in svm_kernels:
-            print(f"Training SVM with {kernel} kernel...")
-            fold_results = []
-            best_model = None
-            best_accuracy = -1
-            
-            for train_idx, test_idx in kf.split(X):
-                X_train, X_test = X[train_idx], X[test_idx]
-                y_train, y_test = y[train_idx], y[test_idx]
-                
-                # Convert labels to -1, 1 for SVM
-                y_train_svm = 2 * y_train - 1
-                y_test_svm = 2 * y_test - 1
-                
-                svm = SVM(kernel=kernel)
-                metrics = evaluate_model(svm, X_train, y_train_svm, X_test, y_test_svm)
-                fold_results.append(metrics)
-                
-                # Keep track of best model
-                if metrics['test_accuracy'] > best_accuracy:
-                    best_accuracy = metrics['test_accuracy']
-                    best_model = svm
-            
-            # Average results across folds
-            avg_results = {
-                'train_accuracy': np.mean([r['train_accuracy'] for r in fold_results]),
-                'test_accuracy': np.mean([r['test_accuracy'] for r in fold_results]),
-                'training_time': np.mean([r['training_time'] for r in fold_results])
-            }
-            
-            # Store results
-            results['dataset'].append(dataset_name)
-            results['model'].append(f'SVM-{kernel}')
-            results['train_accuracy'].append(avg_results['train_accuracy'])
-            results['test_accuracy'].append(avg_results['test_accuracy'])
-            results['training_time'].append(avg_results['training_time'])
-            
-            # Visualize decision boundary for best model
-            if best_model is not None:
-                visualize_decision_boundary(best_model, X, 2 * y - 1,
-                                         f'SVM-{kernel} Decision Boundary - {dataset_name}')
+        # Train the model
+        losses = rnn.train(X_train, y_train, learning_rate=0.01, epochs=100)
         
-        # Evaluate MLP
-        print("Training MLP...")
-        fold_results = []
-        best_model = None
-        best_accuracy = -1
+        # Evaluate on test set
+        test_predictions = []
+        for seq in X_test:
+            _, outputs = rnn.forward(seq)
+            test_predictions.append([o[0][0] for o in outputs])
         
-        for train_idx, test_idx in kf.split(X):
-            X_train, X_test = X[train_idx], X[test_idx]
-            y_train, y_test = y[train_idx], y[test_idx]
-            
-            mlp = MLP(input_size=2, hidden_size=10, output_size=2)
-            metrics = evaluate_model(mlp, X_train, y_train, X_test, y_test)
-            fold_results.append(metrics)
-            
-            # Keep track of best model
-            if metrics['test_accuracy'] > best_accuracy:
-                best_accuracy = metrics['test_accuracy']
-                best_model = mlp
-        
-        # Average results across folds
-        avg_results = {
-            'train_accuracy': np.mean([r['train_accuracy'] for r in fold_results]),
-            'test_accuracy': np.mean([r['test_accuracy'] for r in fold_results]),
-            'training_time': np.mean([r['training_time'] for r in fold_results])
+        # Calculate MSE
+        mse = np.mean((np.array(test_predictions) - y_test) ** 2)
+        results[memory_size] = {
+            'mse': mse,
+            'predictions': test_predictions
         }
         
-        # Store results
-        results['dataset'].append(dataset_name)
-        results['model'].append('MLP')
-        results['train_accuracy'].append(avg_results['train_accuracy'])
-        results['test_accuracy'].append(avg_results['test_accuracy'])
-        results['training_time'].append(avg_results['training_time'])
+        # Plot training loss
+        plt.figure(figsize=(10, 5))
+        plt.plot(losses)
+        plt.title(f'Training Loss (Memory Size = {memory_size})')
+        plt.xlabel('Epoch')
+        plt.ylabel('MSE Loss')
+        plt.grid(True)
+        plt.show()
         
-        # Visualize decision boundary for best model
-        if best_model is not None:
-            visualize_decision_boundary(best_model, X, y,
-                                     f'MLP Decision Boundary - {dataset_name}')
+        # Plot predictions vs ground truth for a sample sequence
+        sample_idx = 0
+        plot_results(y_test[sample_idx], test_predictions[sample_idx], 
+                    f'Predictions vs Ground Truth (Memory Size = {memory_size})')
     
-    # Create results DataFrame and display
-    results_df = pd.DataFrame(results)
+    # Print results table
     print("\nResults Summary:")
-    print(results_df.to_string(index=False))
-    
-    # Save results to CSV
-    results_df.to_csv('classification_results.csv', index=False)
-    print("\nResults have been saved to 'classification_results.csv'")
+    print("Memory Size | Test MSE")
+    print("----------------------")
+    for size, result in results.items():
+        print(f"{size:^10} | {result['mse']:.6f}")
 
 if __name__ == "__main__":
     main()
