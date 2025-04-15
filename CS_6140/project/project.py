@@ -11,113 +11,392 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import mean_squared_error, r2_score
 import gc  # For garbage collection
+import re  # For regex pattern matching
+import itertools  # For islice
 
 
-def load_dataset():
+def discover_available_timeframes():
     """
-    Load the Ookla Internet Speed dataset from a local file
+    Dynamically discover all available timeframes in the dataset directory
+    
+    Returns:
+    --------
+    list of str: Available timeframes in the format 'YYYY-qN'
     """
-    # Use a relative path starting from the current directory
-    file_path = "dataset/2019-q1/2019-01-01_performance_fixed_tiles.parquet"
-
-    # Handle absolute path as well (in case the relative path doesn't work)
-    if not os.path.exists(file_path):
-        # Try searching in a few different places
-        possible_paths = [
-            file_path,
-            os.path.join(os.getcwd(), file_path),
-            os.path.join(os.getcwd(), "CS_6140", "project", file_path),
-            os.path.join(os.getcwd(), "CS_6140", file_path),
+    # Base directory for datasets
+    base_dir = "dataset"
+    
+    # If base_dir doesn't exist, try a few alternatives
+    if not os.path.exists(base_dir):
+        alternatives = [
+            os.path.join(os.getcwd(), "dataset"),
+            os.path.join(os.getcwd(), "CS_6140", "project", "dataset"),
+            os.path.join(os.getcwd(), "CS_6140", "dataset")
         ]
-
-        # Find the first path that exists
-        for path in possible_paths:
-            if os.path.exists(path):
-                file_path = path
+        for alt in alternatives:
+            if os.path.exists(alt):
+                base_dir = alt
                 break
-
-    print(f"Attempting to load dataset from: {file_path}")
-
+    
+    # If still doesn't exist
+    if not os.path.exists(base_dir):
+        print(f"Warning: Could not find dataset directory")
+        return ['2019-q1', '2020-q1', '2021-q1']  # Return default timeframes
+    
+    print(f"Looking for timeframes in: {base_dir}")
+    
+    # List all subdirectories matching the pattern 'YYYY-qN'
+    timeframe_pattern = re.compile(r'\d{4}-q[1-4]')
+    timeframes = []
+    
+    # List all directories in the base_dir
     try:
-        # Check if the file exists
-        if not os.path.exists(file_path):
-            print(f"Error: File not found at {file_path}")
-            print(
-                "Please ensure the Ookla dataset is downloaded and provide the correct path.")
-            print(
-                "The expected structure is: dataset/2019-q1/2019-01-01_performance_fixed_tiles.parquet")
-            return None
-
-        # If it's a zip file, extract it first
-        if file_path.endswith('.zip'):
-            print("Extracting zip file...")
-            extract_dir = os.path.join(os.path.dirname(file_path), 'extracted')
-            os.makedirs(extract_dir, exist_ok=True)
-
-            with ZipFile(file_path, 'r') as zip_ref:
-                zip_ref.extractall(extract_dir)
-
-            print(f"Files extracted to: {extract_dir}")
-
-            # Find all potential data files in the extracted directory
-            csv_files = glob.glob(os.path.join(
-                extract_dir, '**', '*.csv'), recursive=True)
-            parquet_files = glob.glob(os.path.join(
-                extract_dir, '**', '*.parquet'), recursive=True)
-            excel_files = glob.glob(os.path.join(extract_dir, '**', '*.xlsx'), recursive=True) + \
-                glob.glob(os.path.join(
-                    extract_dir, '**', '*.xls'), recursive=True)
-
-            # Prioritize files to load
-            data_files = csv_files + parquet_files + excel_files
-
-            if not data_files:
-                print("No data files found in the extracted directory.")
-                shp_files = glob.glob(os.path.join(
-                    extract_dir, '**', '*.shp'), recursive=True)
-                if shp_files:
-                    print(f"Found {
-                          len(shp_files)} shapefile(s). To load these, install geopandas and use:")
-                    print("import geopandas as gpd")
-                    print(f"gdf = gpd.read_file('{shp_files[0]}')")
-                return None
-
-            file_path = data_files[0]
-            print(f"Loading data from: {file_path}")
-
-        # Load the file based on its extension
-        if file_path.endswith('.csv'):
-            df = pd.read_csv(file_path)
-        elif file_path.endswith('.parquet'):
-            try:
-                # Try with pyarrow engine first
-                df = pd.read_parquet(file_path, engine='pyarrow')
-            except Exception as e:
-                print(f"Error with pyarrow: {e}")
-                try:
-                    # Try with fastparquet engine
-                    df = pd.read_parquet(file_path, engine='fastparquet')
-                except Exception as e2:
-                    print(f"Error with fastparquet: {e2}")
-                    print(
-                        "\nTo read parquet files, you need to install the required packages:")
-                    print("pip install pyarrow fastparquet")
-                    return None
-        elif file_path.endswith('.xlsx') or file_path.endswith('.xls'):
-            df = pd.read_excel(file_path)
-        else:
-            print(f"Unsupported file format: {file_path}")
-            return None
-
-        print("\nDataset loaded successfully!")
-        print(f"Shape: {df.shape}")
-        return df
-
+        subdirs = [d for d in os.listdir(base_dir) if os.path.isdir(os.path.join(base_dir, d))]
+        for subdir in subdirs:
+            if timeframe_pattern.match(subdir):
+                # Check if there are any parquet files in this directory
+                parquet_files = glob.glob(os.path.join(base_dir, subdir, "*.parquet"))
+                if parquet_files:
+                    timeframes.append(subdir)
+                    print(f"Found data for timeframe: {subdir}")
     except Exception as e:
-        print(f"Error loading dataset: {e}")
-        print("\nTry installing necessary dependencies:")
-        print("pip install pandas pyarrow fastparquet matplotlib seaborn scikit-learn")
+        print(f"Error discovering timeframes: {e}")
+    
+    # Sort timeframes chronologically
+    timeframes.sort()
+    
+    # If no timeframes found, return defaults
+    if not timeframes:
+        print("No timeframes found, using defaults")
+        return ['2019-q1', '2020-q1', '2021-q1']
+    
+    print(f"Found {len(timeframes)} timeframes: {timeframes}")
+    return timeframes
+
+
+def load_dataset(timeframes=None, max_timeframes=4, sample_size=200000):
+    """
+    Load the Ookla Internet Speed dataset from local files
+    
+    Parameters:
+    -----------
+    timeframes : list of str, optional
+        List of timeframes to load (e.g., ['2019-q1', '2019-q2']).
+        If None, auto-discovers available timeframes.
+    max_timeframes : int, optional
+        Maximum number of timeframes to load to avoid memory issues.
+        Default is 4 (one year's worth of data).
+    sample_size : int, optional
+        Number of rows to sample from each timeframe to avoid memory issues.
+        Set to None to load all data (warning: may cause memory errors).
+    
+    Returns:
+    --------
+    pandas.DataFrame or None
+    """
+    if timeframes is None:
+        # Auto-discover available timeframes
+        timeframes = discover_available_timeframes()
+    
+    # Limit number of timeframes if needed
+    if len(timeframes) > max_timeframes:
+        print(f"WARNING: Found {len(timeframes)} timeframes but limiting to {max_timeframes} to avoid memory issues.")
+        print(f"Using timeframes: {timeframes[:max_timeframes]}")
+        print(f"To process more timeframes, modify the max_timeframes parameter or process in batches.")
+        timeframes = timeframes[:max_timeframes]
+    
+    print(f"Loading data for timeframes: {timeframes}")
+    
+    all_dataframes = []
+    
+    for timeframe in timeframes:
+        # Extract year from timeframe (e.g., '2019' from '2019-q1')
+        year = timeframe.split('-')[0]
+        
+        # Extract quarter from timeframe (e.g., '1' from '2019-q1')
+        quarter = timeframe.split('-q')[1]
+        
+        # Calculate the month based on the quarter
+        month = (int(quarter) - 1) * 3 + 1  # q1->1, q2->4, q3->7, q4->10
+        
+        # Construct the file path for each timeframe
+        file_path = f"dataset/{timeframe}/{year}-{month:02d}-01_performance_fixed_tiles.parquet"
+        
+        print(f"Attempting to load dataset from: {file_path}")
+        
+        # Handle absolute path as well (in case the relative path doesn't work)
+        if not os.path.exists(file_path):
+            # Try searching in a few different places
+            possible_paths = [
+                file_path,
+                os.path.join(os.getcwd(), file_path),
+                os.path.join(os.getcwd(), "CS_6140", "project", file_path),
+                os.path.join(os.getcwd(), "CS_6140", file_path),
+            ]
+            
+            # Find the first path that exists
+            for path in possible_paths:
+                if os.path.exists(path):
+                    file_path = path
+                    break
+        
+        try:
+            # Check if the file exists
+            if not os.path.exists(file_path):
+                print(f"Warning: File not found at {file_path}")
+                # Try to find any parquet file in the timeframe directory
+                parent_dir = os.path.dirname(file_path)
+                if os.path.exists(parent_dir):
+                    parquet_files = glob.glob(os.path.join(parent_dir, "*.parquet"))
+                    if parquet_files:
+                        file_path = parquet_files[0]
+                        print(f"Found alternative file: {file_path}")
+                    else:
+                        print(f"No parquet files found in {parent_dir}")
+                        print(f"Skipping timeframe {timeframe}")
+                        continue
+                else:
+                    print(f"Skipping timeframe {timeframe}")
+                    continue
+            
+            # Load the file based on its extension
+            if file_path.endswith('.csv'):
+                if sample_size:
+                    # First get total rows to calculate sampling fraction
+                    total_rows = sum(1 for _ in open(file_path, 'r'))
+                    sample_fraction = min(1.0, sample_size / total_rows)
+                    df = pd.read_csv(file_path, skiprows=lambda i: i > 0 and np.random.random() > sample_fraction)
+                else:
+                    df = pd.read_csv(file_path)
+            elif file_path.endswith('.parquet'):
+                try:
+                    # Try with pyarrow engine first
+                    if sample_size:
+                        # For parquet, we need to load and then sample
+                        # Use memory-efficient approach by selecting only needed columns
+                        # First, get the schema to know what columns are available
+                        schema = pd.read_parquet(file_path, engine='pyarrow', columns=None).head(0)
+                        required_cols = schema.columns.tolist()
+                        
+                        # Read the parquet file with specific columns and sample rows
+                        df = pd.read_parquet(file_path, engine='pyarrow', columns=required_cols)
+                        # Sample after loading to reduce memory usage
+                        df = df.sample(n=min(sample_size, len(df)), random_state=42)
+                    else:
+                        df = pd.read_parquet(file_path, engine='pyarrow')
+                except Exception as e:
+                    print(f"Error with pyarrow: {e}")
+                    try:
+                        # Try with fastparquet engine
+                        if sample_size:
+                            # For fastparquet, we also load and then sample
+                            df = pd.read_parquet(file_path, engine='fastparquet')
+                            df = df.sample(n=min(sample_size, len(df)), random_state=42)
+                        else:
+                            df = pd.read_parquet(file_path, engine='fastparquet')
+                    except Exception as e2:
+                        print(f"Error with fastparquet: {e2}")
+                        print(f"Skipping timeframe {timeframe}")
+                        continue
+            elif file_path.endswith('.xlsx') or file_path.endswith('.xls'):
+                if sample_size:
+                    # For Excel, load and then sample
+                    df = pd.read_excel(file_path)
+                    df = df.sample(n=min(sample_size, len(df)), random_state=42)
+                else:
+                    df = pd.read_excel(file_path)
+            else:
+                print(f"Unsupported file format: {file_path}")
+                continue
+            
+            # Add a column to identify the timeframe
+            df['timeframe'] = timeframe
+            
+            print(f"Loaded {timeframe} data successfully! Shape before sampling: {df.shape}")
+            
+            # Force garbage collection
+            gc.collect()
+            
+            all_dataframes.append(df)
+            
+        except Exception as e:
+            print(f"Error loading dataset for {timeframe}: {e}")
+            print(f"Skipping timeframe {timeframe}")
+    
+    if not all_dataframes:
+        print("No dataframes were loaded successfully.")
         return None
+    
+    # Combine all dataframes
+    print("\nCombining all dataframes...")
+    combined_df = pd.concat(all_dataframes, ignore_index=True)
+    print(f"Combined dataset shape: {combined_df.shape}")
+    
+    # Free memory
+    del all_dataframes
+    gc.collect()
+    
+    return combined_df
+
+
+def analyze_correlation_over_time(df, latency_col='avg_lat_ms', output_dir='output'):
+    """
+    Analyze how correlations between factors and latency change over time across timeframes
+    
+    Parameters:
+    -----------
+    df : pandas.DataFrame
+        Combined dataset with all timeframes
+    latency_col : str
+        Name of the column containing latency data
+    output_dir : str
+        Directory to save output files
+    
+    Returns:
+    --------
+    dict: Dictionary with correlation data by timeframe
+    """
+    if 'timeframe' not in df.columns:
+        print("No timeframe information available for correlation over time analysis")
+        return None
+    
+    print("\n\n========== ANALYZING CORRELATION CHANGES OVER TIME ==========")
+    
+    # Make sure output directory exists
+    os.makedirs(output_dir, exist_ok=True)
+    
+    # Get unique timeframes and sort them
+    timeframes = sorted(df['timeframe'].unique())
+    print(f"Analyzing correlation changes across {len(timeframes)} timeframes: {timeframes}")
+    
+    # Dictionary to store correlation results for each timeframe
+    correlation_by_timeframe = {}
+    
+    # Identify all numeric columns
+    numeric_columns = df.select_dtypes(include=['number']).columns.tolist()
+    numeric_columns = [col for col in numeric_columns if col not in [latency_col, 'timeframe']]
+    
+    # Create DataFrames to store correlation values and p-values over time
+    correlation_data = pd.DataFrame(index=timeframes, columns=numeric_columns, dtype=float)
+    
+    # Calculate correlations for each timeframe
+    for timeframe in timeframes:
+        # Filter data for this timeframe
+        timeframe_df = df[df['timeframe'] == timeframe]
+        
+        # Skip if too few samples
+        if len(timeframe_df) < 1000:
+            print(f"Skipping {timeframe} - insufficient data ({len(timeframe_df)} samples)")
+            continue
+            
+        print(f"\nAnalyzing correlations for timeframe {timeframe} ({len(timeframe_df)} samples):")
+        
+        # Calculate correlations for all numeric columns
+        correlations = {}
+        for col in numeric_columns:
+            if col != latency_col and not pd.isna(timeframe_df[col]).all():
+                corr = timeframe_df[[latency_col, col]].corr().iloc[0, 1]
+                if not pd.isna(corr):
+                    correlations[col] = float(corr)  # Convert to float explicitly
+                    # Store correlation in the correlation_data DataFrame
+                    correlation_data.loc[timeframe, col] = float(corr)  # Convert to float
+                else:
+                    # Fill NaN values with 0 directly
+                    correlation_data.loc[timeframe, col] = 0.0
+        
+        # Sort correlations by absolute value
+        sorted_correlations = sorted(correlations.items(), key=lambda x: abs(x[1]), reverse=True)
+        
+        # Print top correlations for this timeframe
+        print(f"Top correlations with {latency_col} in {timeframe}:")
+        for factor, corr in sorted_correlations[:5]:  # Top 5 correlations
+            print(f"  - {factor}: {corr:.4f}")
+        
+        # Store the results
+        correlation_by_timeframe[timeframe] = sorted_correlations
+    
+    # Make sure all values are numeric
+    correlation_data = correlation_data.astype(float)
+    
+    # Now plot the heatmap
+    try:
+        # Convert the DataFrame to long format for plotting, ensuring data types
+        correlation_long = correlation_data.reset_index().melt(
+            id_vars=['index'], 
+            value_vars=numeric_columns,
+            var_name='Factor', 
+            value_name='Correlation'
+        )
+        correlation_long.rename(columns={'index': 'Timeframe'}, inplace=True)
+        correlation_long['Correlation'] = correlation_long['Correlation'].astype(float)
+        
+        # Create a pivot table with explicitly numeric values
+        correlation_pivot = correlation_long.pivot_table(
+            index='Factor', 
+            columns='Timeframe', 
+            values='Correlation',
+            aggfunc='first'  # Just take the first value in case of duplicates
+        ).astype(float)
+        
+        # Plot correlation heatmap over time
+        plt.figure(figsize=(14, 10))
+        sns.heatmap(correlation_pivot, annot=True, cmap='coolwarm', fmt=".2f", center=0)
+        plt.title(f'Correlations with {latency_col} Across Timeframes')
+        plt.tight_layout()
+        plt.savefig(os.path.join(output_dir, 'correlation_heatmap_over_time.png'))
+        plt.close()
+        print(f"Saved correlation heatmap over time to {output_dir}/correlation_heatmap_over_time.png")
+    
+        # Plot correlation line chart for top factors
+        # Get top 5 factors with highest average absolute correlation
+        mean_abs_corr = correlation_data.abs().mean().sort_values(ascending=False)
+        top_factors = mean_abs_corr.index[:5].tolist()
+        
+        plt.figure(figsize=(14, 8))
+        for factor in top_factors:
+            plt.plot(timeframes, correlation_data[factor], marker='o', linewidth=2, label=factor)
+        
+        plt.axhline(y=0, color='gray', linestyle='--', alpha=0.7)
+        plt.grid(True, alpha=0.3)
+        plt.xlabel('Timeframe')
+        plt.ylabel(f'Correlation with {latency_col}')
+        plt.title(f'Changes in Top Correlations with {latency_col} Over Time')
+        plt.xticks(rotation=45)
+        plt.legend(title='Factors')
+        plt.tight_layout()
+        plt.savefig(os.path.join(output_dir, 'correlation_trends_over_time.png'))
+        plt.close()
+        print(f"Saved correlation trends over time to {output_dir}/correlation_trends_over_time.png")
+    
+        # Calculate correlation stability (standard deviation across timeframes)
+        correlation_stability = correlation_data.std().sort_values(ascending=True)
+        
+        print("\nStability of correlations across timeframes (lower std = more stable):")
+        stability_items = list(correlation_stability.items())
+        for factor, std in stability_items[:10]:  # Top 10 most stable
+            print(f"  - {factor}: {std:.4f}")
+        
+        # Plot correlation stability
+        plt.figure(figsize=(12, 8))
+        # Use only the top 10 most stable factors
+        stability_df = pd.DataFrame({
+            'Factor': correlation_stability.index[:10],
+            'Stability': correlation_stability.values[:10]
+        })
+        sns.barplot(x='Stability', y='Factor', data=stability_df)
+        plt.title('Stability of Correlations Across Timeframes')
+        plt.xlabel('Standard Deviation (Lower = More Stable)')
+        plt.tight_layout()
+        plt.savefig(os.path.join(output_dir, 'correlation_stability.png'))
+        plt.close()
+        print(f"Saved correlation stability plot to {output_dir}/correlation_stability.png")
+    
+    except Exception as e:
+        print(f"Error during visualization: {e}")
+        print("Skipping visualization but continuing with analysis")
+    
+    print("\nCorrelation over time analysis complete!")
+    return correlation_by_timeframe
 
 
 def analyze_latency_factors(df):
@@ -185,6 +464,34 @@ def analyze_latency_factors(df):
     plt.close()
     print(f"Saved latency distribution plot to {output_dir}/latency_distribution.png")
     
+    # Check if we have timeframe data for temporal analysis
+    if 'timeframe' in df_sample.columns:
+        # Analyze latency trends over time
+        plt.figure(figsize=(12, 8))
+        time_trends = df_sample.groupby('timeframe')[latency_col].agg(['mean', 'median', 'std']).reset_index()
+        time_trends = time_trends.sort_values('timeframe')
+        
+        # Plot mean latency by timeframe
+        plt.subplot(2, 1, 1)
+        sns.barplot(x='timeframe', y='mean', data=time_trends)
+        plt.title(f'Mean {latency_col} by Timeframe')
+        plt.xticks(rotation=45)
+        
+        # Plot median latency by timeframe
+        plt.subplot(2, 1, 2)
+        sns.barplot(x='timeframe', y='median', data=time_trends)
+        plt.title(f'Median {latency_col} by Timeframe')
+        plt.xticks(rotation=45)
+        
+        plt.tight_layout()
+        plt.savefig(os.path.join(output_dir, 'latency_over_time.png'))
+        plt.close()
+        print(f"Saved latency trends over time to {output_dir}/latency_over_time.png")
+        
+        # Add timeframe as a potential factor
+        print("\nLatency statistics by timeframe:")
+        print(time_trends)
+    
     # 3. Find potential factors that could affect latency
     potential_factors = []
     
@@ -202,7 +509,7 @@ def analyze_latency_factors(df):
     potential_factors.extend(geo_factors)
     
     # Time-related factors
-    time_factors = [col for col in df_sample.columns if 'time' in col.lower() or 'date' in col.lower() or 'hour' in col.lower() or 'day' in col.lower()]
+    time_factors = [col for col in df_sample.columns if 'time' in col.lower() or 'date' in col.lower() or 'hour' in col.lower() or 'day' in col.lower() or 'timeframe' in col.lower()]
     potential_factors.extend(time_factors)
     
     # Get unique factors (remove duplicates)
@@ -270,7 +577,18 @@ def analyze_latency_factors(df):
             features = [factor for factor, _ in correlation_with_latency[:min(5, len(correlation_with_latency))]]
             print(f"Using top {len(features)} features for modeling: {features}")
             
-            X = df_sample[features].copy()
+            # Add timeframe as a categorical feature if available
+            if 'timeframe' in df_sample.columns and 'timeframe' not in features:
+                # Create dummy variables for timeframe
+                timeframe_dummies = pd.get_dummies(df_sample['timeframe'], prefix='timeframe')
+                df_sample_with_dummies = pd.concat([df_sample[features + [latency_col]], timeframe_dummies], axis=1)
+                # Update features list to include the dummy variables
+                features.extend(timeframe_dummies.columns.tolist())
+                print(f"Added timeframe dummy variables as features")
+                X = df_sample_with_dummies[features].copy()
+            else:
+                X = df_sample[features].copy()
+            
             y = df_sample[latency_col].copy()
             
             # Handle NaN values
@@ -335,7 +653,7 @@ def analyze_latency_factors(df):
                 
                 # Feature importance (Random Forest)
                 feature_importance = pd.DataFrame({
-                    'Feature': features,
+                    'Feature': X.columns.tolist(),  # Use column names from X
                     'Importance': rf_model.feature_importances_
                 }).sort_values('Importance', ascending=False)
                 
@@ -364,13 +682,20 @@ def analyze_latency_factors(df):
 
 
 def main():
-    # Load the dataset
-    df = load_dataset()
+    # Load the dataset with auto-discovery of timeframes, loading all available 
+    # timeframes and sampling 100,000 rows from each to avoid memory issues
+    # Increase max_timeframes to analyze more timeframes
+    df = load_dataset(max_timeframes=12, sample_size=100000)
 
     # Analyze factors affecting latency
     if df is not None:
+        # Regular analysis
         df = analyze_latency_factors(df)
-        print("\nData loading and analysis complete!")
+        
+        # Add correlation over time analysis
+        correlation_by_timeframe = analyze_correlation_over_time(df)
+        
+        print("\nData loading and all analyses complete!")
 
     return df
 
