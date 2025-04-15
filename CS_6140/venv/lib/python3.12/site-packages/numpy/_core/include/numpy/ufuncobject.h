@@ -170,10 +170,8 @@ typedef struct _tagPyUFuncObject {
          * with the dtypes for the inputs and outputs.
          */
         PyUFunc_TypeResolutionFunc *type_resolver;
-
-        /* A dictionary to monkeypatch ufuncs */
-        PyObject *dict;
-
+        /* Was the legacy loop resolver */
+        void *reserved2;
         /*
          * This was blocked off to be the "new" inner loop selector in 1.7,
          * but this was never implemented. (This is also why the above

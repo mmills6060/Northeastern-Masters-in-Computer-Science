@@ -7,7 +7,6 @@ from typing import (
     Protocol,
     ParamSpec,
     Concatenate,
-    type_check_only,
 )
 
 import numpy as np
@@ -21,7 +20,7 @@ from numpy import (
     complexfloating,
     object_,
 )
-from numpy._core.shape_base import vstack as row_stack
+
 from numpy._typing import (
     ArrayLike,
     NDArray,
@@ -35,29 +34,12 @@ from numpy._typing import (
     _ArrayLikeObject_co,
 )
 
-__all__ = [
-    "column_stack",
-    "row_stack",
-    "dstack",
-    "array_split",
-    "split",
-    "hsplit",
-    "vsplit",
-    "dsplit",
-    "apply_over_axes",
-    "expand_dims",
-    "apply_along_axis",
-    "kron",
-    "tile",
-    "take_along_axis",
-    "put_along_axis",
-]
+from numpy._core.shape_base import vstack
 
 _P = ParamSpec("_P")
 _SCT = TypeVar("_SCT", bound=generic)
 
 # Signature of `__array_wrap__`
-@type_check_only
 class _ArrayWrap(Protocol):
     def __call__(
         self,
@@ -67,10 +49,12 @@ class _ArrayWrap(Protocol):
         /,
     ) -> Any: ...
 
-@type_check_only
 class _SupportsArrayWrap(Protocol):
     @property
     def __array_wrap__(self) -> _ArrayWrap: ...
+
+
+__all__: list[str]
 
 def take_along_axis(
     arr: _SCT | NDArray[_SCT],
@@ -95,7 +79,7 @@ def apply_along_axis(
 ) -> NDArray[_SCT]: ...
 @overload
 def apply_along_axis(
-    func1d: Callable[Concatenate[NDArray[Any], _P], Any],
+    func1d: Callable[Concatenate[NDArray[Any], _P], ArrayLike],
     axis: SupportsIndex,
     arr: ArrayLike,
     *args: _P.args,

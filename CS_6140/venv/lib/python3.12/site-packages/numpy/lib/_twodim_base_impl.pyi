@@ -1,3 +1,4 @@
+import builtins
 from collections.abc import Callable, Sequence
 from typing import (
     Any,
@@ -38,32 +39,16 @@ from numpy._typing import (
     _ArrayLikeObject_co,
 )
 
-__all__ = [
-    "diag",
-    "diagflat",
-    "eye",
-    "fliplr",
-    "flipud",
-    "tri",
-    "triu",
-    "tril",
-    "vander",
-    "histogram2d",
-    "mask_indices",
-    "tril_indices",
-    "tril_indices_from",
-    "triu_indices",
-    "triu_indices_from",
-]
-
 _T = TypeVar("_T")
 _SCT = TypeVar("_SCT", bound=generic)
 
 # The returned arrays dtype must be compatible with `np.equal`
-_MaskFunc: TypeAlias = Callable[
+_MaskFunc = Callable[
     [NDArray[int_], _T],
     NDArray[number[Any] | np.bool | timedelta64 | datetime64 | object_],
 ]
+
+__all__: list[str]
 
 @overload
 def fliplr(m: _ArrayLike[_SCT]) -> NDArray[_SCT]: ...
@@ -193,19 +178,19 @@ _ArrayLike2D: TypeAlias = (
     | Sequence[_ArrayLike1D[_SCT]]
 )
 
-_ArrayLike1DInt_co: TypeAlias = (
+_ArrayLike1DInt_co = (
     _SupportsArray[np.dtype[_Int_co]]
     | Sequence[int | _Int_co]
 )
-_ArrayLike1DFloat_co: TypeAlias = (
+_ArrayLike1DFloat_co = (
     _SupportsArray[np.dtype[_Float_co]]
     | Sequence[float | int | _Float_co]
 )
-_ArrayLike2DFloat_co: TypeAlias = (
+_ArrayLike2DFloat_co = (
     _SupportsArray[np.dtype[_Float_co]]
     | Sequence[_ArrayLike1DFloat_co]
 )
-_ArrayLike1DNumber_co: TypeAlias = (
+_ArrayLike1DNumber_co = (
     _SupportsArray[np.dtype[_Number_co]]
     | Sequence[int | float | complex | _Number_co]
 )

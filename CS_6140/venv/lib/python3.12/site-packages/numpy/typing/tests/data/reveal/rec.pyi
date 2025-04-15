@@ -1,10 +1,14 @@
 import io
+import sys
 from typing import Any
 
 import numpy as np
 import numpy.typing as npt
 
-from typing_extensions import assert_type
+if sys.version_info >= (3, 11):
+    from typing import assert_type
+else:
+    from typing_extensions import assert_type
 
 AR_i8: npt.NDArray[np.int64]
 REC_AR_V: np.recarray[Any, np.dtype[np.record]]
@@ -70,7 +74,7 @@ assert_type(
 )
 
 assert_type(
-    np.rec.fromrecords((1, 1.5)),
+    np.rec.fromrecords((1, 1.5)), 
     np.recarray[Any, np.dtype[np.record]]
 )
 

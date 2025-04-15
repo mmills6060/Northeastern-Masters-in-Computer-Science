@@ -1097,14 +1097,14 @@ class TestCreation:
                 return 1
 
             def __getitem__(self, index):
-                raise ValueError
+                raise ValueError()
 
         class Map:
             def __len__(self):
                 return 1
 
             def __getitem__(self, index):
-                raise KeyError
+                raise KeyError()
 
         a = np.array([Map()])
         assert_(a.shape == (1,))
@@ -1121,7 +1121,7 @@ class TestCreation:
                 if ind in [0, 1]:
                     return ind
                 else:
-                    raise IndexError
+                    raise IndexError()
         d = np.array([Point2(), Point2(), Point2()])
         assert_equal(d.dtype, np.dtype(object))
 
@@ -4767,7 +4767,7 @@ class TestArgmax:
             ([np.nan, 0, 1, 2, 3], 0),
             ([np.nan, 0, np.nan, 2, 3], 0),
             # To hit the tail of SIMD multi-level(x4, x1) inner loops
-            # on variant SIMD widths
+            # on variant SIMD widthes
             ([1] * (2*5-1) + [np.nan], 2*5-1),
             ([1] * (4*5-1) + [np.nan], 4*5-1),
             ([1] * (8*5-1) + [np.nan], 8*5-1),
@@ -4910,7 +4910,7 @@ class TestArgmin:
             ([np.nan, 0, 1, 2, 3], 0),
             ([np.nan, 0, np.nan, 2, 3], 0),
             # To hit the tail of SIMD multi-level(x4, x1) inner loops
-            # on variant SIMD widths
+            # on variant SIMD widthes
             ([1] * (2*5-1) + [np.nan], 2*5-1),
             ([1] * (4*5-1) + [np.nan], 4*5-1),
             ([1] * (8*5-1) + [np.nan], 8*5-1),
@@ -5374,13 +5374,6 @@ class TestLexsort:
             u, v = np.array(u, dtype='object'), np.array(v, dtype='object')
             assert_array_equal(idx, np.lexsort((u, v)))
 
-    def test_strings(self):  # gh-27984
-        for dtype in "TU":
-            surnames = np.array(['Hertz',    'Galilei', 'Hertz'], dtype=dtype)
-            first_names = np.array(['Heinrich', 'Galileo', 'Gustav'], dtype=dtype)
-            assert_array_equal(np.lexsort((first_names, surnames)), [1, 2, 0])
-
-
     def test_invalid_axis(self): # gh-7528
         x = np.linspace(0., 1., 42*3).reshape(42, 3)
         assert_raises(AxisError, np.lexsort, x, axis=2)
@@ -5485,7 +5478,7 @@ class TestIO:
 
     def test_roundtrip_repr(self, x):
         x = x.real.ravel()
-        s = "@".join((repr(x)[11:-1] for x in x))
+        s = "@".join(map(lambda x: repr(x)[11:-1], x))
         y = np.fromstring(s, sep="@")
         assert_array_equal(x, y)
 
@@ -8599,7 +8592,7 @@ class TestArrayCreationCopyArgument:
     def test__array__reference_leak(self):
         class NotAnArray:
             def __array__(self, dtype=None, copy=None):
-                raise NotImplementedError
+                raise NotImplementedError()
 
         x = NotAnArray()
 
@@ -8907,8 +8900,7 @@ class TestConversion:
         assert_equal(bool(np.array([False])), False)
         assert_equal(bool(np.array([True])), True)
         assert_equal(bool(np.array([[42]])), True)
-
-    def test_to_bool_scalar_not_convertible(self):
+        assert_raises(ValueError, bool, np.array([1, 2]))
 
         class NotConvertible:
             def __bool__(self):
@@ -8926,16 +8918,6 @@ class TestConversion:
 
         assert_raises(Error, bool, self_containing)  # previously stack overflow
         self_containing[0] = None  # resolve circular reference
-
-    def test_to_bool_scalar_size_errors(self):
-        with pytest.raises(ValueError, match=".*one element is ambiguous"):
-            bool(np.array([1, 2]))
-
-        with pytest.raises(ValueError, match=".*empty array is ambiguous"):
-            bool(np.empty((3, 0)))
-
-        with pytest.raises(ValueError, match=".*empty array is ambiguous"):
-            bool(np.empty((0,)))
 
     def test_to_int_scalar(self):
         # gh-9972 means that these aren't always the same
@@ -9732,8 +9714,7 @@ class TestArrayFinalize:
                 raise Exception(self)
 
         # a plain object can't be weakref'd
-        class Dummy:
-            pass
+        class Dummy: pass
 
         # get a weak reference to an object within an array
         obj_arr = np.array(Dummy())
@@ -9814,7 +9795,7 @@ def test_equal_subclass_no_override(op, dt1, dt2):
 
         def __array_wrap__(self, new, context=None, return_scalar=False):
             type(self).called_wrap += 1
-            return super().__array_wrap__(new, context, return_scalar)
+            return super().__array_wrap__(new)
 
     numpy_arr = np.zeros(5, dtype=dt1)
     my_arr = np.zeros(5, dtype=dt2).view(MyArr)
@@ -10000,7 +9981,7 @@ class TestAlignment:
         elif order is None:
             assert_(x.flags.c_contiguous, err_msg)
         else:
-            raise ValueError
+            raise ValueError()
 
     def test_various_alignments(self):
         for align in [1, 2, 3, 4, 8, 12, 16, 32, 64, None]:
