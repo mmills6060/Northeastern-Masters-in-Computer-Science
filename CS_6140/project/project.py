@@ -10,8 +10,8 @@ def load_dataset():
     Load the Ookla Internet Speed dataset from a local file
     """
     # Use a relative path starting from the current directory
-    file_path = "archive/2019-q1/2019-01-01_performance_fixed_tiles.parquet"
-    
+    file_path = "dataset/2019-q1/2019-01-01_performance_fixed_tiles.parquet"
+
     # Handle absolute path as well (in case the relative path doesn't work)
     if not os.path.exists(file_path):
         # Try searching in a few different places
@@ -21,21 +21,23 @@ def load_dataset():
             os.path.join(os.getcwd(), "CS_6140", "project", file_path),
             os.path.join(os.getcwd(), "CS_6140", file_path),
         ]
-        
+
         # Find the first path that exists
         for path in possible_paths:
             if os.path.exists(path):
                 file_path = path
                 break
-    
+
     print(f"Attempting to load dataset from: {file_path}")
 
     try:
         # Check if the file exists
         if not os.path.exists(file_path):
             print(f"Error: File not found at {file_path}")
-            print("Please ensure the Ookla dataset is downloaded and provide the correct path.")
-            print("The expected structure is: archive/2019-q1/2019-01-01_performance_fixed_tiles.parquet")
+            print(
+                "Please ensure the Ookla dataset is downloaded and provide the correct path.")
+            print(
+                "The expected structure is: archive/2019-q1/2019-01-01_performance_fixed_tiles.parquet")
             return None
 
         # If it's a zip file, extract it first
@@ -66,7 +68,8 @@ def load_dataset():
                 shp_files = glob.glob(os.path.join(
                     extract_dir, '**', '*.shp'), recursive=True)
                 if shp_files:
-                    print(f"Found {len(shp_files)} shapefile(s). To load these, install geopandas and use:")
+                    print(f"Found {
+                          len(shp_files)} shapefile(s). To load these, install geopandas and use:")
                     print("import geopandas as gpd")
                     print(f"gdf = gpd.read_file('{shp_files[0]}')")
                 return None
@@ -88,7 +91,8 @@ def load_dataset():
                     df = pd.read_parquet(file_path, engine='fastparquet')
                 except Exception as e2:
                     print(f"Error with fastparquet: {e2}")
-                    print("\nTo read parquet files, you need to install the required packages:")
+                    print(
+                        "\nTo read parquet files, you need to install the required packages:")
                     print("pip install pyarrow fastparquet")
                     return None
         elif file_path.endswith('.xlsx') or file_path.endswith('.xls'):
@@ -145,7 +149,8 @@ def analyze_data(df):
             plt.savefig(os.path.join(
                 'CS_6140/project/output', 'histogram.png'))
             plt.close()
-            print(f"Saved histogram of {numeric_columns[0]} to CS_6140/project/output/histogram.png")
+            print(f"Saved histogram of {
+                  numeric_columns[0]} to CS_6140/project/output/histogram.png")
     except Exception as e:
         print(f"Error creating visualization: {e}")
 
