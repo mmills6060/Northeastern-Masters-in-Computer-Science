@@ -9,3 +9,4 @@ geopandas>=1.0.1
 kagglehub>=0.3.11
 pyarrow>=4.0.0
 fastparquet>=0.5.0
+ipykernel>=6.0.0
